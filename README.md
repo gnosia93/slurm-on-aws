@@ -15,7 +15,7 @@ We provision AWS infrastructure with terraform and configure slurm cluster with 
 
 * [3. distributed training](https://github.com/gnosia93/slurm-on-grv/blob/main/tutorial/3.distributed-training.md)
 
-* [4. open-mpi tutorial](https://github.com/gnosia93/slurm-on-grv/blob/main/tutorial/4.open-mpi.md)(p)
+* [4. data wrangling with Open MPI](https://github.com/gnosia93/slurm-on-grv/blob/main/tutorial/4.open-mpi.md)
 
 * [5. cluster monitoring](https://github.com/gnosia93/slurm-on-grv/blob/main/tutorial/5.cluster-monitoring.md)
   
