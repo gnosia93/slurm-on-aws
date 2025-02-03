@@ -19,7 +19,7 @@ We provision AWS infrastructure with terraform and configure slurm cluster with 
 
 * [5. cluster monitoring](https://github.com/gnosia93/slurm-on-grv/blob/main/tutorial/5.cluster-monitoring.md)
   
-* Autoscaling
+* [Autoscaling](https://github.com/gnosia93/slurm-on-aws/blob/main/tutorial/6.autoscaling.md)
 
 * mlflow
 
