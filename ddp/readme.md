@@ -10,3 +10,8 @@
 ## CIFAR10 ##
 
 * https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
+
+
+## training with CPU ##
+
+* https://stackoverflow.com/questions/75017751/using-multiple-cpu-in-pytorch
