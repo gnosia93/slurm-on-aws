@@ -21,12 +21,10 @@ We provision AWS infrastructure with terraform and configure slurm cluster with 
 
 
 
-## Features to be added ##
+### Features to be added ###
   
 * [Autoscaling](https://github.com/gnosia93/slurm-on-aws/blob/main/tutorial/6.autoscaling.md)
-
 * fine tune with lora.
-
 * mlflow
 
 
