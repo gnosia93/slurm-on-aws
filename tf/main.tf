@@ -2,7 +2,18 @@ provider "aws" {
   region = var.aws_region
 }
 
-# --- 1. 네트워크 인프라 ---
+# --- 1. 최신 Amazon Linux 2023 AMI 조회 ---
+data "aws_ami" "al2023" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023*-kernel-6.1-x86_64"]
+  }
+}
+
+# --- 2. VPC 및 네트워크 인프라 ---
 resource "aws_vpc" "slurm_vpc" {
   cidr_block           = "10.0.0.0/23"
   enable_dns_hostnames = true
@@ -49,11 +60,12 @@ resource "aws_route_table_association" "private_assoc" {
   route_table_id = aws_route_table.private_rt.id
 }
 
-# --- 2. 보안 그룹 ---
+# --- 3. 보안 그룹 (내 IP 및 클러스터 내부 통신) ---
 resource "aws_security_group" "slurm_sg" {
   name   = "slurm-cluster-sg"
   vpc_id = aws_vpc.slurm_vpc.id
 
+  # 클러스터 내부 무제한 통신
   ingress {
     from_port = 0
     to_port   = 0
@@ -61,19 +73,20 @@ resource "aws_security_group" "slurm_sg" {
     self      = true
   }
 
+  # SSH 접속 (내 IP 한정)
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.my_ip]
   }
 
-  # Grafana 접속용 (3000)
+  # Grafana 접속 (내 IP 한정)
   ingress {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/23"]
+    cidr_blocks = [var.my_ip]
   }
 
   egress {
@@ -84,10 +97,12 @@ resource "aws_security_group" "slurm_sg" {
   }
 }
 
-# --- 3. EC2 인스턴스 (관리 노드) ---
+# --- 4. EC2 인스턴스 구성 ---
+
+# 베스천 호스트
 resource "aws_instance" "bastion" {
-  ami                    = var.ami_id
-  instance_type          = "t3.micro"
+  ami                    = data.aws_ami.al2023.id
+  instance_type          = var.instance_types.bastion
   subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
@@ -96,55 +111,29 @@ resource "aws_instance" "bastion" {
   }
 }
 
-resource "aws_instance" "master" {
-  ami                    = var.ami_id
-  instance_type          = var.master_type
+# 관리 노드 (Master, Accounting, Client, Monitor)
+resource "aws_instance" "nodes" {
+  for_each = {
+    master     = var.instance_types.master
+    accounting = var.instance_types.accounting
+    client     = var.instance_types.client
+    monitor    = var.instance_types.monitor
+  }
+  ami                    = data.aws_ami.al2023.id
+  instance_type          = each.value
   subnet_id              = aws_subnet.private.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
   tags = {
-    Name = "slurm-master"
+    Name = "slurm-${each.key}"
   }
 }
 
-resource "aws_instance" "accounting" {
-  ami                    = var.ami_id
-  instance_type          = var.accounting_type
-  subnet_id              = aws_subnet.private.id
-  key_name               = var.key_name
-  vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags = {
-    Name = "slurm-accounting"
-  }
-}
-
-resource "aws_instance" "client" {
-  ami                    = var.ami_id
-  instance_type          = var.client_type
-  subnet_id              = aws_subnet.private.id
-  key_name               = var.key_name
-  vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags = {
-    Name = "slurm-client"
-  }
-}
-
-resource "aws_instance" "monitor" {
-  ami                    = var.ami_id
-  instance_type          = var.monitor_type
-  subnet_id              = aws_subnet.private.id
-  key_name               = var.key_name
-  vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags = {
-    Name = "slurm-monitor"
-  }
-}
-
-# --- 4. EC2 인스턴스 (워커 노드) ---
-resource "aws_instance" "cpu_workers" {
-  count                  = var.cpu_worker_count
-  ami                    = var.ami_id
-  instance_type          = var.cpu_worker_type
+# CPU 워커 노드
+resource "aws_instance" "cpu_worker" {
+  count                  = var.cpu_node_count
+  ami                    = data.aws_ami.al2023.id
+  instance_type          = var.instance_types.cpu_worker
   subnet_id              = aws_subnet.private.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
@@ -153,10 +142,11 @@ resource "aws_instance" "cpu_workers" {
   }
 }
 
-resource "aws_instance" "gpu_workers" {
-  count                  = var.gpu_worker_count
-  ami                    = var.ami_id
-  instance_type          = var.gpu_worker_type
+# GPU 워커 노드
+resource "aws_instance" "gpu_worker" {
+  count                  = var.gpu_node_count
+  ami                    = data.aws_ami.al2023.id
+  instance_type          = var.instance_types.gpu_worker
   subnet_id              = aws_subnet.private.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
@@ -167,44 +157,45 @@ resource "aws_instance" "gpu_workers" {
 }
 
 # --- 5. Ansible Inventory 생성 ---
-resource "local_file" "ansible_inventory" {
+resource "local_file" "inventory" {
   content = <<-EOT
     [master]
-    ${aws_instance.master.private_ip}
+    ${aws_instance.nodes["master"].private_ip}
 
     [accounting]
-    ${aws_instance.accounting.private_ip}
-
-    [clients]
-    ${aws_instance.client.private_ip}
+    ${aws_instance.nodes["accounting"].private_ip}
 
     [monitoring]
-    ${aws_instance.monitor.private_ip}
+    ${aws_instance.nodes["monitor"].private_ip}
+
+    [clients]
+    ${aws_instance.nodes["client"].private_ip}
 
     [cpu_workers]
-    %{ for ip in aws_instance.cpu_workers[*].private_ip ~}
-    ${ip}
-    %{ endfor ~}
+    ${join("\n", aws_instance.cpu_worker[*].private_ip)}
 
     [gpu_workers]
-    %{ for inst in aws_instance.gpu_workers ~}
+    %{ for inst in aws_instance.gpu_worker ~}
     ${inst.private_ip} gpu_count=${inst.tags.GpuCount}
     %{ endfor ~}
 
     [slurm_cluster:children]
     master
     accounting
-    clients
     monitoring
+    clients
     cpu_workers
     gpu_workers
   EOT
   filename = "hosts.ini"
 }
 
-# --- 6. Bastion 동기화 자동화 ---
-resource "null_resource" "sync_bastion" {
-  depends_on = [local_file.ansible_inventory]
+# --- 6. 베스천 자동 동기화 ---
+resource "null_resource" "sync" {
+  depends_on = [
+    local_file.inventory,
+    aws_instance.bastion
+  ]
 
   connection {
     type        = "ssh"
@@ -221,6 +212,7 @@ resource "null_resource" "sync_bastion" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install -y ansible-core",
+      "mkdir -p ~/.ssh",
       "echo 'StrictHostKeyChecking no' >> ~/.ssh/config",
       "chmod 600 /home/ec2-user/hosts.ini"
     ]
