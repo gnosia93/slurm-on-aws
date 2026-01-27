@@ -1,24 +1,34 @@
 variable "aws_region" {
-  description = "AWS 리전 설정"
-  default     = "ap-northeast-2" # 서울 리전
+  default = "ap-northeast-2"
 }
 
 variable "key_name" {
-  description = "EC2에 접속할 기존 SSH 키 페어 이름"
+  description = "AWS Key Pair Name"
   type        = string
 }
 
+# 인스턴스 타입 설정
+variable "master_instance_type" {
+  default = "t3.medium"
+}
+
+variable "cpu_worker_instance_type" {
+  default = "r7iz.large" # Intel AMX 지원
+}
+
+variable "gpu_worker_instance_type" {
+  default = "g4dn.xlarge" # NVIDIA T4
+}
+
+# 인스턴스 개수 설정
 variable "cpu_worker_count" {
-  description = "Intel AMX CPU 워커 노드 개수"
-  default     = 4
+  default = 4
 }
 
 variable "gpu_worker_count" {
-  description = "NVIDIA GPU 워커 노드 개수"
-  default     = 4
+  default = 4
 }
 
 variable "ami_id" {
-  description = "Amazon Linux 2023 AMI ID (리전별로 확인 필요)"
-  default     = "ami-0c02fb55956c7d316" 
+  default = "ami-0c02fb55956c7d316" # Amazon Linux 2023
 }
