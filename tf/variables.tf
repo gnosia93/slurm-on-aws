@@ -8,7 +8,7 @@ variable "key_name" {
 }
 
 variable "my_ip" {
-  description = "관리자 공인 IP (예: 1.2.3.4/32)"
+  description = "관리자 접속 허용 공인 IP (예: 1.2.3.4/32)"
   type        = string
 }
 
@@ -25,15 +25,11 @@ variable "instance_types" {
   }
 }
 
-# 인스턴스 개수 설정
-variable "cpu_count" {
+# 노드 대수 설정
+variable "cpu_node_count" {
   default = 4
 }
 
-variable "gpu_count" {
+variable "gpu_node_count" {
   default = 4
-}
-
-variable "ami_id" {
-  default = "ami-0c02fb55956c7d316" # Amazon Linux 2023
 }
