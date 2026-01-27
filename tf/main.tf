@@ -14,6 +14,9 @@ data "aws_ami" "al2023" {
 
 data "http" "my_ip" {
   url = "https://ifconfig.me"
+  request_headers = {
+    Accept = "text/plain"
+  }
 }
 
 locals {
