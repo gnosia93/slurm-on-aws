@@ -1,1 +1,1 @@
-# aws-slurm-cluster
+# slurm-on-aws
