@@ -19,8 +19,7 @@ brew install hashicorp/tap/terraform
 ### VPC 생성 ###
 테파롬을 초기화한다.
 ```
-git pull https://github.com/gnosia93/training-on-eks.git
-cd training-on-eks/tf
+git clone https://github.com/gnosia93/slurm-on-aws.git
 terraform init
 ```
 [결과]
@@ -41,30 +40,8 @@ terraform apply -auto-approve
 ```
 terraform destroy --auto-approve
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+또는
 ```
 terraform apply -var="gpu_worker_count=8"
 ```
 
-```
-# hosts.ini 파일과 AWS 키 페어 파일을 베스천으로 전송하는 예시
-scp -i your-keypair.pem hosts.ini ec2-user@<Bastion_Public_IP>:/home/ec2-user/
-scp -i your-keypair.pem your-keypair.pem ec2-user@<Bastion_Public_IP>:/home/ec2-user/.ssh/
-
-```
