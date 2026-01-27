@@ -20,6 +20,7 @@ brew install hashicorp/tap/terraform
 테파롬을 초기화한다.
 ```
 git clone https://github.com/gnosia93/slurm-on-aws.git
+cd slurm-on-aws/tf
 terraform init
 ```
 [결과]
