@@ -6,25 +6,26 @@ variable "aws_region" {
 variable "key_name" {
   description = "EC2 접속용 SSH 키 페어 이름"
   type        = string
+  default     = "aws-kp-2"
 }
 
 variable "instance_types" {
   type = map(string)
   default = {
-    bastion    = "t3.micro"
-    master     = "t3.medium"
-    accounting = "t3.medium"
-    client     = "t3.small"
-    monitor    = "t3.medium"
-    cpu_worker = "r7iz.large"
-    gpu_worker = "g4dn.xlarge"
+    bastion    = "m7i.2xlarge"
+    master     = "m7i.2xlarge"
+    accounting = "m7i.2xlarge"
+    client     = "m7i.2xlarge"
+    monitor    = "m7i.2xlarge"
+    cpu_worker = "r7i.4xlarge"
+    gpu_worker = "g6e.4xlarge"
   }
 }
 
 variable "cpu_node_count" {
-  default = 4
+  default = 2
 }
 
 variable "gpu_node_count" {
-  default = 4
+  default = 2
 }
