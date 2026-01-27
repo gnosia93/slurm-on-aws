@@ -163,6 +163,8 @@ resource "local_file" "inventory" {
   filename = "hosts.ini"
 }
 
+/*
+이 부분은 보안상 이슈가 있으니 수동으로 처리한다. 
 resource "null_resource" "sync" {
   depends_on = [local_file.inventory, aws_instance.bastion]
   connection {
@@ -183,3 +185,4 @@ resource "null_resource" "sync" {
     ]
   }
 }
+*/
