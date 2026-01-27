@@ -1,0 +1,102 @@
+---
+- hosts: slurm_cluster
+  become: yes
+  vars:
+    munge_uid: 1001
+    slurm_uid: 1002
+    mysql_pass: "slurm_db_pass"
+
+  tasks:
+    # 1. 사용자 및 그룹 생성 (전 노드 동일 UID/GID 보장)
+    - name: Slurm 및 Munge 그룹 생성
+      group: name={{ item.name }} gid={{ item.id }} state=present
+      loop: [{name: 'munge', id: "{{ munge_uid }}"}, {name: 'slurm', id: "{{ slurm_uid }}"}]
+
+    - name: Slurm 및 Munge 사용자 생성
+      user: name={{ item.name }} uid={{ item.id }} group={{ item.name }} shell=/sbin/nologin state=present
+      loop: [{name: 'munge', id: "{{ munge_uid }}"}, {name: 'slurm', id: "{{ slurm_uid }}"}]
+
+    # 2. 필수 패키지 설치
+    - name: Slurm 및 필수 패키지 설치
+      dnf:
+        name: [munge, munge-libs, slurm, slurm-slurmctld, slurm-slurmd, slurm-slurmdbd, mariadb-connector-odbc, chrony]
+        state: present
+
+    - name: 시간 동기화 서비스 시작 (Chrony)
+      systemd: name=chronyd state=started enabled=yes
+
+    # 3. 디렉토리 생성 및 권한 부여
+    - name: Slurm 관련 디렉토리 생성
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+      loop: [/etc/slurm, /var/spool/slurmctld, /var/spool/slurmd, /var/log/slurm]
+
+# --- Accounting 전용 설정 (MySQL) ---
+- hosts: accounting
+  become: yes
+  tasks:
+    - name: MariaDB 설치 및 DB 생성
+      dnf: name=mariadb-server state=present
+    - systemd: name=mariadb state=started enabled=yes
+    - shell: |
+        mysql -e "CREATE DATABASE IF NOT EXISTS slurm_acct_db;"
+        mysql -e "GRANT ALL ON slurm_acct_db.* TO 'slurm'@'localhost' IDENTIFIED BY '{{ mysql_pass }}';"
+      register: db_res
+      changed_when: "db_res.rc == 0"
+
+# --- Monitoring 전용 설정 ---
+- hosts: monitoring
+  become: yes
+  tasks:
+    - name: 모니터링 툴 설치 및 기동
+      dnf: name=[prometheus, grafana] state=present
+    - systemd: { name: "{{ item }}", state: started, enabled: yes }
+      loop: [prometheus, grafana-server]
+
+# --- MUNGE 키 생성 및 배포 ---
+- hosts: master
+  become: yes
+  tasks:
+    - name: Munge 키 생성
+      command: /usr/sbin/mungekey -f
+      args:
+        creates: /etc/munge/munge.key
+    - name: Munge 키 가져오기
+      fetch: src=/etc/munge/munge.key dest=/tmp/munge.key flat=yes
+
+- hosts: slurm_cluster
+  become: yes
+  tasks:
+    - name: Munge 키 배포 및 서비스 시작
+      copy: src=/tmp/munge.key dest=/etc/munge/munge.key owner=munge group=munge mode='0400'
+    - systemd: name=munge state=restarted enabled=yes
+
+# --- Slurm 설정 배포 및 서비스 기동 ---
+- hosts: slurm_cluster
+  become: yes
+  tasks:
+    - name: slurm.conf 템플릿 배포
+      template:
+        src: slurm.conf.j2
+        dest: /etc/slurm/slurm.conf
+        owner: slurm
+        group: slurm
+
+- hosts: master
+  become: yes
+  tasks:
+    - systemd: name=slurmctld state=restarted enabled=yes
+
+- hosts: accounting
+  become: yes
+  tasks:
+    - systemd: name=slurmdbd state=restarted enabled=yes
+
+- hosts: cpu_workers, gpu_workers
+  become: yes
+  tasks:
+    - systemd: name=slurmd state=restarted enabled=yes
