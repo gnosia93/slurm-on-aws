@@ -1,0 +1,46 @@
+---
+- hosts: gpu_workers
+  become: yes
+  tasks:
+    - name: 1. 커널 헤더 및 빌드 도구 설치
+      dnf:
+        name: [kernel-devel-{{ ansible_kernel }}, kernel-headers-{{ ansible_kernel }}, make, gcc]
+        state: present
+
+    - name: 2. NVIDIA 공식 리포지토리 추가
+      shell: |
+        dnf config-manager --add-repo https://developer.download.nvidia.com
+      args:
+        creates: /etc/yum.repos.d/cuda-fedora37.repo
+
+    - name: 3. NVIDIA 드라이버 설치 (최신 테슬라 드라이버)
+      dnf:
+        name: ["cuda-drivers", "nvidia-driver-latest-dkms"]
+        state: present
+        update_cache: yes
+
+    - name: 4. NVIDIA Container Toolkit 리포지토리 추가
+      shell: |
+        curl -s -L https://nvidia.github.io | \
+        sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+
+    - name: 5. NVIDIA Container Toolkit 설치
+      dnf:
+        name: nvidia-container-toolkit
+        state: present
+
+    - name: 6. GPU 노드 재부팅 (드라이버 적용 필수)
+      reboot:
+        msg: "NVIDIA 드라이버 설치 후 재부팅을 진행합니다."
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: nvidia-smi
+
+    - name: 7. 설치 확인 (nvidia-smi 실행)
+      command: nvidia-smi
+      register: nvidia_smi_output
+    
+    - debug:
+        var: nvidia_smi_output.stdout_lines
