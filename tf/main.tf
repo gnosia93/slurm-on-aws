@@ -169,7 +169,7 @@ resource "null_resource" "sync" {
     type = "ssh"
     user = "ec2-user"
     host = aws_instance.bastion.public_ip
-    private_key = file("${var.key_name}.pem")
+    private_key = file("${var.key_file_path}")
   }
   provisioner "file" { 
     source = "hosts.ini" 
