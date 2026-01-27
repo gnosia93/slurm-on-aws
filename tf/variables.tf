@@ -9,7 +9,7 @@ variable "key_name" {
   default     = "aws-kp-2"
 }
 
-variable "keyfile_path" {
+variable "key_file_path" {
   default     = "~/aws-kp-2.pem"
 }
 
