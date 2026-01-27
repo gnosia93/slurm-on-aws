@@ -9,6 +9,10 @@ variable "key_name" {
   default     = "aws-kp-2"
 }
 
+variable "keyfile_path" {
+  default     = "~/aws-kp-2.pem"
+}
+
 variable "instance_types" {
   type = map(string)
   default = {
