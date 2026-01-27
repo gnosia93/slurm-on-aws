@@ -168,7 +168,10 @@ resource "null_resource" "sync" {
     host = aws_instance.bastion.public_ip
     private_key = file("${var.key_name}.pem")
   }
-  provisioner "file" { source = "hosts.ini"; destination = "/home/ec2-user/hosts.ini" }
+  provisioner "file" { 
+    source = "hosts.ini" 
+    destination = "/home/ec2-user/hosts.ini" 
+  }
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install -y ansible-core",
