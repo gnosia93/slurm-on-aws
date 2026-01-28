@@ -16,20 +16,20 @@ variable "key_file_path" {
 variable "instance_types" {
   type = map(string)
   default = {
-    bastion    = "m7i.2xlarge"
-    master     = "m7i.2xlarge"
-    accounting = "m7i.2xlarge"
-    client     = "m7i.2xlarge"
-    monitor    = "m7i.2xlarge"
-    cpu_worker = "r7i.4xlarge"
-    gpu_worker = "g6e.4xlarge"
+    bastion    = "m7i.xlarge"
+    master     = "m7i.xlarge"
+    accounting = "m7i.xlarge"
+    client     = "m7i.xlarge"
+    monitor    = "m7i.xlarge"
+    cpu_worker = "r7i.2xlarge"
+    gpu_worker = "g6e.2xlarge"
   }
 }
 
 variable "cpu_node_count" {
-  default = 2
+  default = 0
 }
 
 variable "gpu_node_count" {
-  default = 2
+  default = 1
 }
