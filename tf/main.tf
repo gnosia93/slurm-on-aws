@@ -3,6 +3,7 @@ provider "aws" {
 }
 
 # --- 데이터 소스: 최신 AMI 및 내 공인 IP 조회 ---
+/*
 data "aws_ami" "al2023" {
   most_recent = true
   owners      = ["amazon"]
@@ -11,6 +12,25 @@ data "aws_ami" "al2023" {
     values = ["al2023-ami-2023*-kernel-6.1-x86_64"]
   }
 }
+*/
+
+# Ubuntu 22.04 AMI 데이터 소스 가져오기
+data "aws_ami" "al2023" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical 공식 ID
+}
+
 
 data "http" "my_ip" {
   url = "https://checkip.amazonaws.com"
