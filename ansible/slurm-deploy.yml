@@ -1,13 +1,9 @@
----
 - hosts: slurm_cluster
   become: yes
   vars:
     munge_uid: 1001
     slurm_uid: 1002
-    mysql_pass: "slurm123"  
-    db_name: "slurm_acct_db"
-
-
+ 
   tasks:
     # 1. 사용자 및 그룹 생성 (전 노드 동일 UID/GID 보장)
     - name: Slurm 및 Munge 그룹 생성
@@ -48,6 +44,9 @@
 # --- Accounting 전용 설정 (MySQL) ---
 - hosts: accounting
   become: yes
+  vars: 
+    mysql_pass: "slurm123"
+    db_name: "slurm_acct_db"
   tasks:
     - name: MariaDB 설치 및 DB 생성
       dnf: 
