@@ -26,7 +26,7 @@ locals {
 
 # --- 네트워크 (VPC, IGW, NAT GW, Subnets) ---
 resource "aws_vpc" "slurm_vpc" {
-  cidr_block           = "10.0.0.0/23"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   tags = { Name = "slurm-vpc" }
 }
@@ -54,6 +54,22 @@ resource "aws_nat_gateway" "nat_gw" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.public.id
   depends_on    = [aws_internet_gateway.igw]
+}
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.slurm_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = { Name = "slurm-public-rt" }
+}
+
+resource "aws_route_table_association" "public_assoc" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_route_table" "private_rt" {
