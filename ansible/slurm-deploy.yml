@@ -14,16 +14,25 @@
       user: name={{ item.name }} uid={{ item.id }} group={{ item.name }} shell=/sbin/nologin state=present
       loop: [{name: 'munge', id: "{{ munge_uid }}"}, {name: 'slurm', id: "{{ slurm_uid }}"}]
 
-    # 2. Slurm 설치를 위한 리포지토리 설정
+   # 2. Slurm 설치를 위한 리포지토리 설정
     - name: EPEL 리포지토리 설치 (AL2023용)
       shell: |
-        dnf install -y https://dl.fedoraproject.org
+        dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
       register: epel_result
       changed_when: "'already installed' not in epel_result.stdout"
-      
+
     - name: CRB(CodeReady Builder) 리포지토리 활성화 (종속성 해결용)
       shell: dnf config-manager --set-enabled crb
       ignore_errors: yes
+
+    - name: PowerTools 리포지토리 활성화 (AL2023 대안)
+      shell: dnf config-manager --set-enabled powertools
+      ignore_errors: yes
+
+    - name: 리포지토리 캐시 업데이트
+      dnf:
+        update_cache: yes
+
 
     # 3. 필수 패키지 설치
     - name: Slurm 및 필수 패키지 설치
