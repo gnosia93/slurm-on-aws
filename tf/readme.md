@@ -36,13 +36,14 @@ VPC 를 생성한다.
 ```
 terraform apply -auto-approve
 ```
+또는
+```
+terraform apply -var="gpu_worker_count=8"
+```
+
 
 ### VPC 삭제 ###
 ```
 terraform destroy --auto-approve
-```
-또는
-```
-terraform apply -var="gpu_worker_count=8"
 ```
 
