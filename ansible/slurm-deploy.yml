@@ -1,4 +1,4 @@
-- hosts: slurm_cluster
+- hosts: master,accounting,monitoring,clients,cpu_workers,gpu_workers
   become: yes
   vars:
     munge_uid: 1001
