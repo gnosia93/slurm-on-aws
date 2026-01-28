@@ -16,11 +16,11 @@
 
     # 2. Slurm 설치를 위한 리포지토리 설정
     - name: EPEL 리포지토리 설치 (AL2023용)
-      dnf:
-        name: https://dl.fedoraproject.org
-        state: present
-        disable_gpg_check: yes
-
+      shell: |
+        dnf install -y https://dl.fedoraproject.org
+      register: epel_result
+      changed_when: "'already installed' not in epel_result.stdout"
+      
     - name: CRB(CodeReady Builder) 리포지토리 활성화 (종속성 해결용)
       shell: dnf config-manager --set-enabled crb
       ignore_errors: yes
