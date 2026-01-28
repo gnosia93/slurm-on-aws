@@ -1,5 +1,28 @@
 ## slurm 설치 ##
 
+베스천 호스를 경유하여 필요한 slurm 을 설치할 예정이다.
+
+### SSH 설정 파일 수정 (~/.ssh/config) ###
+로컬 머신의 ssh 설정에 베스천을 경유지로 등록하면 ansible이 자동으로 이를 사용한다.
+```
+cp ~/.ssh/config ~/.ssh/config-$(date)
+cat <<EOF > ~/.ssh/config
+# 베스천 호스트 설정
+Host slurm-bastion
+    HostName 3.37.166.36       
+    User ec2-user
+    IdentityFile ~/aws-kp-2.pem
+
+# 프라이빗 서브넷 노드들 (10.0.1.x)
+Host 10.0.1.*
+    User ec2-user
+    IdentityFile ~/aws-kp-2.pem
+    ProxyJump slurm-bastion  # 베스천을 거쳐서 접속
+EOF
+```
+위의 같이 config 파일을 수정한다. 
+
+
 ```
 cd ~/slurm-on-aws/ansible
 ansible-playbook -i ../tf/hosts.ini slurm-deploy.yml
