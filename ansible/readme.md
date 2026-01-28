@@ -5,6 +5,8 @@
 ### SSH 설정 파일 수정 (~/.ssh/config) ###
 로컬 머신의 ssh 설정에 베스천을 경유지로 등록하면 ansible이 자동으로 이를 사용한다.
 ```
+cd ~/slurm-on-aws/ansible
+
 cp ~/.ssh/config ~/.ssh/config-$(date)
 cat <<EOF > ~/.ssh/config
 # 베스천 호스트 설정
@@ -24,7 +26,6 @@ EOF
 
 
 ```
-cd ~/slurm-on-aws/ansible
 ansible-playbook -i ../tf/hosts.ini slurm-deploy.yml
 ```
 * 확인: 마스터 노드에서 sinfo를 입력하여 노드들이 idle 상태인지 확인합니다.
