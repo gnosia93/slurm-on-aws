@@ -61,7 +61,11 @@
   become: yes
   tasks:
     - name: 모니터링 툴 설치 및 기동
-      dnf: name=[prometheus, grafana] state=present
+      dnf: 
+        name:
+          - prometheus
+          - grafana 
+        state: present
     - systemd: { name: "{{ item }}", state: started, enabled: yes }
       loop: [prometheus, grafana-server]
 
