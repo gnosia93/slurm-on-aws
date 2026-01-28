@@ -7,7 +7,7 @@
 ```
 cd ~/slurm-on-aws/ansible
 
-cp ~/.ssh/config ~/.ssh/config-$(date) 2>/dev/null
+cp ~/.ssh/config ~/.ssh/config-$(date +%Y%m%d_%H%M%S) 2>/dev/null
 cat <<EOF > ~/.ssh/config
 # 베스천 호스트 설정
 Host slurm-bastion
