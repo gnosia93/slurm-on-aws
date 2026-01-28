@@ -130,7 +130,13 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "nodes" {
-  for_each               = { master = var.instance_types.master, accounting = var.instance_types.accounting, client = var.instance_types.client, monitor = var.instance_types.monitor }
+  for_each = {
+    master     = var.instance_types.master
+    accounting = var.instance_types.accounting
+    client     = var.instance_types.client
+    monitor    = var.instance_types.monitor
+  }  
+
   ami                    = data.aws_ami.al2023.id
   instance_type          = each.value
   subnet_id              = aws_subnet.private.id
