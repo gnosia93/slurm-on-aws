@@ -7,7 +7,7 @@
 ```
 cd ~/slurm-on-aws/ansible
 
-cp ~/.ssh/config ~/.ssh/config-$(date)
+cp ~/.ssh/config ~/.ssh/config-$(date) 2>/dev/null
 cat <<EOF > ~/.ssh/config
 # 베스천 호스트 설정
 Host slurm-bastion
@@ -20,6 +20,8 @@ Host 10.0.1.*
     User ec2-user
     IdentityFile ~/aws-kp-2.pem
     ProxyJump slurm-bastion  # 베스천을 거쳐서 접속
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
 EOF
 ```
 위의 같이 config 파일을 수정한다. 
