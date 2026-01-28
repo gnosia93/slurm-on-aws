@@ -181,14 +181,6 @@ resource "local_file" "inventory" {
     [gpu_workers]
     %{ for inst in aws_instance.gpu_worker ~}${inst.private_ip} gpu_count=${inst.tags.GpuCount}
     %{ endfor ~}
-
-    [slurm_cluster:children]
-    master
-    accounting
-    monitoring
-    clients
-    cpu_workers
-    gpu_workers
   EOT
   filename = "hosts.ini"
 }
