@@ -19,7 +19,15 @@
     # 2. 필수 패키지 설치
     - name: Slurm 및 필수 패키지 설치
       dnf:
-        name: [munge, munge-libs, slurm, slurm-slurmctld, slurm-slurmd, slurm-slurmdbd, mariadb-connector-odbc, chrony]
+        name: 
+          - munge
+          - munge-libs
+          - slurm
+          - slurm-slurmctld
+          - slurm-slurmd
+          - slurm-slurmdbd
+          - mariadb-connector-odbc
+          - chrony
         state: present
 
     - name: 시간 동기화 서비스 시작 (Chrony)
