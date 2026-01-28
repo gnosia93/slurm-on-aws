@@ -14,7 +14,18 @@
       user: name={{ item.name }} uid={{ item.id }} group={{ item.name }} shell=/sbin/nologin state=present
       loop: [{name: 'munge', id: "{{ munge_uid }}"}, {name: 'slurm', id: "{{ slurm_uid }}"}]
 
-    # 2. 필수 패키지 설치
+    # 2. Slurm 설치를 위한 리포지토리 설정
+    - name: EPEL 리포지토리 설치 (AL2023용)
+      dnf:
+        name: https://dl.fedoraproject.org
+        state: present
+        disable_gpg_check: yes
+
+    - name: CRB(CodeReady Builder) 리포지토리 활성화 (종속성 해결용)
+      shell: dnf config-manager --set-enabled crb
+      ignore_errors: yes
+
+    # 3. 필수 패키지 설치
     - name: Slurm 및 필수 패키지 설치
       dnf:
         name: 
@@ -31,7 +42,7 @@
     - name: 시간 동기화 서비스 시작 (Chrony)
       systemd: name=chronyd state=started enabled=yes
 
-    # 3. 디렉토리 생성 및 권한 부여
+    # 4. 디렉토리 생성 및 권한 부여
     - name: Slurm 관련 디렉토리 생성
       file:
         path: "{{ item }}"
