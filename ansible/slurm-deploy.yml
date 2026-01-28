@@ -66,14 +66,110 @@
 - hosts: monitoring
   become: yes
   tasks:
-    - name: 모니터링 툴 설치 및 기동
-      dnf: 
-        name:
-          - prometheus
-          - grafana 
+    - name: Grafana 리포지토리 추가
+      yum_repository:
+        name: grafana
+        description: Grafana
+        baseurl: https://rpm.grafana.com
+        repo_gpgcheck: yes
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://rpm.grafana.com/gpg.key
+        sslverify: yes
+        sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+    - name: Prometheus 사용자 생성
+      user:
+        name: prometheus
+        system: yes
+        shell: /bin/false
+        home: /var/lib/prometheus
+        createhome: yes
+
+    - name: Prometheus 디렉토리 생성
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: prometheus
+        group: prometheus
+        mode: '0755'
+      loop:
+        - /etc/prometheus
+        - /var/lib/prometheus
+
+    - name: Prometheus 바이너리 다운로드
+      get_url:
+        url: https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
+        dest: /tmp/prometheus.tar.gz
+        mode: '0644'
+
+    - name: Prometheus 압축 해제
+      unarchive:
+        src: /tmp/prometheus.tar.gz
+        dest: /tmp
+        remote_src: yes
+
+    - name: Prometheus 바이너리 복사
+      copy:
+        src: /tmp/prometheus-2.45.0.linux-amd64/{{ item }}
+        dest: /usr/local/bin/{{ item }}
+        owner: prometheus
+        group: prometheus
+        mode: '0755'
+        remote_src: yes
+      loop:
+        - prometheus
+        - promtool
+
+    - name: Prometheus 설정 파일 복사
+      copy:
+        src: /tmp/prometheus-2.45.0.linux-amd64/prometheus.yml
+        dest: /etc/prometheus/prometheus.yml
+        owner: prometheus
+        group: prometheus
+        mode: '0644'
+        remote_src: yes
+
+    - name: Prometheus systemd 서비스 파일 생성
+      copy:
+        dest: /etc/systemd/system/prometheus.service
+        content: |
+          [Unit]
+          Description=Prometheus
+          Wants=network-online.target
+          After=network-online.target
+
+          [Service]
+          User=prometheus
+          Group=prometheus
+          Type=simple
+          ExecStart=/usr/local/bin/prometheus \
+              --config.file /etc/prometheus/prometheus.yml \
+              --storage.tsdb.path /var/lib/prometheus/ \
+              --web.console.templates=/etc/prometheus/consoles \
+              --web.console.libraries=/etc/prometheus/console_libraries \
+              --web.listen-address=0.0.0.0:9090 \
+              --web.enable-lifecycle
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Grafana 설치
+      dnf:
+        name: grafana
         state: present
-    - systemd: { name: "{{ item }}", state: started, enabled: yes }
-      loop: [prometheus, grafana-server]
+
+    - name: 서비스 시작 및 활성화
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+        daemon_reload: yes
+      loop:
+        - prometheus
+        - grafana-server
+
+  
 
 # --- MUNGE 키 생성 및 배포 ---
 - hosts: master
