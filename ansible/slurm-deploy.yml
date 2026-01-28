@@ -48,7 +48,9 @@
   become: yes
   tasks:
     - name: MariaDB 설치 및 DB 생성
-      dnf: name=mariadb-server state=present
+      dnf: 
+        name: mariadb105-server  
+        state: present
     - systemd: name=mariadb state=started enabled=yes
     - shell: |
         mysql -e "CREATE DATABASE IF NOT EXISTS slurm_acct_db;"
