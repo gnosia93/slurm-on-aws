@@ -38,8 +38,8 @@ ansible-playbook -i ../tf/hosts.ini slurm-deploy.yml
 * 확인: 마스터 노드에서 sinfo를 입력하여 노드들이 idle 상태인지 확인합니다.
 
 
-### slurm 설정시 고려사항 ###
-Slurm 클러스터 구축의 핵심은 보안 키 공유와 설정 파일(slurm.conf) 동기화 이다.
+### (참고) slurm 설정시 고려사항 ###
+Slurm 클러스터 구축의 핵심은 보안 키 공유와 설정 파일(slurm.conf) 동기화 이다. 아래와 같은 고려사항은 이미 ansible 스크립에 적용되어져 있다.
 
 * MUNGE 키 공유
   * 모든 노드가 동일한 /etc/munge/munge.key를 가지고 있어야 인증이 성공.
