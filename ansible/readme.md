@@ -5,13 +5,13 @@
 ### SSH 설정 파일 수정 (~/.ssh/config) ###
 로컬 머신의 ssh 설정에 베스천을 경유지로 등록하면 ansible이 자동으로 이를 사용한다.
 ```
+export BASTION_IP=$(cd ~/slurm-on-aws && terraform output | grep bastion | cut -d '"' -f2)
+
 cd ~/slurm-on-aws/ansible
 cp ~/.ssh/config ~/.ssh/config-$(date +%Y%m%d_%H%M%S) 2>/dev/null
 ```
 
 ```
-export BASTION_IP=$(terraform output | grep bastion | cut -d '"' -f2)
-
 cat <<EOF > ~/.ssh/config
 # 베스천 호스트 설정
 Host slurm-bastion
