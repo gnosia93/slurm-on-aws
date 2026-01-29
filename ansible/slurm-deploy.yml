@@ -22,7 +22,7 @@
         - /var/log/slurm
 
 - name: Slurm 마스터 설정
-  hosts: slurm_master
+  hosts: master
   become: yes
   tasks:
     - name: Slurm 컨트롤러 서비스 활성화
@@ -32,7 +32,7 @@
         state: started
 
 - name: Slurm 계산 노드 설정
-  hosts: slurm_compute
+  hosts: cpu_workers, gpu_workers
   become: yes
   tasks:
     - name: Slurm 실행 서비스 활성화
