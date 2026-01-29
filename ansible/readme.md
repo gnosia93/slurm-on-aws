@@ -38,6 +38,20 @@ ansible-playbook -i ../tf/hosts.ini slurm-deploy.yml
 * 확인: 마스터 노드에서 sinfo를 입력하여 노드들이 idle 상태인지 확인합니다.
 
 
+### slurm 설정시 고려사항 ###
+Slurm 클러스터 구축의 핵심은 보안 키 공유와 설정 파일(slurm.conf) 동기화 이다.
+
+* MUNGE 키 공유
+  * 모든 노드가 동일한 /etc/munge/munge.key를 가지고 있어야 인증이 성공.
+  * 방법: 마스터에서 생성된 키를 로컬로 가져온(fetch) 후, 모든 워커 노드에 배포(copy)해야 한다.
+  * 권한: 키 파일은 반드시 0400 혹은 0600이어야 하며 소유자는 munge.
+* slurm.conf 설정 및 배포
+  * Slurm은 마스터와 워커 노드가 완벽히 동일한 설정 파일을 공유.
+  * ControlMachine(마스터 호스트명), NodeName(노드 리스트), PartitionName(큐 설정)이 포함된 slurm.conf를 작성하여 모든 노드의 /etc/slurm/ 경로에 뿌려줘야 한다.
+* 호스트네임 해제 (Name Resolution)
+각 노드가 10.0.1.x 주소가 아닌 master, node01 같은 호스트네임으로 서로를 찾을 수 있어야 한다. /etc/hosts 파일에 모든 노드의 IP와 이름을 등록하는 작업이 필요하다.
+
+
 ## GPU 노드 설정 ##
 ```
 ansible-playbook -i hosts.ini gpu-setup.yml
