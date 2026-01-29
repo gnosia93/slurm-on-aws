@@ -27,6 +27,8 @@ Host 10.0.1.*
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 EOF
+
+cat ~/.ssh/config
 ```
 위의 같이 config 파일을 수정한다. 
 
