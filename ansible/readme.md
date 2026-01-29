@@ -10,16 +10,18 @@ cp ~/.ssh/config ~/.ssh/config-$(date +%Y%m%d_%H%M%S) 2>/dev/null
 ```
 
 ```
+export BASTION_IP=$(terraform output | grep bastion | cut -d '"' -f2)
+
 cat <<EOF > ~/.ssh/config
 # 베스천 호스트 설정
 Host slurm-bastion
-    HostName 3.37.166.36       
-    User ec2-user
+    HostName ${BASTION_IP}       
+    User ubuntu
     IdentityFile ~/aws-kp-2.pem
 
 # 프라이빗 서브넷 노드들 (10.0.1.x)
 Host 10.0.1.*
-    User ec2-user
+    User ubuntu
     IdentityFile ~/aws-kp-2.pem
     ProxyJump slurm-bastion  # 베스천을 거쳐서 접속
     StrictHostKeyChecking no
