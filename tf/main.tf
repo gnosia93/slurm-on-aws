@@ -191,18 +191,18 @@ resource "aws_instance" "gpu_worker" {
 # --- 인벤토리 생성 및 자동 동기화 ---
 resource "local_file" "inventory" {
   content  = <<-EOT
-    [master]
-    ${aws_instance.nodes["master"].private_ip}
+    [controld]
+    ${aws_instance.nodes["controld"].public_ip}
     [accounting]
-    ${aws_instance.nodes["accounting"].private_ip}
+    ${aws_instance.nodes["accounting"].public_ip}
     [monitoring]
-    ${aws_instance.nodes["monitor"].private_ip}
+    ${aws_instance.nodes["monitor"].public_ip}
     [clients]
-    ${aws_instance.nodes["client"].private_ip}
+    ${aws_instance.nodes["client"].public_ip}
     [cpu_workers]
-    ${join("\n", aws_instance.cpu_worker[*].private_ip)}
+    ${join("\n", aws_instance.cpu_worker[*].public_ip)}
     [gpu_workers]
-    %{ for inst in aws_instance.gpu_worker ~}${inst.private_ip} gpu_count=${inst.tags.GpuCount}
+    %{ for inst in aws_instance.gpu_worker ~}${inst.public_ip} gpu_count=${inst.tags.GpuCount}
     %{ endfor ~}
   EOT
   filename = "hosts.ini"
