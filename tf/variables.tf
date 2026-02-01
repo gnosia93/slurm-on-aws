@@ -27,9 +27,9 @@ variable "instance_types" {
 }
 
 variable "cpu_node_count" {
-  default = 0
+  default = 2
 }
 
 variable "gpu_node_count" {
-  default = 1
+  default = 0
 }
