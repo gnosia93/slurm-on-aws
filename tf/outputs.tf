@@ -1,5 +1,3 @@
-# --- 아웃풋 설정 ---
-
 output "bastion_public_ip" {
   value       = aws_instance.bastion.public_ip
   description = "베스천 호스트의 공인 IP 주소입니다."
@@ -17,7 +15,7 @@ output "ssh_agent_forwarding_command" {
 
 output "cluster_private_ips" {
   value = {
-    master     = aws_instance.nodes["master"].private_ip
+    controld   = aws_instance.nodes["controld"].private_ip
     accounting = aws_instance.nodes["accounting"].private_ip
     monitor    = aws_instance.nodes["monitor"].private_ip
     cpu_nodes  = aws_instance.cpu_worker[*].private_ip
