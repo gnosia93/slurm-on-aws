@@ -151,7 +151,7 @@ resource "aws_instance" "bastion" {
 
 resource "aws_instance" "nodes" {
   for_each = {
-    master     = var.instance_types.master
+    controld   = var.instance_types.controld
     accounting = var.instance_types.accounting
     client     = var.instance_types.client
     monitor    = var.instance_types.monitor
@@ -159,7 +159,8 @@ resource "aws_instance" "nodes" {
 
   ami                    = data.aws_ami.al2023.id
   instance_type          = each.value
-  subnet_id              = aws_subnet.private.id
+#  subnet_id              = aws_subnet.private.id
+  subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
   tags                   = { Name = "slurm-${each.key}" }
@@ -169,20 +170,22 @@ resource "aws_instance" "cpu_worker" {
   count                  = var.cpu_node_count
   ami                    = data.aws_ami.al2023.id
   instance_type          = var.instance_types.cpu_worker
-  subnet_id              = aws_subnet.private.id
+#  subnet_id              = aws_subnet.private.id
+  subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags                   = { Name = "cpu-worker-${count.index}" }
+  tags                   = { Name = "slw-c${count.index}" }
 }
 
 resource "aws_instance" "gpu_worker" {
   count                  = var.gpu_node_count
   ami                    = data.aws_ami.al2023.id
   instance_type          = var.instance_types.gpu_worker
-  subnet_id              = aws_subnet.private.id
+#  subnet_id              = aws_subnet.private.id
+  subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags                   = { Name = "gpu-worker-${count.index}", GpuCount = "1" }
+  tags                   = { Name = "slw-g${count.index}", GpuCount = "1" }
 }
 
 # --- 인벤토리 생성 및 자동 동기화 ---
