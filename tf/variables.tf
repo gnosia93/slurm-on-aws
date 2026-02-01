@@ -17,7 +17,7 @@ variable "instance_types" {
   type = map(string)
   default = {
     bastion    = "m7i.xlarge"
-    master     = "m7i.xlarge"
+    controld   = "m7i.xlarge"
     accounting = "m7i.xlarge"
     client     = "m7i.xlarge"
     monitor    = "m7i.xlarge"
