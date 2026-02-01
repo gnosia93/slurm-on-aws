@@ -15,11 +15,11 @@ output "ssh_agent_forwarding_command" {
 
 output "cluster_private_ips" {
   value = {
-    controld   = aws_instance.nodes["controld"].private_ip
-    accounting = aws_instance.nodes["accounting"].private_ip
-    monitor    = aws_instance.nodes["monitor"].private_ip
-    cpu_nodes  = aws_instance.cpu_worker[*].private_ip
-    gpu_nodes  = aws_instance.gpu_worker[*].private_ip
+    controld   = aws_instance.nodes["controld"].public_ip
+    accounting = aws_instance.nodes["accounting"].public_ip
+    monitor    = aws_instance.nodes["monitor"].public_ip
+    cpu_nodes  = aws_instance.cpu_worker[*].public_ip
+    gpu_nodes  = aws_instance.gpu_worker[*].public_ip
   }
   description = "클러스터 내부 노드들의 프라이빗 IP 목록입니다."
 }
