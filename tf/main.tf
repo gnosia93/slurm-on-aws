@@ -180,11 +180,11 @@ resource "local_file" "inventory" {
     [master]
     ${aws_instance.nodes["master"].public_ip}
     [accounting]
-    ${aws_instance.nodes["accounting"].public_ip}
+#    ${aws_instance.nodes["accounting"].public_ip}
     [monitoring]
     ${aws_instance.nodes["monitor"].public_ip}
     [clients]
-    ${aws_instance.nodes["client"].public_ip}
+#    ${aws_instance.nodes["client"].public_ip}
     [cpu_workers]
     ${join("\n", aws_instance.cpu_worker[*].public_ip)}
     [gpu_workers]
