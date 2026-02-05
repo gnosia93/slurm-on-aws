@@ -136,6 +136,7 @@ resource "aws_instance" "bastion" {
 
   user_data = <<_DATA
 #!/bin/bash
+sudo apt install net-tools
 sudo -u ec2-user -i <<'EC2_USER_SCRIPT'
 curl -fsSL https://code-server.dev/install.sh | sh && sudo systemctl enable --now code-server@ec2-user
 sleep 5
