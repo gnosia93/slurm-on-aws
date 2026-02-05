@@ -111,8 +111,8 @@ resource "aws_security_group" "slurm_sg" {
   }
 
   ingress {
-    from_port   = 3000
-    to_port     = 3000
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = [local.my_admin_cidr] # 자동 조회된 IP 적용
   }
