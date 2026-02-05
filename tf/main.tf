@@ -2,19 +2,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-# --- 데이터 소스: 최신 AMI 및 내 공인 IP 조회 ---
-/*
-data "aws_ami" "al2023" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023*-kernel-6.1-x86_64"]
-  }
-}
-*/
-
-# Ubuntu 22.04 AMI 데이터 소스 가져오기
 data "aws_ami" "al2023" {
   most_recent = true
 
@@ -44,7 +31,6 @@ locals {
   my_admin_cidr = "${chomp(data.http.my_ip.response_body)}/32"
 }
 
-# --- 네트워크 (VPC, IGW, NAT GW, Subnets) ---
 resource "aws_vpc" "slurm_vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -151,9 +137,9 @@ resource "aws_instance" "bastion" {
 
 resource "aws_instance" "nodes" {
   for_each = {
-    controld   = var.instance_types.controld
-    accounting = var.instance_types.accounting
-    client     = var.instance_types.client
+    master     = var.instance_types.master
+#    accounting = var.instance_types.accounting
+#    client     = var.instance_types.client
     monitor    = var.instance_types.monitor
   }  
 
@@ -174,7 +160,7 @@ resource "aws_instance" "cpu_worker" {
   subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags                   = { Name = "slw-c${count.index}" }
+  tags                   = { Name = "slw-cpu-${count.index}" }
 }
 
 resource "aws_instance" "gpu_worker" {
@@ -185,14 +171,14 @@ resource "aws_instance" "gpu_worker" {
   subnet_id              = aws_subnet.public.id
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.slurm_sg.id]
-  tags                   = { Name = "slw-g${count.index}", GpuCount = "1" }
+  tags                   = { Name = "slw-gpu-${count.index}" }
 }
 
 # --- 인벤토리 생성 및 자동 동기화 ---
 resource "local_file" "inventory" {
   content  = <<-EOT
-    [controld]
-    ${aws_instance.nodes["controld"].public_ip}
+    [master]
+    ${aws_instance.nodes["master"].public_ip}
     [accounting]
     ${aws_instance.nodes["accounting"].public_ip}
     [monitoring]
