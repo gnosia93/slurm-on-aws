@@ -15,7 +15,7 @@ output "ssh_agent_forwarding_command" {
 
 output "cluster_private_ips" {
   value = {
-    master    = aws_instance.nodes["controld"].public_ip
+    master    = aws_instance.nodes["master"].public_ip
 #    accounting = aws_instance.nodes["accounting"].public_ip
     monitor    = aws_instance.nodes["monitor"].public_ip
     cpu_nodes  = aws_instance.cpu_worker[*].public_ip
