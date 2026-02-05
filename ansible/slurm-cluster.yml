@@ -2,7 +2,6 @@
 - name: Slurm 및 Munge 설치 (NAS 없는 환경)
   hosts: all
   become: yes
-
   tasks:
     - name: 1. 패키지 설치 - 공통 및 서비스별 분리
       apt:
