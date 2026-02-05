@@ -16,7 +16,7 @@ variable "key_file_path" {
 variable "instance_types" {
   type = map(string)
   default = {
-    bastion    = "m7i.2xlarge"
+    bastion    = "m6i.xlarge"
     master     = "m7i.2xlarge"
     accounting = "m7i.2xlarge"
     client     = "m7i.2xlarge"
