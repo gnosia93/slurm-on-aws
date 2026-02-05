@@ -1,30 +1,37 @@
 ---
-- name: Slurm 및 Munge 설치 (NAS 없는 환경)
+- name: Slurm 및 Munge 통합 설치 (NAS 없는 환경 전용)
   hosts: all
   become: yes
+
   tasks:
-    - name: 1. 패키지 설치 - 공통 및 서비스별 분리
+    - name: 0. 유저 및 그룹 생성 (모든 노드 UID/GID 통일)
+      block:
+        - name: munge 그룹 및 유저 생성
+          group: name=munge gid=991 state=present
+        - user: name=munge uid=991 group=munge shell=/usr/sbin/nologin state=present
+
+        - name: slurm 그룹 및 유저 생성
+          group: name=slurm gid=992 state=present
+        - user: name=slurm uid=992 group=slurm shell=/bin/bash state=present
+
+    - name: 1. 패키지 설치
       apt:
         name: [munge, slurm-client]
         state: present
         update_cache: yes
 
     - name: 1-1. 마스터 전용 데몬 설치
-      apt:
-        name: slurmctld
-        state: present
+      apt: { name: slurmctld, state: present }
       when: inventory_hostname in groups['master']
 
     - name: 1-2. 컴퓨트 노드 전용 데몬 설치
-      apt:
-        name: slurmd
-        state: present
+      apt: { name: slurmd, state: present }
       when: inventory_hostname in groups['nodes']
 
-    - name: 2. 마스터에서 Munge 키 생성 및 관리자 PC로 가져오기
+    - name: 2. Munge 키 생성 및 관리자 PC로 가져오기 (마스터 노드)
       when: inventory_hostname in groups['master']
       block:
-        - name: Munge 키 생성
+        - name: Munge 키 생성 (없을 경우만)
           command: /usr/sbin/mungekey -f
           args:
             creates: /etc/munge/munge.key
@@ -36,7 +43,7 @@
             group: munge
             mode: '0400'
 
-        - name: 키 파일 다운로드 (Fetch)
+        - name: 관리자 PC로 키 다운로드 (Fetch)
           fetch:
             src: /etc/munge/munge.key
             dest: /tmp/munge.key
@@ -66,19 +73,12 @@
 
   handlers:
     - name: restart munge
-      service:
-        name: munge
-        state: restarted
-        enabled: yes
+      service: name=munge state=restarted enabled=yes
 
     - name: restart slurmctld
-      service:
-        name: slurmctld
-        state: restarted
+      service: name=slurmctld state=restarted
       when: inventory_hostname in groups['master']
 
     - name: restart slurmd
-      service:
-        name: slurmd
-        state: restarted
+      service: name=slurmd state=restarted
       when: inventory_hostname in groups['nodes']
