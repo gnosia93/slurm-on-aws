@@ -16,13 +16,13 @@ variable "key_file_path" {
 variable "instance_types" {
   type = map(string)
   default = {
-    bastion    = "m7i.xlarge"
-    controld   = "m7i.xlarge"
-    accounting = "m7i.xlarge"
-    client     = "m7i.xlarge"
-    monitor    = "m7i.xlarge"
+    bastion    = "m7i.2xlarge"
+    controld   = "m7i.2xlarge"
+    accounting = "m7i.2xlarge"
+    client     = "m7i.2xlarge"
+    monitor    = "m7i.2xlarge"
     cpu_worker = "r7i.2xlarge"
-    gpu_worker = "g6e.2xlarge"
+    gpu_worker = "g6e.4xlarge"
   }
 }
 
