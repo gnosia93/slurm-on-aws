@@ -2,12 +2,41 @@
   hosts: all
   become: yes
   tasks:
-    - name: 기본 패키지 설치
+    - name: Munge 패키지 설치
       apt:
-        name: [munge, slurm-client]
+        name: munge
         state: present
         update_cache: yes
 
+    - name: (Master) munge.key 생성 및 권한 설정
+      when: inventory_hostname in groups['master']
+      block:
+        - name: munge.key 존재 확인 (없으면 새로 생성)
+          shell: "if [ ! -f /etc/munge/munge.key ]; then /usr/sbin/mungekey -f; fi"
+        - name: 관리자 PC로 키 파일 가져오기 (Fetch)
+          fetch:
+            src: /etc/munge/munge.key
+            dest: /tmp/munge.key
+            flat: yes
+
+    - name: (All) 모든 노드에 munge.key 배포
+      copy:
+        src: /tmp/munge.key
+        dest: /etc/munge/munge.key
+        owner: munge
+        group: munge
+        mode: '0400'
+      notify: Restart Munge    
+    
+  handlers:
+    - name: Restart Munge
+      service:
+        name: munge
+        state: restarted
+        enabled: yes
+
+
+    
     - name: 마스터 전용 데몬 설치
       apt: 
         name: slurmctld
