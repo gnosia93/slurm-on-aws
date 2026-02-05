@@ -1,97 +1,85 @@
-- name: Slurm & Munge Setup without NAS
+---
+- name: Slurm 및 Munge 설치 (NAS 없는 환경)
   hosts: all
   become: yes
+
   tasks:
-    - name: Munge 패키지 설치
+    - name: 1. 패키지 설치 - 공통 및 서비스별 분리
       apt:
-        name: munge
+        name: [munge, slurm-client]
         state: present
         update_cache: yes
 
-    - name: (Master) munge.key 생성
-      command: /usr/sbin/mungekey -f
-      args:
-        creates: /etc/munge/munge.key
-      when: inventory_hostname in groups['master']
-      notify: Restart Munge  # 생성 직후 마스터 재시작 예약
-
-    - name: (Master -> Local) 키 가져오기
-      fetch:
-        src: /etc/munge/munge.key
-        dest: /tmp/munge.key
-        flat: yes
-      when: inventory_hostname in groups['master']
-
-    - name: (All) 모든 노드에 munge.key 배포
-      when: inventory_hostname not in groups['master']
-      copy:
-        src: /tmp/munge.key
-        dest: /etc/munge/munge.key
-        owner: munge
-        group: munge
-        mode: '0400'
-      notify: Restart Munge    
-
-    
-  handlers:
-    - name: Restart Munge
-      service:
-        name: munge
-        state: restarted
-        enabled: yes
-
-
-    
-    - name: 마스터 전용 데몬 설치
-      apt: 
+    - name: 1-1. 마스터 전용 데몬 설치
+      apt:
         name: slurmctld
-        state: present 
+        state: present
       when: inventory_hostname in groups['master']
-    
-    - name: 컴퓨트 노드 전용 데몬 설치
-      apt:  
+
+    - name: 1-2. 컴퓨트 노드 전용 데몬 설치
+      apt:
         name: slurmd
         state: present
       when: inventory_hostname in groups['nodes']
 
-    - name: (Master) Munge 키 생성 및 로컬(관리자PC)로 가져오기
+    - name: 2. 마스터에서 Munge 키 생성 및 관리자 PC로 가져오기
       when: inventory_hostname in groups['master']
       block:
-        - name: Munge 키 존재 확인 및 권한 수정
+        - name: Munge 키 생성
+          command: /usr/sbin/mungekey -f
+          args:
+            creates: /etc/munge/munge.key
+
+        - name: 키 권한 설정
           file:
             path: /etc/munge/munge.key
             owner: munge
             group: munge
             mode: '0400'
-        - name: 마스터의 키를 관리자 PC의 /tmp로 복사
+
+        - name: 키 파일 다운로드 (Fetch)
           fetch:
             src: /etc/munge/munge.key
             dest: /tmp/munge.key
             flat: yes
 
-    - name: (Nodes) 관리자 PC에 있는 키를 각 노드로 배포
+    - name: 3. 관리자 PC의 키를 컴퓨트 노드에 배포
       copy:
         src: /tmp/munge.key
         dest: /etc/munge/munge.key
         owner: munge
         group: munge
         mode: '0400'
+      when: inventory_hostname not in groups['master']
       notify: restart munge
 
-    - name: slurm.conf 설정 배포
+    - name: 4. Slurm 설정 파일(slurm.conf) 배포
       template:
         src: slurm.conf.j2
         dest: /etc/slurm/slurm.conf
-      notify: 
+        owner: slurm
+        group: slurm
+        mode: '0644'
+      notify:
+        - restart munge
         - restart slurmctld
         - restart slurmd
 
   handlers:
     - name: restart munge
-      service: name=munge state=restarted enabled=yes
+      service:
+        name: munge
+        state: restarted
+        enabled: yes
+
     - name: restart slurmctld
-      service: name=slurmctld state=restarted
+      service:
+        name: slurmctld
+        state: restarted
       when: inventory_hostname in groups['master']
+
     - name: restart slurmd
-      service: name=slurmd state=restarted
+      service:
+        name: slurmd
+        state: restarted
       when: inventory_hostname in groups['nodes']
