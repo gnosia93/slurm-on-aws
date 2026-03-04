@@ -20,5 +20,6 @@ With this release, building with platform-aws requires Libfabric v1.22.0amzn4.0 
 ## 레퍼런스 ##
 * https://github.com/NVIDIA/nccl
 * https://github.com/aws/aws-ofi-nccl
+* https://github.com/ofiwg/libfabric
 * https://github.com/NVIDIA/nccl-tests
 * https://github.com/NVIDIA/nvidia-container-toolkit
