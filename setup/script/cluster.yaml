@@ -17,11 +17,11 @@ HeadNode:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
-      - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
+#      - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
   CustomActions:
     OnNodeConfigured:
       Sequence:
-        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
+        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/setup/script/docker.sh'
         - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
           Args:
             - v2.23.4-1 # NCCL version
