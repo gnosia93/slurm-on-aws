@@ -2,6 +2,10 @@
 ## 설치 순서 (Dependency) ##
 스크립트가 성공하려면 아래 순서대로 모듈이 준비되어야 합니다:
 * 커널 헤더 및 빌드 도구 (Build Essentials) : build-essential, linux-headers-$(uname -r)
+  ```
+  dpkg -l | grep build-essential
+  dpkg -l | grep linux-headers-$(uname -r)
+  ```
 * MPI(Message Passing Interface) 라이브러리
   ```
   ls -l /opt/amazon/openmpi  # 경로가 존재하는지 확인
