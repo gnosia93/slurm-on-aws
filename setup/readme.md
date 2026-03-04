@@ -1,6 +1,6 @@
 
-## 설치 순서 (Dependency) ##
-스크립트가 성공하려면 아래 순서대로 모듈이 준비되어야 합니다:
+## 패키지 설치 순서 (Dependency) ##
+NVIDA GPU 사용하기 위해서는 아래와 같은 패키지들이 설치되어 있어야 한다.  
 * 커널 헤더 및 빌드 도구 (Build Essentials) : build-essential, linux-headers-$(uname -r)
   ```
   dpkg -l | grep build-essential
