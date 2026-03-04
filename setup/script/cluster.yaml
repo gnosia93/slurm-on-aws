@@ -6,14 +6,14 @@ HeadNode:
   InstanceType: m7.8xlarge
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
-    AdditionalSecurityGroups:                                 # ParallelCluster는 노드들끼리 통신할 수 있는 기본 보안 그룹을 자동으로 생성
-      - ${SECURITY_GROUP}                                     # ParallelCluster가 기본으로 만드는 보안 그룹 외에, 사용자가 미리 만들어둔 보안 그룹을 추가로 설정
+    AdditionalSecurityGroups:                                  # ParallelCluster는 노드들끼리 통신할 수 있는 기본 보안 그룹을 자동으로 생성
+      - ${SECURITY_GROUP}                                      # ParallelCluster가 기본으로 만드는 보안 그룹 외에, 사용자가 미리 만들어둔 보안 그룹을 추가로 설정
   LocalStorage:
     RootVolume:
       Size: 500
       DeleteOnTermination: true 
   Iam:
-    AdditionalIamPolicies:                                    # grant ECR, SSM and S3 read access
+    AdditionalIamPolicies:                                     # grant ECR, SSM and S3 read access
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
@@ -87,9 +87,9 @@ Monitoring:
   Logs:
     CloudWatch:
       Enabled: true
-  Dashboards:
-    CloudWatch:
-      Enabled: true
-Tags:
-  - Key: 'Grafana'
+  Dashboards:                                        # AWS가 클러스터 이름으로 된 전용 대시보드를 CloudWatch 콘솔에 자동으로 생성
+    CloudWatch:                                      # 노드 상태: 현재 몇 대의 계산 노드(Compute Nodes)가 켜져 있는지, 몇 대가 작업 중인지
+      Enabled: true                                  # 자원 사용량: HeadNode와 ComputeNode들의 CPU 사용률, 메모리 점유율  
+Tags:                                                # 작업 현황: Slurm 스케줄러를 통해 제출된 작업의 성공/실패 여부
+  - Key: 'Grafana'                                   # 스토리지: /home이나 /scratch 디스크의 남은 용량.
     Value: 'true'
