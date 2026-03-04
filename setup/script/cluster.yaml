@@ -31,13 +31,12 @@ HeadNode:
 Scheduling:
   Scheduler: slurm
   SlurmSettings:
-    ScaledownIdletime: 60
-    QueueUpdateStrategy: DRAIN
+    ScaledownIdletime: 600                                      # 600초 동안 IDLE 상태가 지속되면, 인스턴스를 TERMINATE 시킨다.  
+    QueueUpdateStrategy: DRAIN                                  # DRAIN: 클러스터 설정을 변경할 때, 실행 중인 작업은 끝날 때까지 기다리고 새 작업은 받지 않는 방식으로 안전하게 업데이트
     CustomSlurmSettings:
-      # Simple accounting to text file /home/slurm/slurm-job-completions.txt.
-      - JobCompType: jobcomp/filetxt
-      - JobCompLoc: /home/slurm/slurm-job-completions.txt
-      - JobAcctGatherType: jobacct_gather/linux
+      - JobCompType: jobcomp/filetxt                            # 작업이 끝났을 때 그 기록을 텍스트 파일(.txt) 형태로 남기겠다는 설정.
+      - JobCompLoc: /home/slurm/slurm-job-completions.txt       # 어떤 사용자가 어떤 스크립트를 돌렸고, 결과(성공/실패)가 어땠는지 한눈에 볼 수 있음.
+      - JobAcctGatherType: jobacct_gather/linux                 # 작업의 CPU 사용량, 메모리 점유율 같은 데이터를 수집하는 방식 설정 - linux 방식은 리눅스 커널의 표준 기능을 사용.
   SlurmQueues:
     - Name: compute-gpu
       CapacityType: ONDEMAND
