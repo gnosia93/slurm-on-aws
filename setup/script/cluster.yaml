@@ -3,7 +3,7 @@ Imds:
 Image:
   Os: ubuntu2204
 HeadNode:
-  InstanceType: m5.8xlarge
+  InstanceType: m7.8xlarge
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
     AdditionalSecurityGroups:                                 # ParallelCluster는 노드들끼리 통신할 수 있는 기본 보안 그룹을 자동으로 생성
@@ -11,9 +11,9 @@ HeadNode:
   LocalStorage:
     RootVolume:
       Size: 500
-      DeleteOnTermination: true # that's your root and /home volume for users
+      DeleteOnTermination: true 
   Iam:
-    AdditionalIamPolicies: # grant ECR, SSM and S3 read access
+    AdditionalIamPolicies:                                    # grant ECR, SSM and S3 read access
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
