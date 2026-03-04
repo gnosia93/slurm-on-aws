@@ -6,8 +6,8 @@ HeadNode:
   InstanceType: m5.8xlarge
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
-    AdditionalSecurityGroups:
-      - ${SECURITY_GROUP}
+    AdditionalSecurityGroups:                                 # ParallelCluster는 노드들끼리 통신할 수 있는 기본 보안 그룹을 자동으로 생성
+      - ${SECURITY_GROUP}                                     # ParallelCluster가 기본으로 만드는 보안 그룹 외에, 사용자가 미리 만들어둔 보안 그룹을 추가로 설정
   LocalStorage:
     RootVolume:
       Size: 500
