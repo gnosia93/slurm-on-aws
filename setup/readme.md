@@ -12,11 +12,32 @@
   mpirun --version           # MPI 실행 도구가 잡히는지 확인
   ``` 
 * NVIDIA Driver (하드웨어 인식)
+  ```
+  nvidia-smi
+  ```
 * CUDA Toolkit (컴파일 환경 구축)
+  ```
+  nvcc --version
+  ls -ld /usr/local/cuda
+  ```
 * EFA Driver (네트워크 가속 준비)
+  ```
+  fi_info -p efa
+  lsmod | grep efa
+  /opt/amazon/efa/bin/efa_test.sh
+  ```
 * Docker & NVIDIA Container Toolkit (컨테이너 환경)
+  ```
+  sudo systemctl status docker
+  dpkg -l | grep nvidia-container-toolkit
+  cat /etc/docker/daemon.json
+  ```
+  cat 의 결과값이 "default-runtime": "nvidia" 와 같은 값으로 표시되어야 함.
 * NCCL & aws-ofi-nccl (최종 통신 라이브러리 빌드)
-
+  ```
+  ls -l /opt/nccl/build/lib/libnccl.so
+  ls -l /opt/aws-ofi-nccl/install/lib/libnccl-net.so
+  ```
 
 
 
