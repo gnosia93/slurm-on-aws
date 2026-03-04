@@ -16,6 +16,14 @@ With this release, building with platform-aws requires Libfabric v1.22.0amzn4.0 
 |NCCL|v2.29.2-1| |
 |Libfabric|v1.22.0amzn4.0 or greater|v2.4.0|
 
+### NCCL Compile GENCODE ### 
+```
+make -j src.build NVCC_GENCODE="-gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_90,code=sm_90"
+```
+* sm_70 (V100): 초기 Tensor Core 활용.
+* sm_80 (A100): TF32 연산 및 개선된 스파스 매트릭스 가속.
+* sm_90 (H100): Hopper 아키텍처의 Fourth-gen Tensor Core 및 하드웨어 가속기 활용.
+
 
 ## 레퍼런스 ##
 * https://github.com/NVIDIA/nccl
