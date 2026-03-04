@@ -11,9 +11,10 @@ The 1.18.0 release series supports NCCL v2.29.2-1 while maintaining backward com
 With this release, building with platform-aws requires Libfabric v1.22.0amzn4.0 or greater.
 
 |Name|Version|
-|--- |---|
+|--- | ---|
 |AWS OFI NCCL|v1.18.0 Latest|
 |NCCL|v2.29.2-1|
+|Libfabric|v1.22.0amzn4.0 or greater|
 
 
 ## 레퍼런스 ##
