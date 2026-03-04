@@ -1,4 +1,4 @@
-# slurm-on-pcluster
+# slurm-on-aws
 
 
 #### pcluster 설치하기 #### 
