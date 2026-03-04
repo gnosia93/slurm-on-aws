@@ -1,12 +1,12 @@
 
-## 패키지 설치 순서 (Dependency) ##
+## 필수 라이브러리 ##
 NVIDA GPU 사용하기 위해서는 아래와 같은 패키지들이 설치되어 있어야 한다.  
 * 커널 헤더 및 빌드 도구 (Build Essentials) : build-essential, linux-headers-$(uname -r)
   ```
   dpkg -l | grep build-essential
   dpkg -l | grep linux-headers-$(uname -r)
   ```
-* MPI(Message Passing Interface) 라이브러리
+* MPI(Message Passing Interface)
   ```
   ls -l /opt/amazon/openmpi  # 경로가 존재하는지 확인
   mpirun --version           # MPI 실행 도구가 잡히는지 확인
