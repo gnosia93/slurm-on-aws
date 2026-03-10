@@ -19,10 +19,9 @@ pcluster version
 [INFO] FSX_ID = fs-0cfc8084593407ace
 [INFO] FSX_MOUNTNAME = obmixbev
 [INFO] FSXO_ID = fsvol-0be57cf3806xxxxx
-[INFO] SECURITY_GROUP = sg-094ac36f5e082cf86
 ```
 
-
+클러스터 생성에 필요한 환경변수 값을 설정한다. 
 ```bash
 export CLUSTER_NAME="slurm-on-aws"
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
@@ -47,6 +46,7 @@ echo ${PRIVATE_SUBNET_ID}
 echo ${SECURITY_GROUP}
 ```
 
+GPU_INSTACNE_TYPE 인스턴스의 efa 정보를 조회한다. 
 ```
 aws ec2 describe-instance-types \
     --instance-types ${GPU_INSTACNE_TYPE} \
@@ -57,6 +57,7 @@ aws ec2 describe-instance-types \
         NetworkPerformance:NetworkInfo.NetworkPerformance}" --output table
 ```
 
+pcluster 용 config.yaml 파일을 생성한다. 
 ```
 source env_vars
 cat > config.yaml << EOF
