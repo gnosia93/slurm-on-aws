@@ -35,6 +35,7 @@ export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Val
   --query "Subnets[0].SubnetId" --output text)
 export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=ec2-host-sg" \
   --query "SecurityGroups[0].GroupId" --output text)
+export INSTACNE_TYPE="g6e."
 
 echo ${CLUSTER_NAME}
 echo ${AWS_REGION}
@@ -44,6 +45,110 @@ echo ${PUBLIC_SUBNET_ID}
 echo ${PRIVATE_SUBNET_ID}
 echo ${SECURITY_GROUP}
 ```
+
+```
+source env_vars
+cat > config.yaml << EOF
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+
+Imds:
+  ImdsSupport: v1.0
+Image:
+  Os: ubuntu2204
+HeadNode:
+  InstanceType: m5.8xlarge
+  Networking:
+    SubnetId: ${PUBLIC_SUBNET_ID}
+    AdditionalSecurityGroups:
+      - ${SECURITY_GROUP}
+  LocalStorage:
+    RootVolume:
+      Size: 500
+      DeleteOnTermination: true                 # that's your root and /home volume for users
+  Iam:
+    AdditionalIamPolicies: # grant ECR, SSM and S3 read access
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
+  CustomActions:
+    OnNodeConfigured:
+      Sequence:
+        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
+        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
+          Args:
+            - v2.23.4-1 # NCCL version
+            - v1.11.0-aws # AWS OFI NCCL version
+  Imds:
+    Secured: false
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    ScaledownIdletime: 60
+    QueueUpdateStrategy: DRAIN
+    CustomSlurmSettings:
+      # Simple accounting to text file /home/slurm/slurm-job-completions.txt.
+      - JobCompType: jobcomp/filetxt
+      - JobCompLoc: /home/slurm/slurm-job-completions.txt
+      - JobAcctGatherType: jobacct_gather/linux
+  SlurmQueues:
+    - Name: compute-gpu
+      CapacityType: ONDEMAND
+      Networking:
+        SubnetIds:
+          - ${PRIVATE_SUBNET_ID}
+        PlacementGroup:
+          Enabled: true                  # set this to false if using a targeted ODCR
+        AdditionalSecurityGroups:
+          - ${SECURITY_GROUP}
+      ComputeSettings:
+        LocalStorage:
+          EphemeralVolume:
+            MountDir: /scratch           # each instance has a local scratch on NVMe
+          RootVolume:
+            Size: 200
+      JobExclusiveAllocation: true       # GenAI training likes to gobble all GPUs in an instance
+      ComputeResources:
+        - Name: distributed-ml
+          InstanceType: p5.48xlarge
+          MinCount: 4                    # if min = max then capacity is maintained and will
+          MaxCount: 4                    # not scale down
+          Efa:
+            Enabled: true
+      CustomActions:
+        OnNodeConfigured:
+          Sequence:
+            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
+            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
+              Args:
+                - v2.23.4-1             # NCCL version
+                - v1.11.0-aws           # AWS OFI NCCL version
+#SharedStorage:
+#  - Name: HomeDirs
+#    MountDir: /home
+#    StorageType: FsxOpenZfs
+#    FsxOpenZfsSettings:
+#      VolumeId: ${FSXO_ID}
+#  - MountDir: /fsx
+#    Name: fsx
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      FileSystemId: ${FSX_ID}
+Monitoring:
+  DetailedMonitoring: true
+  Logs:
+    CloudWatch:
+      Enabled: true # good for debug
+  Dashboards:
+    CloudWatch:
+      Enabled: true # provide basic dashboards
+Tags:
+  - Key: 'Grafana'
+    Value: 'true'
+EOF
+```
+
 
 ## 레퍼런스 ##
 
