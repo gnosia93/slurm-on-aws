@@ -102,8 +102,6 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-# EKS 클러스터 생성을 위한 필수 권한 부여
-# Note: 이 정책들은 클러스터 생성에 필요한 거의 모든 권한을 포함하므로 주의해야 합니다.
 resource "aws_iam_role_policy_attachment" "ec2_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
   role       = aws_iam_role.ec2_role.name
