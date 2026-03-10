@@ -76,9 +76,6 @@ AdditionalSecurityGroups은 다음과 같은 경우 설정한다.
 * 기존 VPC의 보안 그룹을 사용하고 싶다면 yaml에 지정 가능하다
 ```
 cat > cluster.yaml << EOF
-# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# SPDX-License-Identifier: MIT-0
-
 Imds:
   ImdsSupport: v1.0
 Image:
