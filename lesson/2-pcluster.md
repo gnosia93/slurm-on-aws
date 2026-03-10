@@ -1,7 +1,8 @@
 
-## pcluster 설치하기 ## 
-* https://pypi.org/project/aws-parallelcluster/
+## [pcluster 설치하기](https://pypi.org/project/aws-parallelcluster/) ## 
 ```
+sudo dnf install python3-pip -y
+
 pip install aws-parallelcluster
 pcluster version
 ```
