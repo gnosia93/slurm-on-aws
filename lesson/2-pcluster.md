@@ -169,7 +169,7 @@ Tags:
     Value: 'true'
 EOF
 ```
-
+클러스터를 생성한다. 
 ```
 pcluster create-cluster -n slurm-on-aws -c cluster.yaml
 ```
