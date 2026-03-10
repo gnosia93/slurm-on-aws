@@ -41,7 +41,7 @@ export CPU_INSTANCE_TYPE="m7i.8xlarge"
 export GPU_INSTACNE_TYPE="g6e.12xlarge"
 
 echo ${CLUSTER_NAME}
-echo ${AWS_REGION}
+echo ${AWS_DEFAULT_REGION}
 echo ${AWS_ACCOUNT_ID}
 echo ${VPC_ID}
 echo ${PUBLIC_SUBNET_ID}
