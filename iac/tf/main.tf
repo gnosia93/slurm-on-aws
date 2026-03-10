@@ -80,11 +80,6 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
-
-# ------------------------------------------------
-# EC2 인스턴스용 IAM Role 및 Profile 추가 <--- 이 부분이 추가되었습니다.
-# ------------------------------------------------
-
 resource "aws_iam_role" "ec2_role" {
   name = "EC2_Role"
 
