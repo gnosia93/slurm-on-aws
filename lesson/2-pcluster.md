@@ -69,7 +69,6 @@ aws ec2 describe-instance-types \
 
 pcluster 용 config.yaml 파일을 생성한다. 
 ```
-source env_vars
 cat > config.yaml << EOF
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
