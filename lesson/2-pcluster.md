@@ -170,6 +170,10 @@ Tags:
 EOF
 ```
 
+```
+pcluster create-cluster -n slurm-on-aws -c cluster.yaml
+```
+
 
 ## 레퍼런스 ##
 
