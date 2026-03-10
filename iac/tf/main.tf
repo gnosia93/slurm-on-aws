@@ -85,8 +85,8 @@ resource "aws_route_table_association" "private" {
 # EC2 인스턴스용 IAM Role 및 Profile 추가 <--- 이 부분이 추가되었습니다.
 # ------------------------------------------------
 
-resource "aws_iam_role" "eks_creator_role" {
-  name = "GetStartedEKS_Role"
+resource "aws_iam_role" "ec2_role" {
+  name = "EC2_Role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -104,15 +104,15 @@ resource "aws_iam_role" "eks_creator_role" {
 
 # EKS 클러스터 생성을 위한 필수 권한 부여
 # Note: 이 정책들은 클러스터 생성에 필요한 거의 모든 권한을 포함하므로 주의해야 합니다.
-resource "aws_iam_role_policy_attachment" "eks_creator_policy_cluster" {
+resource "aws_iam_role_policy_attachment" "ec2_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-  role       = aws_iam_role.eks_creator_role.name
+  role       = aws_iam_role.ec2_role.name
 }
 
 # EC2 인스턴스에 IAM Role을 연결하기 위한 Instance Profile
-resource "aws_iam_instance_profile" "eks_creator_profile" {
-  name = "GetStartedEKS_Profile"
-  role = aws_iam_role.eks_creator_role.name
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "EC2_Profile"
+  role = aws_iam_role.ec2_role.name
 }
 
 # ------------------------------------------------
@@ -131,7 +131,7 @@ data "aws_ami" "al2023_x86_64" {
 
 resource "aws_security_group" "instance_sg" {
   vpc_id = aws_vpc.main.id
-  name   = "eks-host-sg"
+  name   = "ec2-host-sg"
 
   # SSH 접속 허용
   ingress {
@@ -166,7 +166,7 @@ resource "aws_instance" "x86_box" {
   key_name                    = var.key_name
 
   # IAM Instance Profile 연결 <--- EC2에 권한을 부여합니다.
-  iam_instance_profile = aws_iam_instance_profile.eks_creator_profile.name
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   // 루트 볼륨 크기를 30GB로 설정
   root_block_device {
