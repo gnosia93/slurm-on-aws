@@ -34,6 +34,7 @@ export PUBLIC_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Valu
 export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=SOA-priv-subnet-1" \
   --query "Subnets[0].SubnetId" --output text)
 
+echo ${CLUSTER_NAME}
 echo ${AWS_REGION}
 echo ${AWS_ACCOUNT_ID}
 echo ${VPC_ID}
