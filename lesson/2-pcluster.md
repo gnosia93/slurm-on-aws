@@ -176,6 +176,34 @@ EOF
 ```
 pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml
 ```
+[결과]
+```
+{
+  "cluster": {
+    "clusterName": "slurm-on-aws",
+    "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+    "cloudformationStackArn": "arn:aws:cloudformation:ap-northeast-2:499514681453:stack/slurm-on-aws/2bed8870-1c98-11f1-b93a-0617e7ce90ef",
+    "region": "ap-northeast-2",
+    "version": "3.14.2",
+    "clusterStatus": "CREATE_IN_PROGRESS",
+    "scheduler": {
+      "type": "slurm"
+    }
+  },
+  "validationMessages": [
+    {
+      "level": "WARNING",
+      "type": "DetailedMonitoringValidator",
+      "message": "Detailed Monitoring is enabled for EC2 instances in your compute fleet. The Amazon EC2 console will display monitoring graphs with a 1-minute period for these instances. Note that this will increase the cost. If you want to avoid this and use basic monitoring instead, please set `Monitoring / DetailedMonitoring` to false."
+    },
+    {
+      "level": "WARNING",
+      "type": "KeyPairValidator",
+      "message": "If you do not specify a key pair, you can't connect to the instance unless you choose an AMI that is configured to allow users another way to log in"
+    }
+  ]
+}
+```
 
 ### ssh 로그인 ###
 ```
