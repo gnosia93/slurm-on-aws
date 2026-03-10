@@ -187,7 +187,7 @@ sudo systemctl restart code-server@ec2-user
 _DATA
 
   tags = {
-    Name = "soa-vscode"
+    Name = "slurm-vscode"
   }
 }
 
