@@ -15,7 +15,6 @@ pcluster version
 
 ## 클러스터 생성하기 ##
 
-
 ```
 [INFO] FSX_ID = fs-0cfc8084593407ace
 [INFO] FSX_MOUNTNAME = obmixbev
@@ -35,7 +34,9 @@ export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Val
   --query "Subnets[0].SubnetId" --output text)
 export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=ec2-host-sg" \
   --query "SecurityGroups[0].GroupId" --output text)
-export INSTACNE_TYPE="g6e."
+
+export CPU_INSTANCE_TYPE="m7i.8xlarge"
+export GPU_INSTACNE_TYPE="g6e.8xlarge"
 
 echo ${CLUSTER_NAME}
 echo ${AWS_REGION}
@@ -44,6 +45,16 @@ echo ${VPC_ID}
 echo ${PUBLIC_SUBNET_ID}
 echo ${PRIVATE_SUBNET_ID}
 echo ${SECURITY_GROUP}
+```
+
+```
+aws ec2 describe-instance-types \
+    --instance-types ${GPU_INSTACNE_TYPE} \
+    --query "InstanceTypes[*].{InstanceType:InstanceType, \
+        EfaSupported:NetworkInfo.EfaSupported, \
+        MaxNetworkInterfaces:NetworkInfo.MaximumNetworkInterfaces, \
+        MaxEfaInterfaces:NetworkInfo.EfaInfo.MaximumEfaInterfaces, \
+        NetworkPerformance:NetworkInfo.NetworkPerformance}" --output table
 ```
 
 ```
@@ -57,7 +68,7 @@ Imds:
 Image:
   Os: ubuntu2204
 HeadNode:
-  InstanceType: m5.8xlarge
+  InstanceType: ${CPU_INSTANCE_TYPE}
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
     AdditionalSecurityGroups:
@@ -110,8 +121,8 @@ Scheduling:
             Size: 200
       JobExclusiveAllocation: true       # GenAI training likes to gobble all GPUs in an instance
       ComputeResources:
-        - Name: distributed-ml
-          InstanceType: p5.48xlarge
+        - Name: dist-ml
+          InstanceType: ${GPU_INSTACNE_TYPE}
           MinCount: 4                    # if min = max then capacity is maintained and will
           MaxCount: 4                    # not scale down
           Efa:
