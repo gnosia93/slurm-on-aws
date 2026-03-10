@@ -177,7 +177,7 @@ EOF
 ```
 클러스터를 생성한다. 
 ```
-pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml
+pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml --rollback-on-failure false
 ```
 [결과]
 ```
@@ -213,20 +213,12 @@ pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml
 pcluster list-clusters
 ```
 
-롤백을 막으려면:
 
-pcluster create-cluster -n slurm-on-aws -c cluster.yaml -r ap-northeast-2 \
-  --rollback-on-failure false
---rollback-on-failure false를 추가하면 실패해도 리소스가 유지되어서 헤드노드에 접속해 
-cfn-init.log
-를 직접 확인할 수 있습니다.
 
 디버깅 끝나면 수동으로 삭제해야 합니다:
-
-
-
-pcluster delete-cluster -n slurm-on-aws -r ap-northeast-2
-
+```
+pcluster delete-cluster -n slurm-on-aws 
+```
 
 ### ssh 로그인 ###
 ```
