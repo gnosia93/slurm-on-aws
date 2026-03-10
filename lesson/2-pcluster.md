@@ -36,7 +36,7 @@ export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-n
   --query "SecurityGroups[0].GroupId" --output text)
 
 export CPU_INSTANCE_TYPE="m7i.8xlarge"
-export GPU_INSTACNE_TYPE="g6e.8xlarge"
+export GPU_INSTACNE_TYPE="g6e.12xlarge"
 
 echo ${CLUSTER_NAME}
 echo ${AWS_REGION}
