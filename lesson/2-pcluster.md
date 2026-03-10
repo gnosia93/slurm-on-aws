@@ -177,6 +177,13 @@ EOF
 pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml
 ```
 
+### ssh 로그인 ###
+```
+pcluster ssh -n slurm-on-aws
+# 또는 SSM으로 직접
+aws ssm start-session --target <head-node-instance-id>
+```
+
 
 ## 레퍼런스 ##
 
