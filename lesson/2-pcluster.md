@@ -205,6 +205,13 @@ pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml
 }
 ```
 
+생성된 클러스터를 조회한다. 
+```
+pcluster list-clusters
+```
+
+
+
 ### ssh 로그인 ###
 ```
 pcluster ssh -n slurm-on-aws
