@@ -1,7 +1,9 @@
 
 ## [pcluster 설치하기](https://pypi.org/project/aws-parallelcluster/) ## 
+pip, nodejs 및 aws-parallelcluster 클러스터를 설치한다.
 ```
 sudo dnf install python3-pip -y
+sudo dnf install nodejs -y
 
 pip install aws-parallelcluster
 pcluster version
