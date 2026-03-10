@@ -220,6 +220,9 @@ pcluster list-clusters
 pcluster ssh -n slurm-on-aws
 # 또는 SSM으로 직접
 aws ssm start-session --target <head-node-instance-id>
+
+# 또는 헤드노드에 접속 가능하다면
+# /var/log/cfn-init.log 확인
 ```
 
 
