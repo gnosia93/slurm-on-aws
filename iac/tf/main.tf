@@ -187,7 +187,7 @@ sudo systemctl restart code-server@ec2-user
 _DATA
 
   tags = {
-    Name = "code-server-x86"
+    Name = "soa-vscode"
   }
 }
 
