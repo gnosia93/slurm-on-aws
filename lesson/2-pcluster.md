@@ -67,9 +67,9 @@ aws ec2 describe-instance-types \
 +--------------+---------------+-------------------+------------------------+----------------------+
 ```
 
-pcluster 용 config.yaml 파일을 생성한다. 
+pcluster 용 cluster.yaml 파일을 생성한다. 
 ```
-cat > config.yaml << EOF
+cat > cluster.yaml << EOF
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
