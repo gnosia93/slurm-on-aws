@@ -56,6 +56,16 @@ aws ec2 describe-instance-types \
         MaxEfaInterfaces:NetworkInfo.EfaInfo.MaximumEfaInterfaces, \
         NetworkPerformance:NetworkInfo.NetworkPerformance}" --output table
 ```
+[결과]
+```
+----------------------------------------------------------------------------------------------------
+|                                       DescribeInstanceTypes                                      |
++--------------+---------------+-------------------+------------------------+----------------------+
+| EfaSupported | InstanceType  | MaxEfaInterfaces  | MaxNetworkInterfaces   | NetworkPerformance   |
++--------------+---------------+-------------------+------------------------+----------------------+
+|  True        |  g6e.12xlarge |  1                |  10                    |  100 Gigabit         |
++--------------+---------------+-------------------+------------------------+----------------------+
+```
 
 pcluster 용 config.yaml 파일을 생성한다. 
 ```
