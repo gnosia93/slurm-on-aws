@@ -70,6 +70,16 @@ aws ec2 describe-instance-types \
 +--------------+---------------+-------------------+------------------------+----------------------+
 ```
 
+### 키페어 생성 ###
+```
+aws ec2 create-key-pair --key-name slurm-key --region ${AWS_DEFAULT_REGION} \
+  --query 'KeyMaterial' --output text > slurm-key.pem
+
+chmod 400 slurm-key.pem
+```
+
+
+
 pcluster 용 cluster.yaml 파일을 생성한다. ParallelCluster가 자동으로 보안 그룹을 생성하고 헤드노드-컴퓨트노드 간 통신, SLURM 포트, NFS/EFS 포트 등이 자동으로 설정한다.   
 AdditionalSecurityGroups은 다음과 같은 경우 설정한다.
 * 외부에서 헤드노드에 SSH 접속하려면 22번 포트 인바운드를 열어야 한다.
