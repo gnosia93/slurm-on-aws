@@ -2,6 +2,8 @@
 
 set -exo pipefail
 
+NVIDIA_CONTAINER_TOOLKIT_VERSION=${1:-1.18.2-1}
+
 echo "
 ###################################
 # BEGIN: post-install docker
@@ -68,7 +70,8 @@ elif [ "${OS}" = "Ubuntu" ]; then
     tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 
     apt-get -y update
-    apt-get install -y nvidia-container-toolkit=1.17.6-1 nvidia-container-toolkit-base=1.17.6-1 libnvidia-container-tools=1.17.6-1 libnvidia-container1=1.17.6-1
+    apt-get install -y nvidia-container-toolkit=${NVIDIA_CONTAINER_TOOLKIT_VERSION} nvidia-container-toolkit-base=${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
+    libnvidia-container-tools=${NVIDIA_CONTAINER_TOOLKIT_VERSION} libnvidia-container1=${NVIDIA_CONTAINER_TOOLKIT_VERSION}
 
 else
         echo "Unsupported OS: ${OS}" && exit 1;
