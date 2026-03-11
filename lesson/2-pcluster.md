@@ -221,15 +221,28 @@ pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml --rollback-on-failure
 ```
 pcluster list-clusters
 ```
-
-### ssh 로그인 ###
+[결과]
 ```
-pcluster ssh -n slurm-on-aws
-# 또는 SSM으로 직접
-aws ssm start-session --target <head-node-instance-id>
+{
+  "clusters": [
+    {
+      "clusterName": "slurm-on-aws",
+      "cloudformationStackStatus": "CREATE_COMPLETE",
+      "cloudformationStackArn": "arn:aws:cloudformation:ap-northeast-2:499514681453:stack/slurm-on-aws/c71a5560-1d35-11f1-ba26-0abf24fe3867",
+      "region": "ap-northeast-2",
+      "version": "3.14.2",
+      "clusterStatus": "CREATE_COMPLETE",
+      "scheduler": {
+        "type": "slurm"
+      }
+    }
+  ]
+}
+```
 
-# 또는 헤드노드에 접속 가능하다면
-# /var/log/cfn-init.log 확인
+### 헤드노드 ssh 로그인 ###
+```
+pcluster ssh -n slurm-on-aws -i ~/slurm-key.pem
 ```
 
 ## 클러스터 삭제하기 ##
