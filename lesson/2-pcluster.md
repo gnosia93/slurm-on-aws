@@ -239,6 +239,13 @@ pcluster list-clusters
   ]
 }
 ```
+AWS 콘솔에서 생성된 리소스를 확인한다.  
+[cloudformation]
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cf-slurm.png)
+
+[ec2]
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cf-slurm-2.png)
+
 
 ### 헤드노드 ssh 로그인 ###
 ```
