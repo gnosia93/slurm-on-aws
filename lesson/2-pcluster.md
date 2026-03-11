@@ -146,7 +146,7 @@ Scheduling:
             Size: 200
       JobExclusiveAllocation: true       # GenAI training likes to gobble all GPUs in an instance
       ComputeResources:
-        - Name: dist-ml
+        - Name: ml
           InstanceType: ${GPU_INSTACNE_TYPE}
           MinCount: 2                    # if min = max then capacity is maintained and will
           MaxCount: 2                    # not scale down
