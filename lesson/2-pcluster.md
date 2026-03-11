@@ -113,7 +113,8 @@ HeadNode:
     OnNodeConfigured:
       Sequence:
         - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
-          Args: 1.18.2-1             # NVIDIA Container Toolkit version 
+          Args:
+            - 1.18.2-1             # NVIDIA Container Toolkit version 
 #        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
 #          Args:
 #            - v2.23.4-1 # NCCL version
@@ -158,7 +159,8 @@ Scheduling:
         OnNodeConfigured:
           Sequence:
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
-              Args: 1.18.2-1             # NVIDIA Container Toolkit version 
+              Args:
+                - 1.18.2-1             # NVIDIA Container Toolkit version 
 #            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
 #              Args:
 #                - v2.23.4-1             # NCCL version
