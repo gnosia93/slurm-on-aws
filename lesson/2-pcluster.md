@@ -258,6 +258,31 @@ NODELIST                  NODES    PARTITION STATE
 gpu-st-ml-1      1 compute-gpu* idle  
 gpu-st-ml-2      1 compute-gpu* idle
 ```
+컴퓨트 노드 상세 정보를 조회한다. 
+```
+scontrol show node gpu-st-ml-1
+```
+[결과]
+```
+NodeName=gpu-st-ml-1 Arch=x86_64 CoresPerSocket=1 
+   CPUAlloc=0 CPUEfctv=32 CPUTot=32 CPULoad=1.23
+   AvailableFeatures=static,g7e.8xlarge,dist-ml,efa,gpu
+   ActiveFeatures=static,g7e.8xlarge,dist-ml,efa,gpu
+   Gres=gpu:rtxproserver6000:1
+   NodeAddr=10.0.10.160 NodeHostName=gpu-st-ml-1 Version=24.11.7
+   OS=Linux 6.8.0-1045-aws #47~22.04.1-Ubuntu SMP Thu Jan 29 21:28:23 UTC 2026 
+   RealMemory=249036 AllocMem=0 FreeMem=239612 Sockets=32 Boards=1
+   State=IDLE+CLOUD ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=compute-gpu 
+   BootTime=2026-03-11T11:04:15 SlurmdStartTime=2026-03-11T11:05:49
+   LastBusyTime=2026-03-11T11:05:51 ResumeAfterTime=None
+   CfgTRES=cpu=32,mem=249036M,billing=32
+   AllocTRES=
+   CurrentWatts=0 AveWatts=0
+   
+   Reason=Node start up [root@2026-03-11T11:05:51]
+   InstanceId=i-0cba89ff05359cd2f InstanceType=g7e.8xlarge
+```
 
 ssh 를 이용하여 컴퓨트 노드로 접속한다. 
 ```
