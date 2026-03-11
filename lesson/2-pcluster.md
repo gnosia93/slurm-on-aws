@@ -371,6 +371,17 @@ systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
 aws ssm list-associations --region ap-northeast-2 --query "Associations[*].[AssociationId,Name,Targets]" --output table
 이걸로 AWS-RunPatchBaseline 관련 association을 찾아서 삭제하면 SSM은 살리면서 자동 패치만 막을 수 있어요
 
+해결 방법:
+
+# SSM State Manager Association 확인 (이게 패치를 트리거함)
+aws ssm list-associations --region ap-northeast-2 --output table
+# 패치 관련 association 찾아서 비활성화
+aws ssm list-associations --region ap-northeast-2 --query "Associations[?contains(Name, 'Patch') || contains(Name, 'patch') || contains(Name, 'AWS-RunPatchBaseline')]"
+해당 association을 찾으면:
+
+aws ssm delete-association --association-id <association-id> --region ap-northeast-2
+또는 계정 레벨에서 SSM Default Host Management가 패치를 자동 적용하고 있을 수 있습니다. AWS 콘솔에서 Systems Manager → Patch Manager → 설정을 확인해보세요.
+
 
 ## 클러스터 삭제하기 ##
 ```
