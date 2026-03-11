@@ -230,3 +230,4 @@ aws ssm start-session --target <head-node-instance-id>
 ## 레퍼런스 ##
 
 * https://catalog.workshops.aws/ml-on-aws-parallelcluster/en-US
+* https://aws.amazon.com/ko/blogs/korea/announcing-amazon-ec2-g7e-instances-accelerated-by-nvidia-rtx-pro-6000-blackwell-server-edition-gpus/
