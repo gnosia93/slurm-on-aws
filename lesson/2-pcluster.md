@@ -152,14 +152,14 @@ Scheduling:
           MaxCount: 2                    # not scale down
           Efa:
             Enabled: true
-      CustomActions:
-        OnNodeConfigured:
-          Sequence:
-            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
-            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
-              Args:
-                - v2.23.4-1             # NCCL version
-                - v1.11.0-aws           # AWS OFI NCCL version
+#      CustomActions:
+#        OnNodeConfigured:
+#          Sequence:
+#            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
+#            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
+#              Args:
+#                - v2.23.4-1             # NCCL version
+#                - v1.11.0-aws           # AWS OFI NCCL version
 #SharedStorage:
 #  - Name: HomeDirs
 #    MountDir: /home
