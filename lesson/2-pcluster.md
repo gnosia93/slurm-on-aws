@@ -246,10 +246,13 @@ AWS 콘솔에서 생성된 리소스를 확인한다.
 [ec2]
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cf-slurm-2.png)
 
-
-### 헤드노드 ssh 로그인 ###
+헤드 노드로 로그인해서 클러스터 노드 정보를 조회한다. 
 ```
 pcluster ssh -n slurm-on-aws -i ~/slurm-key.pem
+sinfo -N
+
+# 3. 컴퓨트 노드로 SSH (호스트명 또는 프라이빗 IP)
+ssh compute-gpu-dy-dist-ml-1
 ```
 
 ## 클러스터 삭제하기 ##
