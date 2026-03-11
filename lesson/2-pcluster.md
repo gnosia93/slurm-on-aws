@@ -345,6 +345,33 @@ Wed Mar 11 11:30:59 2026
 
 
 
+## trouble shooting ##
+#### compute 노드가 10분 단위로 termination 됨 ####
+1. 컴퓨트 노드에서 SSM Agent 자체를 끄기 (부팅 때마다 해야 함)
+```
+sudo systemctl stop snap.amazon-ssm-agent.amazon-ssm-agent.service
+sudo systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
+```
+
+2. cluster.yaml에서 PostInstall 스크립트로 영구 적용:
+```
+CustomActions:
+  OnNodeConfigured:
+    Script: s3://your-bucket/disable-ssm.sh
+
+disable-ssm.sh 내용:
+
+#!/bin/bash
+systemctl stop snap.amazon-ssm-agent.amazon-ssm-agent.service
+systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
+```
+하지만 SSM 전체를 끄면 SSM Session Manager 접속도 안 됩니다. 더 나은 방법은 Patch Manager association만 제거하는 것입니다:
+
+# 패치 association 찾기
+aws ssm list-associations --region ap-northeast-2 --query "Associations[*].[AssociationId,Name,Targets]" --output table
+이걸로 AWS-RunPatchBaseline 관련 association을 찾아서 삭제하면 SSM은 살리면서 자동 패치만 막을 수 있어요
+
+
 ## 클러스터 삭제하기 ##
 ```
 pcluster delete-cluster -n ${CLUSTER_NAME} 
