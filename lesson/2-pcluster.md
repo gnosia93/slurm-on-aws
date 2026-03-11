@@ -249,10 +249,19 @@ AWS 콘솔에서 생성된 리소스를 확인한다.
 헤드 노드로 로그인해서 클러스터 노드 정보를 조회한다. 
 ```
 pcluster ssh -n slurm-on-aws -i ~/slurm-key.pem
-sinfo -N
 
-# 3. 컴퓨트 노드로 SSH (호스트명 또는 프라이빗 IP)
-ssh compute-gpu-dy-dist-ml-1
+sinfo -N
+```
+[결과]
+```
+NODELIST                  NODES    PARTITION STATE 
+gpu-st-ml-1      1 compute-gpu* idle  
+gpu-st-ml-2      1 compute-gpu* idle
+```
+
+ssh 를 이용하여 컴퓨트 노드로 접속한다. 
+```
+ssh gpu-st-ml-1
 ```
 
 ## 클러스터 삭제하기 ##
