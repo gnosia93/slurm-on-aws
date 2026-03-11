@@ -345,6 +345,22 @@ Wed Mar 11 11:30:59 2026
 +-----------------------------------------------------------------------------------------+
 ```
 
+* docker 확인
+* nvidia-container-toolkit 확인
+* nccl/nccl-test
+* cuda toolkit 확인
+* aws-ofi-
+
+정확히는 CUDA Toolkit을 설치하면 생기는 디렉토리입니다.
+
+NVIDIA 드라이버: GPU 하드웨어를 제어 (nvidia-smi가 동작하게 함)
+CUDA Toolkit: CUDA 컴파일러(nvcc), 라이브러리, 헤더 등 개발 도구 → /usr/local/cuda에 설치됨
+ParallelCluster의 GPU AMI에는 둘 다 미리 설치되어 있어서 /usr/local/cuda가 존재합니다. 보통 심볼릭 링크로 /usr/local/cuda → 
+cuda-12.8
+ 같은 식으로 연결되어 있어요.
+
+
+
 
 
 ## 클러스터 삭제하기 ##
