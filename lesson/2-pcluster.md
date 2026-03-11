@@ -210,13 +210,6 @@ pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml --rollback-on-failure
 pcluster list-clusters
 ```
 
-
-
-디버깅 끝나면 수동으로 삭제해야 합니다:
-```
-pcluster delete-cluster -n slurm-on-aws 
-```
-
 ### ssh 로그인 ###
 ```
 pcluster ssh -n slurm-on-aws
@@ -227,6 +220,10 @@ aws ssm start-session --target <head-node-instance-id>
 # /var/log/cfn-init.log 확인
 ```
 
+## 클러스터 삭제하기 ##
+```
+pcluster delete-cluster -n ${CLUSTER_NAME} 
+```
 
 ## 레퍼런스 ##
 
