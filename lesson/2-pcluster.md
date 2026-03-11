@@ -96,14 +96,14 @@ HeadNode:
       - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
       - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
-  CustomActions:
-    OnNodeConfigured:
-      Sequence:
-        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
-        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
-          Args:
-            - v2.23.4-1 # NCCL version
-            - v1.11.0-aws # AWS OFI NCCL version
+#  CustomActions:
+#    OnNodeConfigured:
+#      Sequence:
+#        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
+#        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
+#          Args:
+#            - v2.23.4-1 # NCCL version
+#            - v1.11.0-aws # AWS OFI NCCL version
   Imds:
     Secured: false
 Scheduling:
