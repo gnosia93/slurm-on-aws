@@ -259,7 +259,7 @@ AWS 콘솔에서 생성된 리소스를 확인한다.
 
 헤드 노드로 로그인해서 클러스터 노드 정보를 조회한다. 
 ```
-pcluster ssh -n slurm-on-aws -i ~/slurm-key.pem
+pcluster ssh -n ${CLUSTER_NAME} -i ~/slurm-key.pem
 
 sinfo -N
 ```
