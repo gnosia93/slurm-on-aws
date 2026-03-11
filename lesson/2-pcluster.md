@@ -72,7 +72,7 @@ aws ec2 describe-instance-types \
 
 ### 키페어 생성 ###
 ```
-aws ec2 create-key-pair --key-name slurm-key --region ${AWS_DEFAULT_REGION} \
+aws ec2 create-key-pair --key-name slurm-key --region ${AWS_DEFAULT_REGION} --key-type ed25519 \
   --query 'KeyMaterial' --output text > slurm-key.pem
 
 chmod 400 slurm-key.pem
