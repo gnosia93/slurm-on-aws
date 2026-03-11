@@ -336,69 +336,6 @@ Wed Mar 11 11:30:59 2026
 +-----------------------------------------------------------------------------------------+
 ```
 
-### ###
-
-
-
-## trouble shooting ##
-#### compute 노드가 10분 단위로 termination 됨 ####
-1. 컴퓨트 노드에서 SSM Agent 자체를 끄기 (부팅 때마다 해야 함)
-```
-sudo systemctl stop snap.amazon-ssm-agent.amazon-ssm-agent.service
-sudo systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
-```
-
-2. cluster.yaml에서 PostInstall 스크립트로 영구 적용:
-```
-CustomActions:
-  OnNodeConfigured:
-    Script: s3://your-bucket/disable-ssm.sh
-
-disable-ssm.sh 내용:
-
-#!/bin/bash
-systemctl stop snap.amazon-ssm-agent.amazon-ssm-agent.service
-systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
-```
-하지만 SSM 전체를 끄면 SSM Session Manager 접속도 안 됩니다. 더 나은 방법은 Patch Manager association만 제거하는 것입니다:
-
-# 패치 association 찾기
-aws ssm list-associations --region ap-northeast-2 --query "Associations[*].[AssociationId,Name,Targets]" --output table
-이걸로 AWS-RunPatchBaseline 관련 association을 찾아서 삭제하면 SSM은 살리면서 자동 패치만 막을 수 있어요
-
-해결 방법:
-
-# SSM State Manager Association 확인 (이게 패치를 트리거함)
-aws ssm list-associations --region ap-northeast-2 --output table
-# 패치 관련 association 찾아서 비활성화
-aws ssm list-associations --region ap-northeast-2 --query "Associations[?contains(Name, 'Patch') || contains(Name, 'patch') || contains(Name, 'AWS-RunPatchBaseline')]"
-해당 association을 찾으면:
-
-aws ssm delete-association --association-id <association-id> --region ap-northeast-2
-또는 계정 레벨에서 SSM Default Host Management가 패치를 자동 적용하고 있을 수 있습니다. AWS 콘솔에서 Systems Manager → Patch Manager → 설정을 확인해보세요.
-
-#### shutdown wrapping ####
-```
-# 예약된 shutdown 취소 및 ssm-agent 데몬 제거
-sudo shutdown -c
-sudo systemctl stop snap.amazon-ssm-agent.amazon-ssm-agent.service
-sudo systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
-
-# shutdown을 래핑
-sudo mv /usr/sbin/shutdown /usr/sbin/shutdown.real
-sudo tee /usr/sbin/shutdown << 'EOF'
-#!/bin/bash
-echo "$(date) - shutdown called by PID $$ PPID $PPID USER $(whoami)" >> /tmp/shutdown_trace.log
-echo "$(date) - cmdline: $@" >> /tmp/shutdown_trace.log
-echo "$(date) - parent: $(cat /proc/$PPID/cmdline 2>/dev/null | tr '\0' ' ')" >> /tmp/shutdown_trace.log
-echo "$(date) - pstree: $(pstree -p $PPID 2>/dev/null)" >> /tmp/shutdown_trace.log
-/usr/sbin/shutdown.real "$@"
-EOF
-sudo chmod +x /usr/sbin/shutdown
-
-cat /tmp/shutdown_trace.log
-```
-
 
 
 ## 클러스터 삭제하기 ##
