@@ -129,7 +129,7 @@ Scheduling:
       - JobCompLoc: /home/slurm/slurm-job-completions.txt
       - JobAcctGatherType: jobacct_gather/linux
   SlurmQueues:
-    - Name: compute-gpu
+    - Name: gpu
       CapacityType: ONDEMAND
       Networking:
         SubnetIds:
