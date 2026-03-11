@@ -284,6 +284,30 @@ NodeName=gpu-st-ml-1 Arch=x86_64 CoresPerSocket=1
    InstanceId=i-0cba89ff05359cd2f InstanceType=g7e.8xlarge
 ```
 
+```
+sudo vi /opt/slurm/etc/slurm.conf
+# CLUSTER SETTINGS
+ResumeTimeout=3600     <--- 추가 
+
+sudo /opt/slurm/bin/scontrol reconfigure
+scontrol show config | grep -i ResumeTimeout
+```
+[결과]
+```
+Configuration data as of 2026-03-11T11:45:41
+AccountingStorageBackupHost = (null)
+AccountingStorageEnforce = none
+AccountingStorageHost   = localhost
+AccountingStorageExternalHost = (null)
+AccountingStorageParameters = (null)
+AccountingStoragePort   = 0
+AccountingStorageTRES   = cpu,mem,energy,node,billing,fs/disk,vmem,pages
+AccountingStorageType   = (null)
+...
+```
+
+
+
 ssh 를 이용하여 컴퓨트 노드로 접속한다. 
 ```
 ssh gpu-st-ml-1
