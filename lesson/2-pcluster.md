@@ -379,6 +379,11 @@ aws ssm delete-association --association-id <association-id> --region ap-northea
 
 #### shutdown wrapping ####
 ```
+# 예약된 shutdown 취소 및 ssm-agent 데몬 제거
+sudo shutdown -c
+sudo systemctl stop snap.amazon-ssm-agent.amazon-ssm-agent.service
+sudo systemctl disable snap.amazon-ssm-agent.amazon-ssm-agent.service
+
 # shutdown을 래핑
 sudo mv /usr/sbin/shutdown /usr/sbin/shutdown.real
 sudo tee /usr/sbin/shutdown << 'EOF'
@@ -390,6 +395,8 @@ echo "$(date) - pstree: $(pstree -p $PPID 2>/dev/null)" >> /tmp/shutdown_trace.l
 /usr/sbin/shutdown.real "$@"
 EOF
 sudo chmod +x /usr/sbin/shutdown
+
+cat /tmp/shutdown_trace.log
 ```
 
 
