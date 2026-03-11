@@ -92,6 +92,8 @@ Image:
   Os: ubuntu2204
 HeadNode:
   InstanceType: ${CPU_INSTANCE_TYPE}
+  Ssh:
+    KeyName: slurm-key          # 여기 추가
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
     AdditionalSecurityGroups:
@@ -146,6 +148,8 @@ Scheduling:
       ComputeResources:
         - Name: dist-ml
           InstanceType: ${GPU_INSTACNE_TYPE}
+          Ssh:
+            KeyName: slurm-key           # 여기 추가
           MinCount: 2                    # if min = max then capacity is maintained and will
           MaxCount: 2                    # not scale down
           Efa:
