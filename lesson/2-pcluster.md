@@ -382,6 +382,22 @@ aws ssm list-associations --region ap-northeast-2 --query "Associations[?contain
 aws ssm delete-association --association-id <association-id> --region ap-northeast-2
 또는 계정 레벨에서 SSM Default Host Management가 패치를 자동 적용하고 있을 수 있습니다. AWS 콘솔에서 Systems Manager → Patch Manager → 설정을 확인해보세요.
 
+#### shutdown wrapping ####
+```
+# shutdown을 래핑
+sudo mv /usr/sbin/shutdown /usr/sbin/shutdown.real
+sudo tee /usr/sbin/shutdown << 'EOF'
+#!/bin/bash
+echo "$(date) - shutdown called by PID $$ PPID $PPID USER $(whoami)" >> /tmp/shutdown_trace.log
+echo "$(date) - cmdline: $@" >> /tmp/shutdown_trace.log
+echo "$(date) - parent: $(cat /proc/$PPID/cmdline 2>/dev/null | tr '\0' ' ')" >> /tmp/shutdown_trace.log
+echo "$(date) - pstree: $(pstree -p $PPID 2>/dev/null)" >> /tmp/shutdown_trace.log
+/usr/sbin/shutdown.real "$@"
+EOF
+sudo chmod +x /usr/sbin/shutdown
+```
+
+
 
 ## 클러스터 삭제하기 ##
 ```
