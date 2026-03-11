@@ -136,8 +136,8 @@ Scheduling:
       ComputeResources:
         - Name: dist-ml
           InstanceType: ${GPU_INSTACNE_TYPE}
-          MinCount: 4                    # if min = max then capacity is maintained and will
-          MaxCount: 4                    # not scale down
+          MinCount: 2                    # if min = max then capacity is maintained and will
+          MaxCount: 2                    # not scale down
           Efa:
             Enabled: true
       CustomActions:
