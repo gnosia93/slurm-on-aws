@@ -22,6 +22,7 @@ pcluster version
 [INFO] FSX_MOUNTNAME = obmixbev
 [INFO] FSXO_ID = fsvol-0be57cf3806xxxxx
 ```
+### 환경변수 설정 ###
 
 클러스터 생성에 필요한 환경변수 값을 설정한다. AZ 의 경우 1번을 사용하도록 한다. 
 ```bash
@@ -79,7 +80,7 @@ chmod 400 slurm-key.pem
 ```
 
 
-
+### slurm 클러스터 생성 ###
 pcluster 용 cluster.yaml 파일을 생성한다. ParallelCluster가 자동으로 보안 그룹을 생성하고 헤드노드-컴퓨트노드 간 통신, SLURM 포트, NFS/EFS 포트 등이 자동으로 설정한다.   
 AdditionalSecurityGroups은 다음과 같은 경우 설정한다.
 * 외부에서 헤드노드에 SSH 접속하려면 22번 포트 인바운드를 열어야 한다.
@@ -239,12 +240,17 @@ pcluster list-clusters
   ]
 }
 ```
+
+### AWS 콘솔에서 확인 ###
 AWS 콘솔에서 생성된 리소스를 확인한다.  
 [cloudformation]
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cf-slurm.png)
 
 [ec2]
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cf-slurm-2.png)
+
+
+### 클러스터 상세 정보 조회 ###
 
 헤드 노드로 로그인해서 클러스터 노드 정보를 조회한다. 
 ```
@@ -301,14 +307,13 @@ AccountingStorageType   = (null)
 ...
 ```
 
-
-
+### 컴퓨트 노드 확인 ###
 ssh 를 이용하여 컴퓨트 노드로 접속한다. 
 ```
 ssh gpu-st-ml-1
 ```
 
-### nvidia device driver 확인 ###
+#### 1. nvidia device driver 확인 ####
 ```
 nvidia-smi
 ```
