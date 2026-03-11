@@ -283,14 +283,9 @@ NodeName=gpu-st-ml-1 Arch=x86_64 CoresPerSocket=1
    Reason=Node start up [root@2026-03-11T11:05:51]
    InstanceId=i-0cba89ff05359cd2f InstanceType=g7e.8xlarge
 ```
-
+slurm 설정 조회하기 
 ```
-sudo vi /opt/slurm/etc/slurm.conf
-# CLUSTER SETTINGS
-ResumeTimeout=3600     <--- 추가 
-
-sudo /opt/slurm/bin/scontrol reconfigure
-scontrol show config | grep -i ResumeTimeout
+scontrol show config 
 ```
 [결과]
 ```
