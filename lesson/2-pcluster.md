@@ -347,9 +347,9 @@ Wed Mar 11 11:30:59 2026
 
 * docker 확인
 * nvidia-container-toolkit 확인
-* nccl/nccl-test
+* nccl/nccl-test 확인
 * cuda toolkit 확인
-* aws-ofi-
+* aws-ofi-nccl 확인
 
 정확히는 CUDA Toolkit을 설치하면 생기는 디렉토리입니다.
 
