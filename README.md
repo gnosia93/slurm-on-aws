@@ -17,9 +17,8 @@
 
 * [C7. 모니터링 설정하기]
 
-* [C9. 클러스터 삭제]
+* [C9. 클러스터 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-cluster-delete.md)
 
-* pcluster delete-cluster -n ${CLUSTER_NAME} 
 
 
 일반적인 분산 학습(Data Parallel, FSDP, TP, PP)에서는 all-reduce, all-gather, reduce-scatter가 주요 통신 패턴인데, 이것들은 대용량 메시지를 순차적으로 전달하는 방식이라 bandwidth 위주입니다. EFA로 충분합니다.
