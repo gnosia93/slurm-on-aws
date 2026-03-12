@@ -1,7 +1,7 @@
 
 헤드 노드로 로그인해서 아래와 같은 slurm job 파일을 생성한다.
 ```
-cat <<EOF > nccl-test.sbatch
+cat <<'EOF' > nccl-test.sbatch
 #!/bin/bash
 #SBATCH --job-name=nccl-test
 #SBATCH --partition=gpu
