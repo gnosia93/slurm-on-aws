@@ -29,6 +29,8 @@ pcluster version
 export CLUSTER_NAME="slurm-on-aws"
 export CPU_INSTANCE_TYPE="m6i.4xlarge"
 export GPU_INSTACNE_TYPE="g7e.8xlarge"
+export GPU_MIN=2
+export GPU_MAX=40
 export AZ="1"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
@@ -120,8 +122,8 @@ HeadNode:
 Scheduling:
   Scheduler: slurm
   SlurmSettings:
-    ScaledownIdletime: 60
-    QueueUpdateStrategy: DRAIN
+    ScaledownIdletime: 300               # Idle 상태의 노드의 경우 5분후 삭제
+    QueueUpdateStrategy: DRAIN           # 클러스터 업데이트시 DRAIN은 실행 중인 작업이 끝날 때까지 대기후 업데이트, TERMINATE은 실행 중인 작업을 즉시 종료하고 바로 업데이트
     CustomSlurmSettings:
       # Simple accounting to text file /home/slurm/slurm-job-completions.txt.
       - JobCompType: jobcomp/filetxt
@@ -147,8 +149,8 @@ Scheduling:
       ComputeResources:
         - Name: ml
           InstanceType: ${GPU_INSTACNE_TYPE}
-          MinCount: 2                    # if min = max then capacity is maintained and will
-          MaxCount: 40                   # not scale down
+          MinCount: ${GPU_MIN}
+          MaxCount: ${GPU_MAX}
           Efa:
             Enabled: true
       CustomActions:
