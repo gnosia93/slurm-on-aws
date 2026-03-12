@@ -25,6 +25,7 @@ EOF
 예를 들어
 * 모델 파라미터 1억개 (100M) × FP32 (4 bytes) = 400MB
 * 모델 파라미터 3억개 (300M) × FP16 (2 bytes) = 600MB 
+
 각 GPU가 자기 배치에 대한 gradient를 계산한 후, all_reduce로 모든 GPU의 gradient를 합산하는데, 이때 전체 파라미터의 gradient가 한 번에 교환되는 것이다.
 다만 실제로는 NCCL이 gradient를 여러 청크로 쪼개서 파이프라인 방식으로 전송하고, PyTorch도 backward 계산과 통신을 오버랩시키기 때문에 1GB를 한 덩어리로 보내는 건 아니다. 하지만 총량 기준으로 그 정도이다.
 * -b 8: begin, 시작 메시지 크기 8 bytes
