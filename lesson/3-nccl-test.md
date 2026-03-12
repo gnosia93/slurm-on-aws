@@ -47,3 +47,9 @@ cat nccl-test-*.out
 squeue 는 실시간 확인용이고, cat 으로는 최종 결과를 확인할 수 있다. 
 
 
+## 참고 - srun bash ##
+아래는 srun bash 을 활용하여 gpu 파티션 노드들에 설치되어 있는 nccl-tests 프로그램을 재 컴파일 하는 샘플이다. srun + bash -c 커맨드 조합을 활용하며 slurm 클러스터의 각 노드에서 bash 명령어를 실행할 수 있다.  
+```
+srun -p gpu -N 2 --ntasks-per-node=1 \
+bash -c "cd /opt/nccl-tests && sudo make clean && sudo make -j \$(nproc) NCCL_HOME=/opt/nccl/build CUDA_HOME=/usr/local/cuda"
+```
