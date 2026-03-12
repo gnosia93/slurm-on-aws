@@ -20,3 +20,4 @@
 ## 레퍼런스 ##
 
 * https://aws.amazon.com/ko/hpc/parallelcluster/
+* [CUDA Thread Hierarchy (Introduction to CUDA Week1-3) / CUDA 강의](https://www.youtube.com/watch?v=my1U4QY59Bg)
