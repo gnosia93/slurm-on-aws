@@ -5,7 +5,7 @@
 ```
 export GPU_NODES=8
 
-cat <<'EOF' > nccl-test.sbatch
+cat <<EOF > nccl-test.sbatch
 #!/bin/bash
 #SBATCH --job-name=nccl-test
 #SBATCH --partition=gpu
@@ -15,7 +15,7 @@ cat <<'EOF' > nccl-test.sbatch
 #SBATCH --output=nccl-test-%j.out
 #SBATCH --error=nccl-test-%j.err
 
-export LD_LIBRARY_PATH=/opt/amazon/openmpi/lib:/opt/nccl/build/lib:/opt/aws-ofi-nccl/lib:/opt/amazon/efa/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/opt/amazon/openmpi/lib:/opt/nccl/build/lib:/opt/aws-ofi-nccl/lib:/opt/amazon/efa/lib:\$LD_LIBRARY_PATH
 export NCCL_DEBUG=INFO
 export FI_PROVIDER=efa
 export FI_EFA_USE_DEVICE_RDMA=1
