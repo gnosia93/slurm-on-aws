@@ -4,7 +4,7 @@
   
 * [C2. Parallel Cluster 설치](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/2-pcluster.md) 
 
-* [C3. NCCL-Test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-nccl-test.md) 
+* [C3. nccl-test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-nccl-test.md) 
     
 * 시스템 전반적으로 진단하기     
     - dcgm diag -r 3
