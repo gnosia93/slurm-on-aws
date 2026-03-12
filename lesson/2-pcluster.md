@@ -162,10 +162,10 @@ Scheduling:
               Args:
                 - 1.18.2-1
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
-#            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
-#              Args:
-#                - v2.23.4-1             # NCCL version
-#                - v1.11.0-aws           # AWS OFI NCCL version
+            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
+              Args:
+                - v2.29.2-1             # NCCL version
+                - v1.18.0               # AWS OFI NCCL version
 #SharedStorage:
 #  - Name: HomeDirs
 #    MountDir: /home
