@@ -148,7 +148,7 @@ Scheduling:
         - Name: ml
           InstanceType: ${GPU_INSTACNE_TYPE}
           MinCount: 2                    # if min = max then capacity is maintained and will
-          MaxCount: 2                    # not scale down
+          MaxCount: 40                   # not scale down
           Efa:
             Enabled: true
       CustomActions:
