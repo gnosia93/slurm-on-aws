@@ -10,8 +10,13 @@ if [ ! -d "/opt/nccl" ]; then
   git clone  --single-branch --branch ${NCCL_VERSION} https://github.com/NVIDIA/nccl.git /opt/nccl
   cd /opt/nccl
   # Explicitly specify platforms since building for all takes ~10 minutes
-  # It takes 6 min 7 sec for 70,80,90
-  make -j src.build NVCC_GENCODE="-gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_90,code=sm_90"
+  # It takes 6 min 7 sec for 70,80,90,120
+  # V100 - 70 (Volta)
+  # A100, A10G - 80 (Ampere)
+  # H100, H200 - 90 (Hopper)
+  # B200, RTX PRO 6000 - 120 (Blackwell)
+  make -j $(nproc) src.build NVCC_GENCODE="-gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_80,code=sm_80 \
+  -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120"
 fi
 
 # Install nccl-tests
