@@ -3,11 +3,13 @@
 헤드 노드로 로그인해서 아래와 같은 slurm job 파일을 생성한다.
 * 주의: <<EOF 대신 <<'EOF'를 사용해야 $LD_LIBRARY_PATH가 작성 시점에 치환되지 않고 실행 시점에 평가된다.
 ```
+export GPU_NODES=8
+
 cat <<'EOF' > nccl-test.sbatch
 #!/bin/bash
 #SBATCH --job-name=nccl-test
 #SBATCH --partition=gpu
-#SBATCH --nodes=2
+#SBATCH --nodes=${GPU_NODES}
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=1
 #SBATCH --output=nccl-test-%j.out
