@@ -446,11 +446,6 @@ nvlink 또는 nvswitch 로 연결된 서버에서 활성화 되어 있어야 한
 sudo systemctl status nvidia-fabricmanager
 ```
 
-## 클러스터 삭제하기 ##
-```
-pcluster delete-cluster -n ${CLUSTER_NAME} 
-```
-
 ## 레퍼런스 ##
 
 * https://catalog.workshops.aws/ml-on-aws-parallelcluster/en-US
