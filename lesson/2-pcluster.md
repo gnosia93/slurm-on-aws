@@ -232,6 +232,7 @@ pcluster list-clusters
 }
 ```
 
+
 ### AWS 콘솔에서 확인 ###
 AWS 콘솔에서 생성된 리소스를 확인한다.  
 [cloudformation]
@@ -297,6 +298,20 @@ AccountingStorageTRES   = cpu,mem,energy,node,billing,fs/disk,vmem,pages
 AccountingStorageType   = (null)
 ...
 ```
+
+### 클러스터 생성 로그 조회 ###
+클러스터 생성 완료 후, 헤드 노드에서 아래의 명령어를 이용하여 클러스터 프러비저닝시 생성된 로그 파일을 조회할 수 있다. 
+```
+# CloudFormation 초기화 로그 (클러스터 생성 과정)
+sudo cat /var/log/cfn-init.log
+
+# cloud-init 로그
+sudo cat /var/log/cloud-init-output.log
+
+# ParallelCluster 설치 로그
+sudo cat /var/log/parallelcluster/slurm_resume
+```
+
 
 ### 컴퓨트 노드 확인 ###
 ssh 를 이용하여 컴퓨트 노드로 접속한다. 
