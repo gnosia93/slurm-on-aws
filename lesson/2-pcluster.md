@@ -27,7 +27,7 @@ pcluster version
 클러스터 생성에 필요한 환경변수 값을 설정한다. AZ 의 경우 1번을 사용하도록 한다. 
 ```bash
 export CLUSTER_NAME="slurm-on-aws"
-export CPU_INSTANCE_TYPE="m7i.8xlarge"
+export CPU_INSTANCE_TYPE="m6i.4xlarge"
 export GPU_INSTACNE_TYPE="g7e.8xlarge"
 export AZ="1"
 
