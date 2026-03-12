@@ -114,11 +114,7 @@ HeadNode:
       Sequence:
         - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
           Args:
-            - 1.18.2-1
-#        - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
-#          Args:
-#            - v2.23.4-1 # NCCL version
-#            - v1.11.0-aws # AWS OFI NCCL version
+            - 1.18.2-1                         # NVIDIA_CONTAINER_TOOLKIT_VERSION version
   Imds:
     Secured: false
 Scheduling:
@@ -160,7 +156,7 @@ Scheduling:
           Sequence:
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
               Args:
-                - 1.18.2-1
+                - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
             - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
               Args:
