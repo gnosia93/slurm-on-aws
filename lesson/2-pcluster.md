@@ -401,6 +401,18 @@ ls -la /usr/local/cuda
 ls /usr/local/cuda/lib64/
 ```
 
+#### 4. MPI 확인 ####
+Message Passing Interface 는 분산 컴퓨팅에서 노드 간 메시지를 주고받기 위한 표준 규격이고, 구현체로는 OpenMPI, Intel MPI, MPICH 등이 있다.
+GPU 1개짜리 작업이면 MPI 필요 없지만, 여러 노드에 걸쳐 분산 학습을 하려면 노드 간 통신이 필요하고, 그 통신 레이어가 MPI 이다.
+* NCCL: GPU ↔ GPU 간 데이터 전송 (gradient 교환 등)
+* MPI: 프로세스 런칭 및 조율 (mpirun으로 여러 노드에 프로세스 띄우기)
+* EFA: 네트워크 하드웨어 (RDMA로 저지연 통신)
+즉 MPI는 GPU 자체를 위한 게 아니라, 여러 노드의 GPU를 묶어서 쓰기 위한 프로세스 관리/통신 프레임워크이다. mpirun -np 4 --hostfile hosts python train.py 이런 식으로 4개 노드에 학습 프로세스를 동시에 띄우는 역할을 한다.
+```
+ls -l /opt/amazon/openmpi  # 경로가 존재하는지 확인
+mpirun --version           # MPI 실행 도구가 잡히는지 확인
+```
+
 * nccl/nccl-test 확인
 * aws-ofi-nccl 확인
 
