@@ -403,16 +403,11 @@ ls /usr/local/cuda/lib64/
 
 #### 4. MPI 확인 ####
 Message Passing Interface 는 분산 컴퓨팅에서 노드 간 메시지를 주고받기 위한 표준 규격이고, 구현체로는 OpenMPI, Intel MPI, MPICH 등이 있다.
-GPU 1개짜리 작업이면 MPI 필요 없지만, 여러 노드에 걸쳐 분산 학습을 하려면 노드 간 통신이 필요하고, 그 통신 레이어가 MPI 이다.
+GPU 1개짜리 작업이면 MPI 필요 없지만, 여러 노드에 걸쳐 분산 학습을 하려면 노드 간 통신이 필요하고, 그 통신 레이어가 MPI 이다. 즉 MPI는 GPU 자체를 위한 게 아니라, 여러 노드의 GPU를 묶어서 쓰기 위한 프로세스 관리/통신 프레임워크로, mpirun -np 4 --hostfile hosts python train.py 이런 식으로 4개 노드에 학습 프로세스를 동시에 띄우는 역할을 한다.
+전통적인 HPC 환경에서는 MPI 를 이용해서 통신을 조율하고 pytorch 의 경우 torchrun 기반으로 프로세스간의 통신을 조율한다 (MPI 없이도 동작)
 * NCCL: GPU ↔ GPU 간 데이터 전송 (gradient 교환 등)
 * MPI: 프로세스 런칭 및 조율 (mpirun으로 여러 노드에 프로세스 띄우기)
 * EFA: 네트워크 하드웨어 (RDMA로 저지연 통신)
-즉 MPI는 GPU 자체를 위한 게 아니라, 여러 노드의 GPU를 묶어서 쓰기 위한 프로세스 관리/통신 프레임워크로, mpirun -np 4 --hostfile hosts python train.py 이런 식으로 4개 노드에 학습 프로세스를 동시에 띄우는 역할을 한다.
-
-* mpirun: MPI 기반. 프로세스 띄우고 MPI 통신으로 조율. HPC 전통 방식.
-* torchrun: PyTorch 네이티브. torch.distributed 기반. rendezvous(c10d) 방식으로 프로세스 간 연결. MPI 없이도 동작.
-torchrun은 통신 백엔드로 nccl (GPU간), gloo (CPU간)을 사용하지 MPI를 사용하지 않는다. 다만 SLURM 환경에서는 srun으로 torchrun을 띄우는 경우가 많고, 이때도 MPI가 아니라 SLURM의 프로세스 관리 기능을 쓰는 겁니다.
-
 ```
 ls -l /opt/amazon/openmpi  # 경로가 존재하는지 확인
 mpirun --version           # MPI 실행 도구가 잡히는지 확인
