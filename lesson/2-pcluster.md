@@ -387,6 +387,9 @@ Thu Mar 12 12:27:38 2026
 ```
 
 #### 3. CUDA Toolkit 확인 ####
+
+nvcc 는 NVIDIA CUDA Compiler 로 .cu 파일(CUDA C/C++ 코드)을 GPU에서 실행 가능한 바이너리로 컴파일하는 컴파일러이다.
+gcc가 C 컴파일러인 것처럼, nvcc는 CUDA 컴파일러이다. CUDA Toolkit에 포함되어 있어서 CUDA Toolkit 설치 확인용으로 많이 쓰인다.
 ```
 # CUDA 버전 확인
 nvcc --version
@@ -397,8 +400,6 @@ ls -la /usr/local/cuda
 # CUDA 라이브러리 확인
 ls /usr/local/cuda/lib64/
 ```
-
-
 
 * nccl/nccl-test 확인
 * aws-ofi-nccl 확인
