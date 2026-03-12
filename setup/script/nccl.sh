@@ -15,6 +15,7 @@ if [ ! -d "/opt/nccl" ]; then
   # A100, A10G - 80 (Ampere)
   # H100, H200 - 90 (Hopper)
   # B200, RTX PRO 6000 - 120 (Blackwell)
+  # https://developer.nvidia.com/cuda/gpus
   make -j $(nproc) src.build NVCC_GENCODE="-gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_80,code=sm_80 \
   -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120"
 fi
