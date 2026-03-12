@@ -30,7 +30,7 @@ export CLUSTER_NAME="slurm-on-aws"
 export CPU_INSTANCE_TYPE="m6i.4xlarge"
 export GPU_INSTACNE_TYPE="g7e.8xlarge"
 export GPU_MIN=2
-export GPU_MAX=8
+export GPU_MAX=2
 export AZ="1"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
