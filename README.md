@@ -4,17 +4,18 @@
   
 * [C2. Parallel Cluster 설치](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/2-pcluster.md) 
 
-* [C3. NCCL-Test 실행하기] 
+* [C3. NCCL-Test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-nccl-test.md) 
+    
+* 시스템 전반적으로 진단하기     
     - dcgm diag -r 3
-    - nccl-test and check badnwidth 
     - system message 확인 (dmessage / pci bandwidth 확인 등)   
     - efa hw counter 확인 ...
      
-* [C4. 컨테이너 설정]
+* [C5. 컨테이너 설정]
 
-* [C5. Megatron]
+* [C6. Megatron]
 
-* [C6. 모니터링 설정하기]
+* [C7. 모니터링 설정하기]
 
 
 ## 레퍼런스 ##
