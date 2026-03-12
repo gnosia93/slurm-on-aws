@@ -413,16 +413,20 @@ ls -l /opt/amazon/openmpi  # 경로가 존재하는지 확인
 mpirun --version           # MPI 실행 도구가 잡히는지 확인
 ```
 
-* nccl/nccl-test 확인
-* aws-ofi-nccl 확인
+#### 5. efa / aws-ofi-nccl 확인 ####
+aws-ofi-nccl은 NCCL이 EFA(Elastic Fabric Adapter)를 통해 통신할 수 있게 해주는 플러그인으로, EFA를 쓰는 멀티노드 GPU 학습에 필수이다.
+```
+fi_info -p efa
+lsmod | grep efa
 
-정확히는 CUDA Toolkit을 설치하면 생기는 디렉토리입니다.
+ls /opt/aws-ofi-nccl/
+```
 
-NVIDIA 드라이버: GPU 하드웨어를 제어 (nvidia-smi가 동작하게 함)
-CUDA Toolkit: CUDA 컴파일러(nvcc), 라이브러리, 헤더 등 개발 도구 → /usr/local/cuda에 설치됨
-ParallelCluster의 GPU AMI에는 둘 다 미리 설치되어 있어서 /usr/local/cuda가 존재합니다. 보통 심볼릭 링크로 /usr/local/cuda → 
-cuda-12.8
- 같은 식으로 연결되어 있어요.
+#### 6. fabric manager 확인 ####
+nvlink 또는 nvswitch 로 연결된 서버에서 활성화 되어 있어야 한다.
+```
+sudo systemctl status nvidia-fabricmanager
+```
 
 
 
