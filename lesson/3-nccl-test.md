@@ -36,15 +36,13 @@ EOF
 다만 실제로는 NCCL이 gradient를 여러 청크로 쪼개서 파이프라인 방식으로 전송하고, PyTorch도 backward 계산과 통신을 오버랩시키기 때문에 1GB를 한 덩어리로 보내는 건 아니다. 하지만 총량 기준으로 그 정도이다.
 
 
-sbatch 로 nccl 테스트를 실행한다. 
+sbatch 로 nccl-test 를 실행하고, 결과를 확인한다. 
 ```
 sbatch nccl-test.sbatch
-```
 
-결과를 확인한다.
-```
-# 실시간 확인
 squeue
-# 완료 후
 cat nccl-test-*.out
 ```
+squeue 는 실시간 확인용이고, cat 으로는 최종 결과를 확인할 수 있다. 
+
+
