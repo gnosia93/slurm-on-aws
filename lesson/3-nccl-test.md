@@ -272,12 +272,6 @@ sbatch nccl-test.sbatch
 ```
 
 
-### [nccl-test 결과 - 16 nodes] ###
-
-
-
-
-
 ## [참고] srun 으로 bash 실행하기 ##
 아래는 srun bash 을 활용하여 gpu 파티션 노드들에 설치되어 있는 nccl-tests 프로그램을 재 컴파일 하는 샘플이다. srun + bash -c 커맨드 조합을 활용하며 slurm 클러스터의 각 노드에서 bash 명령어를 실행할 수 있다.  
 
