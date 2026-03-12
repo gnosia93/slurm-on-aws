@@ -423,6 +423,18 @@ ls /opt/aws-ofi-nccl/
 ```
 
 #### 6. nccl 버전 확인 ####
+```
+cat /opt/nccl/makefiles/version.mk 2>/dev/null
+```
+[결과]
+```
+##### version
+NCCL_MAJOR   := 2
+NCCL_MINOR   := 29
+NCCL_PATCH   := 2
+NCCL_SUFFIX  :=
+PKG_REVISION := 1
+```
 
 #### 7. fabric manager 확인 ####
 nvlink 또는 nvswitch 로 연결된 서버에서 활성화 되어 있어야 한다.
