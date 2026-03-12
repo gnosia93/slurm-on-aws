@@ -20,6 +20,8 @@ srun /opt/nccl-tests/build/all_reduce_perf -b 8 -e 1G -f 2 -g 1
 EOF
 ```
 8 바이트부터 1GB 까지 메시지 크기를 2배씩 늘려가며 all_reduce 성능을 측정한다.
+실제 AI 학습에서 all_reduce로 교환하는 gradient 크기가 보통 수백 MB ~ 1GB 수준이라, 1GB까지 테스트하면 실전 성능을 잘 반영하는 것이다
+더 큰 사이즈를 테스트하고 싶으면 -e 2G나 -e 4G로 늘릴 수 있지만, 1GB 이후로는 bandwidth 가 거의 일정하게 수렴하기 때문에 큰 의미는 없다.
 * -b 8: begin, 시작 메시지 크기 8 bytes
 * -e 1G: end, 최대 메시지 크기 1GB
 * -f 2: factor, 매 반복마다 크기를 2배씩 증가 (8B → 16B → 32B → ... → 1GB)
