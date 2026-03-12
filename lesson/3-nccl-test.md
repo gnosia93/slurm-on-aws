@@ -17,7 +17,7 @@ export NCCL_DEBUG=INFO
 export FI_PROVIDER=efa
 export FI_EFA_USE_DEVICE_RDMA=1
 
-srun /opt/nccl-tests/build/all_reduce_perf -b 8 -e 1G -f 2 -g 1
+srun --mpi=pmix /opt/nccl-tests/build/all_reduce_perf -b 8 -e 1G -f 2 -g 1
 EOF
 ```
 #### [파라미터 정보] ####
