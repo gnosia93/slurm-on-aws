@@ -233,7 +233,13 @@ gpu-st-ml-2:77729:77729 [0] NCCL INFO Unloading plugin libnccl-net.so
 gpu-st-ml-2:77729:77729 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
 gpu-st-ml-1:78499:78499 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
 ```
-
+* 2노드, rank 0/1, nranks 2 — 멀티노드 통신 정상
+* EFA/Libfabric 연결 완료
+* #wrong: 0 — 데이터 정합성 OK
+* 대용량(1GB) 기준 busbw: ~12.37 GB/s
+* Avg bus bandwidth: 4.27 GB/s
+* g7e.8xlarge는 EFA NIC 1개(100Gbps)이므로 이론 최대 ~12.5 GB/s 이다. 1GB 사이즈에서 12.37 GB/s가 나왔으니 EFA 대역폭을 거의 100% 활용하고 있다. 
+GDR 0 (GPU Direct RDMA 비활성)이라 GPU→CPU→EFA→CPU→GPU 경로로 데이터가 이동하고 있다. 
 
 
 ## 참고 - srun bash ##
