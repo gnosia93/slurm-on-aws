@@ -241,6 +241,21 @@ gpu-st-ml-1:78499:78499 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefa
 * g7e.8xlarge는 EFA NIC 1개(100Gbps)이므로 이론 최대 ~12.5 GB/s 이다. 1GB 사이즈에서 12.37 GB/s가 나왔으니 EFA 대역폭을 거의 100% 활용하고 있다. 
 GDR 0 (GPU Direct RDMA 비활성)이라 GPU→CPU→EFA→CPU→GPU 경로로 데이터가 이동하고 있다. 
 
+#### NCCL이 사용 가능한 프로토콜과 알고리즘 조합 ####
+* 프로토콜 (데이터 전송 방식):
+  * LL: Low Latency. 작은 메시지용, 오버헤드 최소화
+  * LL128: Low Latency 128byte. LL의 확장 버전
+  * Simple: 대용량 메시지용, 높은 bandwidth
+* 알고리즘 (통신 토폴로지):
+  * Ring: GPU들이 링 형태로 데이터 전달
+  * Tree: 트리 구조로 reduce/broadcast
+  * CollNetDirect/CollNetChain: 네트워크 스위치의 in-network reduction 활용
+  * NVLS: NVLink Switch (NVSwitch 기반)
+  * NVLSTree: NVLS + Tree 조합
+  * PAT: Parallel Aggregation Tree
+
+
+
 
 ## 참고 - srun bash ##
 아래는 srun bash 을 활용하여 gpu 파티션 노드들에 설치되어 있는 nccl-tests 프로그램을 재 컴파일 하는 샘플이다. srun + bash -c 커맨드 조합을 활용하며 slurm 클러스터의 각 노드에서 bash 명령어를 실행할 수 있다.  
