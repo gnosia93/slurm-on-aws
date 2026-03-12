@@ -53,3 +53,109 @@ squeue 는 실시간 확인용이고, cat 으로는 최종 결과를 확인할 �
 srun -p gpu -N 2 --ntasks-per-node=1 \
 bash -c "cd /opt/nccl-tests && sudo make clean && sudo make -j \$(nproc) MPI=1 MPI_HOME=/opt/amazon/openmpi NCCL_HOME=/opt/nccl/build CUDA_HOME=/usr/local/cuda"
 ```
+[결과]
+```
+bash -c "cd /opt/nccl-tests && sudo make clean && sudo make -j \$(nproc) MPI=1 MPI_HOME=/opt/amazon/openmpi NCCL_HOME=/opt/nccl/build CUDA_HOME=/usr/local/cuda"
+make -C src clean BUILDDIR=/opt/nccl-tests/build
+make[1]: Entering directory '/opt/nccl-tests/src'
+make -C src clean BUILDDIR=/opt/nccl-tests/build
+make[1]: Entering directory '/opt/nccl-tests/src'
+make[1]: Leaving directory '/opt/nccl-tests/src'
+make -C src build BUILDDIR=/opt/nccl-tests/build
+make[1]: Entering directory '/opt/nccl-tests/src'
+Compiling  timer.cc                            > /opt/nccl-tests/build/timer.o
+Compiling /opt/nccl-tests/build/verifiable/verifiable.o
+Compiling  all_reduce.cu                       > /opt/nccl-tests/build/all_reduce.o
+Compiling  common.cu                           > /opt/nccl-tests/build/common.o
+Compiling  all_gather.cu                       > /opt/nccl-tests/build/all_gather.o
+Compiling  broadcast.cu                        > /opt/nccl-tests/build/broadcast.o
+Compiling  reduce_scatter.cu                   > /opt/nccl-tests/build/reduce_scatter.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  reduce.cu                           > /opt/nccl-tests/build/reduce.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  alltoall.cu                         > /opt/nccl-tests/build/alltoall.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  scatter.cu                          > /opt/nccl-tests/build/scatter.o
+Compiling  gather.cu                           > /opt/nccl-tests/build/gather.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  sendrecv.cu                         > /opt/nccl-tests/build/sendrecv.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  hypercube.cu                        > /opt/nccl-tests/build/hypercube.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+make[1]: Leaving directory '/opt/nccl-tests/src'
+make -C src build BUILDDIR=/opt/nccl-tests/build
+make[1]: Entering directory '/opt/nccl-tests/src'
+Compiling  timer.cc                            > /opt/nccl-tests/build/timer.o
+Compiling /opt/nccl-tests/build/verifiable/verifiable.o
+Compiling  all_reduce.cu                       > /opt/nccl-tests/build/all_reduce.o
+Compiling  common.cu                           > /opt/nccl-tests/build/common.o
+Compiling  all_gather.cu                       > /opt/nccl-tests/build/all_gather.o
+Compiling  broadcast.cu                        > /opt/nccl-tests/build/broadcast.o
+Compiling  reduce_scatter.cu                   > /opt/nccl-tests/build/reduce_scatter.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  reduce.cu                           > /opt/nccl-tests/build/reduce.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  alltoall.cu                         > /opt/nccl-tests/build/alltoall.o
+Compiling  scatter.cu                          > /opt/nccl-tests/build/scatter.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  gather.cu                           > /opt/nccl-tests/build/gather.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  sendrecv.cu                         > /opt/nccl-tests/build/sendrecv.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Compiling  hypercube.cu                        > /opt/nccl-tests/build/hypercube.o
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/all_reduce.o  > /opt/nccl-tests/build/all_reduce_perf
+Linking  /opt/nccl-tests/build/all_gather.o  > /opt/nccl-tests/build/all_gather_perf
+Linking  /opt/nccl-tests/build/broadcast.o   > /opt/nccl-tests/build/broadcast_perf
+Linking  /opt/nccl-tests/build/reduce_scatter.o > /opt/nccl-tests/build/reduce_scatter_perf
+Linking  /opt/nccl-tests/build/reduce.o      > /opt/nccl-tests/build/reduce_perf
+Linking  /opt/nccl-tests/build/alltoall.o    > /opt/nccl-tests/build/alltoall_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/scatter.o     > /opt/nccl-tests/build/scatter_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/gather.o      > /opt/nccl-tests/build/gather_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/sendrecv.o    > /opt/nccl-tests/build/sendrecv_perf
+Linking  /opt/nccl-tests/build/hypercube.o   > /opt/nccl-tests/build/hypercube_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/all_reduce.o  > /opt/nccl-tests/build/all_reduce_perf
+Linking  /opt/nccl-tests/build/all_gather.o  > /opt/nccl-tests/build/all_gather_perf
+Linking  /opt/nccl-tests/build/broadcast.o   > /opt/nccl-tests/build/broadcast_perf
+Linking  /opt/nccl-tests/build/reduce_scatter.o > /opt/nccl-tests/build/reduce_scatter_perf
+Linking  /opt/nccl-tests/build/reduce.o      > /opt/nccl-tests/build/reduce_perf
+Linking  /opt/nccl-tests/build/alltoall.o    > /opt/nccl-tests/build/alltoall_perf
+Linking  /opt/nccl-tests/build/scatter.o     > /opt/nccl-tests/build/scatter_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/gather.o      > /opt/nccl-tests/build/gather_perf
+Linking  /opt/nccl-tests/build/sendrecv.o    > /opt/nccl-tests/build/sendrecv_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+Linking  /opt/nccl-tests/build/hypercube.o   > /opt/nccl-tests/build/hypercube_perf
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+make[1]: Leaving directory '/opt/nccl-tests/src'
+make[1]: Leaving directory '/opt/nccl-tests/src'
+```
