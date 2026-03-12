@@ -347,10 +347,60 @@ Wed Mar 11 11:30:59 2026
 +-----------------------------------------------------------------------------------------+
 ```
 
-* docker 확인
-* nvidia-container-toolkit 확인
+#### 2. Docker 및 NVIDIA Container Toolkit 확인 ####
+```
+docker -v
+nvidia-ctk --version
+
+docker run --rm --gpus all nvidia/cuda:12.8.0-base-ubuntu22.04 nvidia-smi
+```
+[결과]
+```
+Unable to find image 'nvidia/cuda:12.8.0-base-ubuntu22.04' locally
+12.8.0-base-ubuntu22.04: Pulling from nvidia/cuda
+4b650590013c: Pull complete 
+7d21de8cade1: Pull complete 
+ad69d3880477: Pull complete 
+2d01ee89ef0b: Pull complete 
+Digest: sha256:12242992c121f6cab0ca11bccbaaf757db893b3065d7db74b933e59f321b2cf4
+Status: Downloaded newer image for nvidia/cuda:12.8.0-base-ubuntu22.04
+Thu Mar 12 12:27:38 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.172.08             Driver Version: 570.172.08     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA RTX PRO 6000 Blac...    On  |   00000000:30:00.0 Off |                    0 |
+| N/A   27C    P8             30W /  600W |       0MiB /  97887MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+```
+
+#### 3. CUDA Toolkit 확인 ####
+```
+# CUDA 버전 확인
+nvcc --version
+
+# CUDA 설치 경로 확인
+ls -la /usr/local/cuda
+
+# CUDA 라이브러리 확인
+ls /usr/local/cuda/lib64/
+```
+
+
+
 * nccl/nccl-test 확인
-* cuda toolkit 확인
 * aws-ofi-nccl 확인
 
 정확히는 CUDA Toolkit을 설치하면 생기는 디렉토리입니다.
