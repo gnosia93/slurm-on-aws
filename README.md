@@ -1,4 +1,5 @@
 # slurm-on-aws
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/two-subnets.png)
 
 * [C1. VPC 생성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/1-vpc.md)
   
