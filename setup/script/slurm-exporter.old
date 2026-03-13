@@ -29,7 +29,6 @@ elif [ "${OS}" = "Amazon Linux" ]; then
 fi
 
 cd /tmp
-rm -rf prometheus-slurm-exporter
 git clone https://github.com/vpenso/prometheus-slurm-exporter.git
 cd prometheus-slurm-exporter
 go mod download
