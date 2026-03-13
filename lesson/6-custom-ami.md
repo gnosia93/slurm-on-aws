@@ -38,6 +38,9 @@ echo ${AWS_REGION}
 
 sed -n '85,110p' packer-ami.pkr.hcl
 sed -i 's/Deep Learning AMI GPU PyTorch 2.0.1 (Amazon Linux 2) \*/Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.7 (Ubuntu 22.04) */' packer-ami.pkr.hcl
+sed -i 's/default = "3.7.0"/default = "3.14.2"/' packer-ami.pkr.hcl
+sed -i 's/amzn2-\*/ubuntu-2204-lts-hvm-x86_64-*/' packer-ami.pkr.hcl
+sed -i 's/default = "ec2-user"/default = "ubuntu"/' packer-ami.pkr.hcl
 
 make ami_pcluster_gpu
 ```
