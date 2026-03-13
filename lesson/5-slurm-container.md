@@ -29,3 +29,6 @@ srun --container-image=nvidia/cuda:11.6.2-base-ubuntu20.04 nvidia-smi
 
 nvidia-smi
 ```
+
+## 레퍼런스 ##
+* https://slurm.schedmd.com/containers.html
