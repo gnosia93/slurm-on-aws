@@ -41,7 +41,7 @@ export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Val
 export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=ec2-host-sg" \
   --query "SecurityGroups[0].GroupId" --output text)
 
-echo "\n"
+echo " "
 echo "CLUSTER_NAME: ${CLUSTER_NAME}"
 echo "AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}"
 echo "AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID}"
