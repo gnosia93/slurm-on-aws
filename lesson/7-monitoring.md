@@ -170,16 +170,16 @@ volumes:
 EOF
 ```
 
-도커 컴포즈를 실행한다. 
+restart always 모드로 도커 컴포즈를 실행한다. EC2가 재부팅되더라도 모니터링 에이전트들은 재실행된다. 
 ```
 docker compose up -d
 
 echo "============================================"
 echo "Monitoring stack installed"
 echo "============================================"
-echo "Grafana:    http://<EC2_IP>:3000  (admin/changeme)"
-echo "Loki:       http://<EC2_IP>:3100"
-echo "Prometheus: http://<EC2_IP>:9090"
+echo "Grafana:    http://${PUBLIC_HOSTNAME}:3000  (admin/changeme)"
+echo "Loki:       http://${PUBLIC_HOSTNAME}:3100"
+echo "Prometheus: http://${PUBLIC_HOSTNAME}:9090"
 ```
 
 
