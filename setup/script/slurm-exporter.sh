@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+OS=$(cat /etc/os-release | grep "^NAME=" | sed 's/NAME="//' | sed 's/"//')
+
 # Docker 데몬 준비 대기
 for i in $(seq 1 30); do
   docker info &>/dev/null && break
@@ -19,36 +21,35 @@ docker run -d --restart always \
 
 
 # --- SLURM Exporter (포트: 9341) - Head Node 전용 ---
-# Go 설치
-sudo snap install go --classic
+if [ "${OS}" = "Ubuntu" ]; then
+  apt-get install -y git golang-go
+elif [ "${OS}" = "Amazon Linux" ]; then
+  dnf install -y git golang
+fi
 
-# prometheus-slurm-exporter 빌드
 cd /tmp
 git clone https://github.com/vpenso/prometheus-slurm-exporter.git
 cd prometheus-slurm-exporter
 go mod download
-sudo go build -o /usr/local/bin/prometheus-slurm-exporter
+go build -o /usr/local/bin/prometheus-slurm-exporter
 
-# systemd 서비스 등록
-sudo tee /etc/systemd/system/slurm-exporter.service <<EOF
+tee /etc/systemd/system/slurm-exporter.service <<EOF
 [Unit]
 Description=Prometheus SLURM Exporter
 After=network.target slurmd.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/prometheus-slurm-exporter :9341
+ExecStart=/usr/local/bin/prometheus-slurm-exporter -listen-address :9341
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
-sudo systemctl daemon-reload
-sudo systemctl enable slurm-exporter
-sudo systemctl start slurm-exporter
+systemctl daemon-reload
+systemctl enable slurm-exporter
+systemctl start slurm-exporter
 
-echo "============================================"
-echo "SLURM exporter installed successfully"
-echo "============================================"
 echo "SLURM Exporter: http://localhost:9341/metrics"
+
