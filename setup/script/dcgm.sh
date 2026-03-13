@@ -25,7 +25,15 @@ fi
 systemctl enable nvidia-dcgm
 systemctl start nvidia-dcgm
 
+# Docker 데몬 준비 대기
+for i in $(seq 1 30); do
+  docker info &>/dev/null && break
+  echo "Waiting for Docker daemon... ($i/30)"
+  sleep 5
+done
+
 # --- DCGM Exporter (포트: 9400) ---
+docker rm -f dcgm-exporter 2>/dev/null || true
 docker run -d --restart always \
   --name dcgm-exporter \
   --gpus all \
@@ -34,6 +42,7 @@ docker run -d --restart always \
   nvcr.io/nvidia/k8s/dcgm-exporter:3.3.9-3.6.1-ubuntu22.04
 
 # --- Node Exporter (포트: 9100) ---
+docker rm -f node-exporter 2>/dev/null || true
 docker run -d --restart always \
   --name node-exporter \
   --net host \
