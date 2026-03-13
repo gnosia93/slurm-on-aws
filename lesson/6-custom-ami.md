@@ -32,6 +32,7 @@ Installed plugin github.com/hashicorp/ansible v1.1.4 in "/home/ec2-user/.config/
 ```
 
 ### 3. AMI 빌드 ###
+기존 packet 레서피를 다음과 수정한다. 
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 echo ${AWS_REGION}
