@@ -6,11 +6,19 @@ nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.e
 
 * nvidia-smi — GPU 상태, 온도, 전력, ECC 에러
 * nvidia-smi topo -m — GPU/NVLink/PCIe 토폴로지
-* dcgmi diag -r 3 — GPU 전체 진단
-* dcgmi health -c — GPU health 모니터링 설정
 
+#### GPU 토폴로지 ####
+```
+nvidia-smi topo -m -i all
+nvidia-smi topo -mp
+```
+* NV#	- NVLink (숫자는 링크 수)
+* PIX	- 같은 PCIe 스위치	(~32GB/s)
+* PHB	- 같은 CPU 소켓, 다른 PCIe 스위치 (~32GB/s)
+* SYS	- 다른 CPU 소켓 (~16GB/s)
+* NODE - 같은 NUMA 노드	(~32GB/s)
 
-### GPU 진단 ###
+#### GPU 진단 ####
 ```
 srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 ```
