@@ -30,6 +30,8 @@ EOF
 * -f 2: factor, 매 반복마다 크기를 2배씩 증가 (8B → 16B → 32B → ... → 1GB)
 * -g 1: 노드당 사용할 GPU 수 1개
 * %h는 hostname, %p는 PID로 치환
+* --mpi=pmix는 srun에서 프로세스 간 통신을 위한 MPI 런칭 방식을 지정하는 옵션으로, PMIx (Process Management Interface for Exascale)는 SLURM이 멀티노드 프로세스를 launch할 때 각 프로세스에게 rank, world_size, 다른 프로세스의 주소 등의 정보를 전달하는 프로토콜이다. 보통 pmix, pmix_v4, pmi2, none 등이 있습니다. ParallelCluster에서는 pmix가 기본적으로 지원된다.
+
 
 8 바이트부터 1GB 까지 메시지 크기를 2배씩 늘려가며 all_reduce 성능을 측정한다.
 실제 AI 학습에서 all_reduce로 교환하는 gradient 크기가 보통 수백 MB ~ 1GB 수준이라, 1GB까지 테스트하면 실전 성능을 잘 반영하는 것이다
