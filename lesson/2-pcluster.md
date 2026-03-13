@@ -166,7 +166,7 @@ Scheduling:
               Args:
                 - v2.29.2-1             # NCCL version
                 - v1.18.0               # AWS OFI NCCL version
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot-pyxis.sh'
+#            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot-pyxis.sh'
 #SharedStorage:
 #  - Name: HomeDirs
 #    MountDir: /home
