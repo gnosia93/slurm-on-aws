@@ -1,13 +1,16 @@
 ### 도커 및 컴포즈 설치 ###
 ```
 sudo dnf install -y docker
+
 sudo mkdir -p /usr/local/lib/docker/cli-plugins
 sudo curl -SL https://github.com/docker/compose/releases/download/v2.32.4/docker-compose-linux-x86_64 \
   -o /usr/local/lib/docker/cli-plugins/docker-compose
 sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker $USER
+
 docker --version
 docker compose version
 ```
