@@ -5,6 +5,12 @@
 nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.errors.corrected.volatile.total, ecc.errors.uncorrected.volatile.total --format=csv
 ```
 
+#### GPU 쓰로틀링 ####
+```
+nvidia-smi --query-gpu=index,name,clocks_throttle_reasons.active,clocks_throttle_reasons.gpu_idle,clocks_throttle_reasons.hw_thermal_slowdown,clocks_throttle_reasons.sw_thermal_slowdown,
+clocks_throttle_reasons.sw_power_cap --format=csv
+```
+
 #### GPU 토폴로지 ####
 ```
 nvidia-smi topo -m -i all
