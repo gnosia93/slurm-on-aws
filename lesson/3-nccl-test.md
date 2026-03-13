@@ -296,9 +296,12 @@ pcluster update-cluster --cluster-name ${CLUSTER_NAME} --cluster-configuration c
 
 업데이트 상태를 조회한다.
 ```
-pcluster describe-cluster --cluster-name slurm-on-aws
+pcluster describe-cluster --cluster-name slurm-on-aws | grep clusterStatus
 ```
-
+[결과]
+```
+"clusterStatus": "UPDATE_COMPLETE",
+```
 
 nccl-test 노드의 크기를 2에서 8로 증가시킨 후 ncc-test를 실행한다. 
 ```
