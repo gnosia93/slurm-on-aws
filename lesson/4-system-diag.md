@@ -99,8 +99,7 @@ lspci -vvv | grep -A 20 -i nvidia | grep -E "NVIDIA|LnkSta|LnkCap"
     LnkSta: Speed 16GT/s, Width x16    ← 현재 실제 링크 상태
 ```
   
-* lspci -vv -s <gpu_bus_id> | grep -i width — PCIe bandwidth (x16 확인)
-* numactl --hardware — NUMA 토폴로지 (GPU-CPU affinity)
+
 
 
 ---
