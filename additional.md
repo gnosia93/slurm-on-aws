@@ -12,6 +12,7 @@
 
 * 일반적인 분산 학습(Data Parallel, FSDP, TP, PP)에서는 all-reduce, all-gather, reduce-scatter가 주요 통신 패턴인데, 이것들은 대용량 메시지를 순차적으로 전달하는 방식이라 bandwidth 위주이다.
 * latency에 민감한 케이스는 MoE 외에도, Pipeline Parallelism에서 마이크로배치 간 전환 (작은 activation 전송이 빈번), 노드 수가 수천 대 이상일 때 동기화 오버헤드가 이에 해당한다.
-  * [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
-  * [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
-  * [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+#### #### 
+* [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
+* [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
+* [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
