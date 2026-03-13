@@ -115,6 +115,7 @@ HeadNode:
   CustomActions:
     OnNodeConfigured:
       Sequence:
+        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
         - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
           Args:
             - 1.18.2-1                         # NVIDIA_CONTAINER_TOOLKIT_VERSION version
@@ -159,6 +160,7 @@ Scheduling:
       CustomActions:
         OnNodeConfigured:
           Sequence:
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
               Args:
                 - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
