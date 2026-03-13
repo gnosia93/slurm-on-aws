@@ -51,7 +51,8 @@ srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 * df -h — 마운트/용량
 * fio — 디스크 I/O 벤치마크 (데이터 로딩 병목 확인)
 
-### 시스템 dmesg ###
+## 시스템 ##
+### dmesg ###
 ```
 # 전체 커널 에러
 dmesg | grep -i error
