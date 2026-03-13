@@ -21,7 +21,7 @@ docker --version
 docker compose version
 ```
 
-### 커피그 파일 생성 ###
+### 설정 파일 생성 ###
 ```
 mkdir -p /opt/monitoring
 cd /opt/monitoring
