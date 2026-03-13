@@ -28,8 +28,8 @@ elif [ "${OS}" = "Amazon Linux" ]; then
   dnf install -y git golang
 fi
 
-cd /tmp
-git clone https://github.com/vpenso/prometheus-slurm-exporter.git
-cd prometheus-slurm-exporter
-go mod download
-go build -o /usr/local/bin/prometheus-slurm-exporter
+#cd /tmp
+#git clone https://github.com/vpenso/prometheus-slurm-exporter.git
+#cd prometheus-slurm-exporter
+#go mod download
+#go build -o /usr/local/bin/prometheus-slurm-exporter
