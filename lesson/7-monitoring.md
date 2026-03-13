@@ -153,3 +153,13 @@ echo "Loki:       http://<EC2_IP>:3100"
 echo "Prometheus: http://<EC2_IP>:9090"
 ```
 
+
+설치 후 Grafana에서 할 일:
+
+http://<EC2_IP>:3000 접속 (admin/changeme)
+Data Sources 추가:
+Loki: http://loki:3100
+Prometheus: http://prometheus:9090
+Explore에서 로그/메트릭 조회 가능
+Prometheus의 static_configs에 compute 노드 IP를 수동으로 넣어야 하는데, ParallelCluster는 노드가 동적으로 변하니까 file-based service discovery를 쓰는 게 더 좋습니다. 필요하면 그 부분도 안내해 드릴게요.
+
