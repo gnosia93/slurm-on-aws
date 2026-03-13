@@ -1,11 +1,11 @@
-### GPU 관련 ###
+## GPU 관련 ##
 
-#### GPU 온도 파워 등 ####
+### GPU 온도 파워 등 ###
 ```
 nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.errors.corrected.volatile.total, ecc.errors.uncorrected.volatile.total --format=csv
 ```
 
-#### GPU 쓰로틀링 ####
+### GPU 쓰로틀링 ###
 ```
 nvidia-smi --query-gpu=index,name,clocks_throttle_reasons.active,clocks_throttle_reasons.gpu_idle,\
 clocks_throttle_reasons.hw_thermal_slowdown,clocks_throttle_reasons.sw_thermal_slowdown,\
@@ -17,11 +17,11 @@ nvidia-smi dmon -s pt -d 1
 ```
 * p: 전력/온도, t: 쓰로틀링 상태, -d 1: 1초 간격
   
-#### GPU Clock 비교 (현재 클럭과 최대 클럭) ####
+### GPU Clock 비교 (현재 클럭과 최대 클럭) ###
 ```
 nvidia-smi --query-gpu=index,clocks.current.graphics,clocks.max.graphics,clocks.current.mem,clocks.max.mem --format=csv
 ```
-#### GPU 토폴로지 ####
+### GPU 토폴로지 ###
 ```
 nvidia-smi topo -m -i all
 nvidia-smi topo -mp
@@ -33,21 +33,17 @@ nvidia-smi topo -mp
 * SYS	- 다른 CPU 소켓 (~16GB/s)
 * NODE - 같은 NUMA 노드	(~32GB/s) 
 
-#### GPU 진단 ####
+### GPU 진단 ###
 ```
 srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 ```
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/dcgmi-diag.png)
 
 
-
-
-
 ### 네트워크 관련 ###
 
 * fi_info -p efa — EFA provider 상태
 * ethtool -S <efa_device> — EFA 카운터 (drop, error 등)
-* nccl-test all_reduce — 노드 간 실제 bandwidth/latency
 
 ### 스토리지 관련 ###
 
@@ -55,9 +51,27 @@ srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 * df -h — 마운트/용량
 * fio — 디스크 I/O 벤치마크 (데이터 로딩 병목 확인)
 
-### 시스템 관련 ###
+### 시스템 dmesg ###
+```
+# 전체 커널 에러
+dmesg | grep -i error
 
-* dmesg | grep -i error — 커널 에러
+# GPU/NVIDIA 관련 에러만
+dmesg | grep -i nvidia
+
+# ECC/Xid 에러 (GPU 하드웨어 에러)
+dmesg | grep -i xid
+
+# PCIe 에러
+dmesg | grep -i pcie
+
+# EFA 관련 에러
+dmesg | grep -i efa
+
+# 최근 에러만 (타임스탬프 포함)
+dmesg -T | grep -i error | tail -20
+```
+
 * lspci | grep -i nvidia — PCIe 장치 인식
 * lspci -vv -s <gpu_bus_id> | grep -i width — PCIe bandwidth (x16 확인)
 * numactl --hardware — NUMA 토폴로지 (GPU-CPU affinity)
