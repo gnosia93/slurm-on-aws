@@ -119,7 +119,7 @@ HeadNode:
         - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
           Args:
             - 1.18.2-1                         # NVIDIA_CONTAINER_TOOLKIT_VERSION version
-        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/slurm-exporter.sh'
+#        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/slurm-exporter.sh'
   Imds:
     Secured: false
 Scheduling:
