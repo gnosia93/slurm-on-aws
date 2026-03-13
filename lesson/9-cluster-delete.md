@@ -1,4 +1,4 @@
-### 컴퓨트 노드 줄이기 ###
+## 컴퓨트 노드 줄이기 ##
 #### 1. 변경전 ####
 ```
 sinfo -N
@@ -49,7 +49,7 @@ gpu-st-ml-1      1      gpu* idle~ ```
 ```
 
 
-### 클러스터 삭제 ###
+## 클러스터 삭제 ##
 ```
 pcluster delete-cluster -n ${CLUSTER_NAME} 
 ```
