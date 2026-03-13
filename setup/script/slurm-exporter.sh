@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+# Docker 데몬 준비 대기
+for i in $(seq 1 30); do
+  docker info &>/dev/null && break
+  echo "Waiting for Docker daemon... ($i/30)"
+  sleep 5
+done
+
 # --- Node Exporter (포트: 9100) ---
 docker run -d --restart always \
   --name node-exporter \
