@@ -41,18 +41,18 @@ srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/dcgmi-diag.png)
 
 
-### 네트워크 관련 ###
+## 네트워크 ##
 
 * fi_info -p efa — EFA provider 상태
 * ethtool -S <efa_device> — EFA 카운터 (drop, error 등)
 
-### 스토리지 관련 ###
+## 스토리지 ##
 
 * lsblk — 디스크 구성
 * df -h — 마운트/용량
 * fio — 디스크 I/O 벤치마크 (데이터 로딩 병목 확인)
 
-## 시스템 ##
+## OS 시스템 ##
 ### dmesg ###
 ```
 # 전체 커널 에러
