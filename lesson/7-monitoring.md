@@ -29,6 +29,10 @@ cd /opt/monitoring
 
 [프로메테우스]
 ```
+
+
+
+cat <<EOF > prometheus.yml
 global:
   scrape_interval: 15s
 
@@ -69,6 +73,7 @@ scrape_configs:
     static_configs:
       - targets:
           - '<HEAD_NODE_IP>:9341'
+EOF
 ```
 
 [LOKI]
