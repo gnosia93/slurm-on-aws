@@ -12,6 +12,7 @@ nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.e
 nvidia-smi topo -m -i all
 nvidia-smi topo -mp
 ```
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/smi-topology.png)
 * NV#	- NVLink (숫자는 링크 수)
 * PIX	- 같은 PCIe 스위치	(~32GB/s)
 * PHB	- 같은 CPU 소켓, 다른 PCIe 스위치 (~32GB/s)
