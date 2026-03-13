@@ -10,7 +10,7 @@
      
 * [C5. 컨테이너 사용하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-slurm-container.md)
 
-* [C6. 커스컴 AMI 만들기]()
+* [C6. 커스컴 AMI 만들기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md)
   
 * [C7. 모니터링 설정하기]
 
