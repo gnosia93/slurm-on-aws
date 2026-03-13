@@ -308,6 +308,633 @@ nccl-test 노드의 크기를 2에서 8로 증가시킨 후 ncc-test를 실행�
 sed -i 's/--nodes=2/--nodes=8/' nccl-test.sbatch
 sbatch nccl-test.sbatch
 ```
+[결과]
+```
+# Collective test starting: all_reduce_perf
+# nThread 1 nGpus 1 minBytes 8 maxBytes 1073741824 step: 2(factor) warmup iters: 1 iters: 20 agg iters: 1 validation: 1 graph: 0
+#
+# Using devices
+#  Rank  0 Group  0 Pid  48811 on gpu-st-ml-1 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  1 Group  0 Pid  49607 on gpu-st-ml-2 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  2 Group  0 Pid  48190 on gpu-st-ml-3 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  3 Group  0 Pid  47507 on gpu-st-ml-4 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  4 Group  0 Pid  48572 on gpu-st-ml-5 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  5 Group  0 Pid  48176 on gpu-st-ml-6 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  6 Group  0 Pid  47791 on gpu-st-ml-7 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+#  Rank  7 Group  0 Pid  47774 on gpu-st-ml-8 device  0 [0000:30:00] NVIDIA RTX PRO 6000 Blackwell Server Edition
+gpu-st-ml-1:48811:48811 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.13<0>
+gpu-st-ml-1:48811:48811 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-8:47774:47774 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-6:48176:48176 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-6:48176:48176 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-7:47791:47791 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-7:47791:47791 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-4:47507:47507 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-4:47507:47507 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-5:48572:48572 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-5:48572:48572 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-3:48190:48190 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-2:49607:49607 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+gpu-st-ml-3:48190:48190 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-2:49607:49607 [0] NCCL INFO cudaDriverVersion 12080
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.75<0>
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.216<0>
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.188<0>
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.8<0>
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.224<0>
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.71<0>
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Bootstrap: Using enp39s0:10.0.10.140<0>
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NCCL version 2.29.2+cuda12.8
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NCCL git version HEAD ebd1e92
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/Plugin: Loaded net plugin Libfabric (v11)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Successfully loaded external network plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Initializing aws-ofi-nccl 1.18.0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Using Libfabric version 2.3
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Using CUDA driver version 12080 with runtime 12080
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 794471d700007500
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000ad800000075
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 6fed320300010d00
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000abc0000010d
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 79408c0000000d00
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000ae00000000d
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI GUID of rdmap47s0: bfa464ef00017500
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000a0800000175
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 9724468400000d00
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000a4b0000000d
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 3fd1f48800017500
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000a8c00000175
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 4f06de9000010d00
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000a470000010d
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Plugin selected platform: AWS
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Configuring AWS-specific options
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Internode latency set at 35.0 us
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Using transport protocol SENDRECV (platform set)
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Selected provider is efa, fabric is efa (found 1 nics)
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI GUID of rdmap47s0: 1988da3500007500
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI GUID for dev[0]: 00000000000000000a000a0d00000075
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Could not disable CUDA API usage for HMEM, disabling GDR
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Support for global registrations: false
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Support for DMA-BUF registrations: false
+gpu-st-ml-2:49607:49607 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Need to force simple protocol: GDR not supported
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Adding FI_EFA_FORK_SAFE=1 to environment
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Adding NCCL_BUFFSIZE=8388608 to environment
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Adding NCCL_P2P_NET_CHUNKSIZE=524288 to environment
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Adding NCCL_PROTO=simple to environment
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Adding NCCL_TUNER_PLUGIN=libnccl-net.so to environment
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Initialized NET plugin Libfabric
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Assigned NET plugin Libfabric to comm
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Using network Libfabric
+gpu-st-ml-2:49607:49607 [0] NCCL INFO [Rank 1] ncclCommInitRank comm 0x56a78808a960 rank 1 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-4:47507:47507 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO [Rank 3] ncclCommInitRank comm 0x58f66a414740 rank 3 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-8:47774:47774 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO [Rank 7] ncclCommInitRank comm 0x5b10fe675770 rank 7 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-1:48811:48811 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO [Rank 0] ncclCommInitRank comm 0x5b3d0af0a1b0 rank 0 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-1:48811:48811 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-6:48176:48176 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO [Rank 5] ncclCommInitRank comm 0x5f35ac4d5970 rank 5 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-5:48572:48572 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO [Rank 4] ncclCommInitRank comm 0x5aecd7193cf0 rank 4 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-5:48572:48572 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-3:48190:48190 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO [Rank 2] ncclCommInitRank comm 0x5e5ae8cffaa0 rank 2 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-2:49607:49607 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-4:47507:47507 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-3:48190:48190 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-7:47791:47791 [0] NCCL INFO DMA-BUF is available on GPU device 0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO [Rank 6] ncclCommInitRank comm 0x613a158d6aa0 rank 6 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init START
+gpu-st-ml-8:47774:47774 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-6:48176:48176 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-7:47791:47791 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Bootstrap timings total 0.007394 (create 0.000023, send 0.000154, recv 0.006160, ring 0.000721, delay 0.000000)
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Bootstrap timings total 0.001706 (create 0.000023, send 0.000160, recv 0.000322, ring 0.000626, delay 0.000001)
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Bootstrap timings total 0.012177 (create 0.000023, send 0.000169, recv 0.002608, ring 0.000888, delay 0.000001)
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Bootstrap timings total 0.006854 (create 0.000023, send 0.000167, recv 0.000355, ring 0.005994, delay 0.000000)
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Bootstrap timings total 0.009765 (create 0.000019, send 0.000074, recv 0.000197, ring 0.009110, delay 0.000001)
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Bootstrap timings total 0.016990 (create 0.000021, send 0.000176, recv 0.012896, ring 0.003353, delay 0.000000)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Bootstrap timings total 0.004431 (create 0.000023, send 0.000155, recv 0.000532, ring 0.003314, delay 0.000000)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Bootstrap timings total 0.016544 (create 0.000021, send 0.000164, recv 0.009691, ring 0.003364, delay 0.000000)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-6:48176:48176 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-1:48811:48811 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-5:48572:48572 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-8:47774:47774 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-7:47791:47791 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-2:49607:49607 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-4:47507:47507 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 0-31. (GPU affinity = 0-31 ; CPU affinity = 0-31).
+gpu-st-ml-8:47774:47774 [0] NCCL INFO comm 0x5b10fe675770 rank 7 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Trees [0] -1/-1/-1->7->6 [1] 3/-1/-1->7->-1
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-8:47774:47774 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-1:48811:48811 [0] NCCL INFO comm 0x5b3d0af0a1b0 rank 0 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 00/02 : 0 1 2 3 4 5 6 7
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 01/02 : 0 1 2 3 4 5 6 7
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Trees [0] 4/-1/-1->0->-1 [1] -1/-1/-1->0->1
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-1:48811:48811 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-7:47791:47791 [0] NCCL INFO comm 0x613a158d6aa0 rank 6 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Trees [0] 5/7/-1->6->4 [1] -1/-1/-1->6->5
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-7:47791:47791 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-6:48176:48176 [0] NCCL INFO comm 0x5f35ac4d5970 rank 5 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Trees [0] -1/-1/-1->5->6 [1] 6/4/-1->5->3
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-6:48176:48176 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-2:49607:49607 [0] NCCL INFO comm 0x56a78808a960 rank 1 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Trees [0] -1/-1/-1->1->2 [1] 2/0/-1->1->3
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-2:49607:49607 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-3:48190:48190 [0] NCCL INFO comm 0x5e5ae8cffaa0 rank 2 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Trees [0] 1/3/-1->2->4 [1] -1/-1/-1->2->1
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-3:48190:48190 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-4:47507:47507 [0] NCCL INFO comm 0x58f66a414740 rank 3 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Trees [0] -1/-1/-1->3->2 [1] 5/1/-1->3->7
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-4:47507:47507 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-5:48572:48572 [0] NCCL INFO comm 0x5aecd7193cf0 rank 4 nRanks 8 nNodes 8 localRanks 1 localRank 0 MNNVL 0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Trees [0] 2/6/-1->4->0 [1] -1/-1/-1->4->5
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NCCL_BUFFSIZE set by environment to 8388608.
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NCCL_P2P_NET_CHUNKSIZE set by environment to 524288.
+gpu-st-ml-5:48572:48572 [0] NCCL INFO P2P Chunksize set to 524288
+gpu-st-ml-8:47774:47774 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-1:48811:48811 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-7:47791:47791 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-6:48176:48176 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-8:47774:47782 [0] NCCL INFO [Proxy Service] Device 0 CPU core 17
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-1:48811:48821 [0] NCCL INFO [Proxy Service] Device 0 CPU core 19
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-2:49607:49607 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-1:48811:48822 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 21
+gpu-st-ml-8:47774:47783 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 19
+gpu-st-ml-6:48176:48184 [0] NCCL INFO [Proxy Service] Device 0 CPU core 17
+gpu-st-ml-3:48190:48190 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-2:49607:49616 [0] NCCL INFO [Proxy Service] Device 0 CPU core 18
+gpu-st-ml-6:48176:48185 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 18
+gpu-st-ml-4:47507:47507 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-7:47791:47799 [0] NCCL INFO [Proxy Service] Device 0 CPU core 2
+gpu-st-ml-7:47791:47800 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 3
+gpu-st-ml-5:48572:48572 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Check P2P Type isAllDirectP2p 1 directMode 0 isAllCudaP2p 1
+gpu-st-ml-2:49607:49617 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 19
+gpu-st-ml-3:48190:48198 [0] NCCL INFO [Proxy Service] Device 0 CPU core 1
+gpu-st-ml-4:47507:47515 [0] NCCL INFO [Proxy Service] Device 0 CPU core 17
+gpu-st-ml-4:47507:47516 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 18
+gpu-st-ml-5:48572:48580 [0] NCCL INFO [Proxy Service] Device 0 CPU core 1
+gpu-st-ml-5:48572:48581 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 2
+gpu-st-ml-3:48190:48199 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 19
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-6:48176:48176 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-5:48572:48572 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-1:48811:48811 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-2:49607:49607 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-7:47791:47791 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-3:48190:48190 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NCCL_TUNER_PLUGIN set by environment to libnccl-net.so
+gpu-st-ml-4:47507:47507 [0] NCCL INFO TUNER/Plugin: Using nccl_ofi_tuner (v3)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Successfully loaded external tuner plugin /opt/aws-ofi-nccl/lib/libnccl-net.so
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-5:48572:48572 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-5:48572:48572 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-5:48572:48572 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO ncclCommInitRank comm 0x5aecd7193cf0 rank 4 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Init timings - ncclCommInitRank: rank 4 nranks 8 total 1.49 (kernels 1.39, alloc 0.07, bootstrap 0.01, allgathers 0.01, topo 0.00, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-1:48811:48811 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-3:48190:48190 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Enabled NCCL Func/Proto/Algo Matrix:
+     Function |       LL     LL128    Simple   |          Tree           Ring  CollNetDirect   CollNetChain           NVLS       NVLSTree            PAT  
+    Broadcast |        0         0         1   |             1              1              1              1              1              1              1  
+       Reduce |        0         0         1   |             1              1              1              1              1              1              1  
+    AllGather |        0         0         1   |             1              1              1              1              1              1              1  
+ReduceScatter |        0         0         1   |             1              1              1              1              1              1              1  
+    AllReduce |        0         0         1   |             1              1              1              1              1              1              1  
+
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-2:49607:49607 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-1:48811:48811 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-1:48811:48811 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-2:49607:49607 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-3:48190:48190 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-8:47774:47774 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-8:47774:47774 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-8:47774:47774 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-4:47507:47507 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-4:47507:47507 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-4:47507:47507 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-1:48811:48811 [0] NCCL INFO CC Off, workFifoBytes 1048576
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO ncclCommInitRank comm 0x5b3d0af0a1b0 rank 0 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Init timings - ncclCommInitRank: rank 0 nranks 8 total 1.49 (kernels 1.39, alloc 0.07, bootstrap 0.01, allgathers 0.01, topo 0.00, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-3:48190:48190 [0] NCCL INFO ncclCommInitRank comm 0x5e5ae8cffaa0 rank 2 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Init timings - ncclCommInitRank: rank 2 nranks 8 total 1.49 (kernels 1.39, alloc 0.07, bootstrap 0.00, allgathers 0.01, topo 0.00, graphs 0.00, connections 0.02, rest 0.00)
+#
+#                                                              out-of-place                       in-place          
+#       size         count      type   redop    root     time   algbw   busbw #wrong     time   algbw   busbw #wrong
+#        (B)    (elements)                               (us)  (GB/s)  (GB/s)            (us)  (GB/s)  (GB/s)       
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-7:47791:47791 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-7:47791:47791 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-7:47791:47791 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO ncclCommInitRank comm 0x56a78808a960 rank 1 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Init timings - ncclCommInitRank: rank 1 nranks 8 total 1.49 (kernels 1.38, alloc 0.06, bootstrap 0.02, allgathers 0.00, topo 0.01, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-8:47774:47774 [0] NCCL INFO ncclCommInitRank comm 0x5b10fe675770 rank 7 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Init timings - ncclCommInitRank: rank 7 nranks 8 total 1.49 (kernels 1.39, alloc 0.07, bootstrap 0.01, allgathers 0.01, topo 0.00, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-4:47507:47507 [0] NCCL INFO ncclCommInitRank comm 0x58f66a414740 rank 3 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Init timings - ncclCommInitRank: rank 3 nranks 8 total 1.49 (kernels 1.38, alloc 0.06, bootstrap 0.02, allgathers 0.00, topo 0.01, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-7:47791:47791 [0] NCCL INFO ncclCommInitRank comm 0x613a158d6aa0 rank 6 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Init timings - ncclCommInitRank: rank 6 nranks 8 total 1.49 (kernels 1.39, alloc 0.07, bootstrap 0.00, allgathers 0.01, topo 0.00, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI Tuner selected platform: AWS
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NET/OFI NCCL_OFI_TUNER is not available for platform : g7e.8xlarge, Fall back to NCCL's tuner
+gpu-st-ml-6:48176:48176 [0] NCCL INFO NCCL_PROTO set by environment to simple
+gpu-st-ml-6:48176:48176 [0] NCCL INFO threadThresholds 8/8/64 | 64/8/64 | 512 | 512
+gpu-st-ml-6:48176:48176 [0] NCCL INFO 2 coll channels, 2 collnet channels, 0 nvls channels, 2 p2p channels, 1 p2p channels per peer
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 1, ginSupport 0, globalNicFused 0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO ncclCommInitRank comm 0x5f35ac4d5970 rank 5 nranks 8 cudaDev 0 nvmlDev 0 busId 30000 commId 0xffb444396903efb0 - Init COMPLETE
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Init timings - ncclCommInitRank: rank 5 nranks 8 total 1.49 (kernels 1.39, alloc 0.07, bootstrap 0.01, allgathers 0.01, topo 0.00, graphs 0.00, connections 0.02, rest 0.00)
+gpu-st-ml-6:48176:48186 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 19
+gpu-st-ml-2:49607:49618 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 20
+gpu-st-ml-7:47791:47801 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 20
+gpu-st-ml-8:47774:47784 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 20
+gpu-st-ml-1:48811:48823 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 22
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 01/0 : 0[0] -> 1[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47517 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 19
+gpu-st-ml-3:48190:48200 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 20
+gpu-st-ml-5:48572:48582 [0] NCCL INFO [Proxy Progress] Device 0 CPU core 20
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 01/0 : 4[0] -> 5[0] [send] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 01/0 : 4[0] -> 5[0] [receive] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 00/0 : 5[0] -> 6[0] [send] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 01/0 : 5[0] -> 6[0] [send] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 00/0 : 5[0] -> 6[0] [receive] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 01/0 : 5[0] -> 6[0] [receive] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 01/0 : 0[0] -> 1[0] [receive] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 00/0 : 6[0] -> 7[0] [receive] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 00/0 : 6[0] -> 7[0] [send] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 00/0 : 1[0] -> 2[0] [send] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 01/0 : 1[0] -> 2[0] [send] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 00/0 : 4[0] -> 6[0] [receive] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 01/0 : 3[0] -> 7[0] [receive] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 01/0 : 3[0] -> 5[0] [receive] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 01/0 : 7[0] -> 3[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 00/0 : 2[0] -> 3[0] [receive] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 00/0 : 1[0] -> 2[0] [receive] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 01/0 : 1[0] -> 2[0] [receive] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 00/0 : 2[0] -> 3[0] [send] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 00/0 : 2[0] -> 4[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 1[0] -> 3[0] [receive] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 01/0 : 1[0] -> 3[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 3[0] -> 5[0] [send] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 01/0 : 3[0] -> 1[0] [receive] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 01/0 : 5[0] -> 3[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 7[0] -> 3[0] [receive] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 3[0] -> 7[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 5[0] -> 3[0] [receive] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 00/0 : 7[0] -> 6[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 3[0] -> 1[0] [send] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 00/0 : 6[0] -> 5[0] [receive] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 01/0 : 6[0] -> 5[0] [receive] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 01/0 : 5[0] -> 4[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 00/0 : 3[0] -> 2[0] [send] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 00/0 : 2[0] -> 1[0] [receive] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 01/0 : 2[0] -> 1[0] [receive] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 01/0 : 1[0] -> 0[0] [send] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 2[0] -> 4[0] [receive] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 4[0] -> 6[0] [send] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 00/0 : 4[0] -> 2[0] [receive] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 00/0 : 6[0] -> 4[0] [send] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 0[0] -> 4[0] [receive] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 4[0] -> 0[0] [send] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 00/0 : 4[0] -> 0[0] [receive] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 00/0 : 0[0] -> 4[0] [send] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 6[0] -> 4[0] [receive] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 01/0 : 1[0] -> 0[0] [receive] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 4[0] -> 2[0] [send] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 00/0 : 7[0] -> 6[0] [receive] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 00/0 : 6[0] -> 5[0] [send] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 01/0 : 5[0] -> 4[0] [receive] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 01/0 : 6[0] -> 5[0] [send] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 00/0 : 3[0] -> 2[0] [receive] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 00/0 : 2[0] -> 1[0] [send] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 01/0 : 2[0] -> 1[0] [send] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Connected all trees
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Connected all trees
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Connected all trees
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Connected all trees
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Connected all trees
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Connected all trees
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Connected all trees
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Connected all trees
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 3[0] -> 4[0] [receive] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 2[0] -> 3[0] [receive] via NET/Libfabric/0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Channel 00/0 : 4[0] -> 5[0] [receive] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 00/0 : 7[0] -> 0[0] [receive] via NET/Libfabric/0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Channel 00/0 : 0[0] -> 1[0] [receive] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 01/0 : 6[0] -> 7[0] [receive] via NET/Libfabric/0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Channel 01/0 : 6[0] -> 7[0] [send] via NET/Libfabric/0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Channel 01/0 : 2[0] -> 3[0] [send] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 00/0 : 3[0] -> 4[0] [send] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 00/0 : 7[0] -> 0[0] [send] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 01/0 : 7[0] -> 0[0] [receive] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 01/0 : 3[0] -> 4[0] [receive] via NET/Libfabric/0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Channel 01/0 : 3[0] -> 4[0] [send] via NET/Libfabric/0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Channel 00/0 : 0[0] -> 1[0] [send] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Channel 01/0 : 7[0] -> 0[0] [send] via NET/Libfabric/0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Channel 00/0 : 4[0] -> 5[0] [send] via NET/Libfabric/0
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+           8             2     float     sum      -1    120.3    0.00    0.00      0    119.9    0.00    0.00      0
+          16             4     float     sum      -1    128.9    0.00    0.00      0    160.1    0.00    0.00      0
+          32             8     float     sum      -1    115.0    0.00    0.00      0    145.4    0.00    0.00      0
+          64            16     float     sum      -1    114.0    0.00    0.00      0    114.0    0.00    0.00      0
+         128            32     float     sum      -1    114.4    0.00    0.00      0    113.5    0.00    0.00      0
+         256            64     float     sum      -1    114.9    0.00    0.00      0    114.0    0.00    0.00      0
+         512           128     float     sum      -1    115.3    0.00    0.01      0    114.4    0.00    0.01      0
+        1024           256     float     sum      -1    115.4    0.01    0.02      0    115.4    0.01    0.02      0
+        2048           512     float     sum      -1    116.9    0.02    0.03      0    116.8    0.02    0.03      0
+        4096          1024     float     sum      -1    130.5    0.03    0.05      0    130.4    0.03    0.05      0
+        8192          2048     float     sum      -1    141.8    0.06    0.10      0    141.4    0.06    0.10      0
+       16384          4096     float     sum      -1    150.5    0.11    0.19      0    148.9    0.11    0.19      0
+       32768          8192     float     sum      -1    174.0    0.19    0.33      0    172.2    0.19    0.33      0
+       65536         16384     float     sum      -1    179.9    0.36    0.64      0    177.6    0.37    0.65      0
+      131072         32768     float     sum      -1    235.6    0.56    0.97      0    229.9    0.57    1.00      0
+      262144         65536     float     sum      -1    454.9    0.58    1.01      0    441.8    0.59    1.04      0
+      524288        131072     float     sum      -1    662.4    0.79    1.39      0    629.0    0.83    1.46      0
+     1048576        262144     float     sum      -1   1158.2    0.91    1.58      0   1095.8    0.96    1.67      0
+     2097152        524288     float     sum      -1   1221.1    1.72    3.01      0   1205.8    1.74    3.04      0
+     4194304       1048576     float     sum      -1   1494.6    2.81    4.91      0   1494.7    2.81    4.91      0
+     8388608       2097152     float     sum      -1   2157.2    3.89    6.81      0   2160.4    3.88    6.79      0
+    16777216       4194304     float     sum      -1   5484.1    3.06    5.35      0   5247.6    3.20    5.59      0
+    33554432       8388608     float     sum      -1   4691.3    7.15   12.52      0   4697.1    7.14   12.50      0
+    67108864      16777216     float     sum      -1   9463.6    7.09   12.41      0   9479.7    7.08   12.39      0
+   134217728      33554432     float     sum      -1    18981    7.07   12.37      0    18918    7.09   12.42      0
+   268435456      67108864     float     sum      -1    37946    7.07   12.38      0    37907    7.08   12.39      0
+   536870912     134217728     float     sum      -1    75848    7.08   12.39      0    75944    7.07   12.37      0
+  1073741824     268435456     float     sum      -1   151910    7.07   12.37      0   151847    7.07   12.37      0
+gpu-st-ml-2:49607:49607 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-5:48572:48572 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-6:48176:48176 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-8:47774:47774 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-4:47507:47507 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-7:47791:47791 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-3:48190:48190 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-1:48811:48811 [0] NCCL INFO TUNER/Plugin: Closing tuner: 'nccl_ofi_tuner'
+gpu-st-ml-7:47791:47791 [0] NCCL INFO comm 0x613a158d6aa0 rank 6 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-7:47791:47791 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-4:47507:47507 [0] NCCL INFO comm 0x58f66a414740 rank 3 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-4:47507:47507 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-1:48811:48811 [0] NCCL INFO comm 0x5b3d0af0a1b0 rank 0 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-1:48811:48811 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-8:47774:47774 [0] NCCL INFO comm 0x5b10fe675770 rank 7 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-8:47774:47774 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-3:48190:48190 [0] NCCL INFO comm 0x5e5ae8cffaa0 rank 2 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-3:48190:48190 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-6:48176:48176 [0] NCCL INFO comm 0x5f35ac4d5970 rank 5 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-6:48176:48176 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-2:49607:49607 [0] NCCL INFO comm 0x56a78808a960 rank 1 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-2:49607:49607 [0] NCCL INFO Unloading plugin libnccl-net.so
+gpu-st-ml-5:48572:48572 [0] NCCL INFO comm 0x5aecd7193cf0 rank 4 nranks 8 cudaDev 0 busId 30000 - Destroy COMPLETE
+gpu-st-ml-5:48572:48572 [0] NCCL INFO Unloading plugin libnccl-net.so
+# Out of bounds values : 0 OK
+# Avg bus bandwidth    : 3.61047 
+#
+# Collective test concluded: all_reduce_perf
+
+gpu-st-ml-4:47507:47507 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-6:48176:48176 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-3:48190:48190 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-1:48811:48811 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-7:47791:47791 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-8:47774:47774 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-5:48572:48572 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+gpu-st-ml-2:49607:49607 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault
+```
+* 8 ranks × 8 nodes, all_reduce_perf 완료
+* 1GB 기준 busbw: ~12.37 GB/s (2노드 테스트와 동일)
+* EFA 100Gbps 이론 최대치(~12.5 GB/s)에 근접한 수치
+* 에러 없음 (Out of bounds values : 0 OK)
 
 
 ## [참고] srun 으로 bash 실행하기 ##
@@ -332,10 +959,6 @@ Compiling  timer.cc                            > /opt/nccl-tests/build/timer.o
 Compiling /opt/nccl-tests/build/verifiable/verifiable.o
 Compiling  all_reduce.cu                       > /opt/nccl-tests/build/all_reduce.o
 Compiling  common.cu                           > /opt/nccl-tests/build/common.o
-Compiling  all_gather.cu                       > /opt/nccl-tests/build/all_gather.o
-Compiling  broadcast.cu                        > /opt/nccl-tests/build/broadcast.o
-Compiling  reduce_scatter.cu                   > /opt/nccl-tests/build/reduce_scatter.o
-nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
 ...
 ...
 make[1]: Leaving directory '/opt/nccl-tests/src'
