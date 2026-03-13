@@ -14,7 +14,7 @@ nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.e
 ```
 srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 ```
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/dcgmi-diag.png)
 
 
 
