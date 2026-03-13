@@ -15,15 +15,15 @@ sudo dnf install -y dnf-utils
 sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo dnf install -y packer
 ```
-다음 명령을 실행하여 Packer를 초기화하고 플러그인을 설치합니다.
-```
-packer init -upgrade packer-ami.pkr.hcl
-```
 
 ### 2. Packer 레서피 ###
 ```
 git clone https://github.com/aws-samples/awsome-distributed-training.git
 cd awsome-distributed-training/2.ami_and_containers/1.amazon_machine_image
+```
+다음 명령을 실행하여 Packer를 초기화하고 플러그인을 설치합니다.
+```
+packer init -upgrade packer-ami.pkr.hcl
 ```
 
 ### 3. AMI 빌드 ###
