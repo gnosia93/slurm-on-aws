@@ -8,3 +8,12 @@ enroot import docker://amazonlinux:latest
 enroot create amazonlinux+latest.sqsh
 enroot start amazonlinux+latest
 ```
+
+### Pyxis ###
+SLURM은 OCI 컨테이너를 지원하긴 하지만, 사용자가 직접 컨테이너 이미지를 다운로드하고 OCI 런타임 형식으로 변환한 뒤 SLURM에 경로를 지정해야 하는 번거로운 과정이 필요하다. NVIDIA는 이를 해결하기 위해 Pyxis라는 SLURM 플러그인을 만들었다. Pyxis를 사용하면 srun --container-image=amazonlinux/latest처럼 컨테이너 URI만 지정하면 이미지 다운로드부터 실행까지 자동으로 처리된다.
+즉, enroot가 컨테이너 런타임이라면, Pyxis는 SLURM에서 enroot를 편하게 쓸 수 있게 해주는 플러그인이다.
+```
+#SBATCH --container-image nvcr.io\#nvidia/pytorch:21.12-py3
+
+python -c 'import torch ; print(torch.__version__)'
+```
