@@ -73,10 +73,21 @@ dmesg | grep -i efa
 dmesg -T | grep -i error | tail -20
 ```
 
-### 리소스 제한(ulimit) ###
+### 리소스 제한(ulimit -l) ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/ulimit-a.png)
+설정 방법:
+```
+# /etc/security/limits.conf
+*    soft    memlock    unlimited
+*    hard    memlock    unlimited
+*    soft    nofile     65536
+*    hard    nofile     65536
+```
 
+### lspci ###
 * lspci | grep -i nvidia — PCIe 장치 인식
+
+  
 * lspci -vv -s <gpu_bus_id> | grep -i width — PCIe bandwidth (x16 확인)
 * numactl --hardware — NUMA 토폴로지 (GPU-CPU affinity)
 
