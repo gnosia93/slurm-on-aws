@@ -6,11 +6,11 @@
 
 * [C3. nccl-test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-nccl-test.md) 
     
-* [C4. 클러스터 상태 진단](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/4-system-diag.md)     
+* [C4. 클러스터 상태 진단](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/4-system-diag.md)   <<<   
      
 * [C5. 컨테이너 사용하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-slurm-container.md)
 
-* [C6. 커스텀 AMI 만들기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md)
+* [C6. 커스텀 AMI 만들기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md) <<<
   
 * [C7. 모니터링 설정하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
 
