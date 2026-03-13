@@ -20,9 +20,3 @@
 
 
 
-### _Appendix_ ###
-
-* https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a1-trouble-shoot.md
-
-## 레퍼런스 ##
-* https://aws.amazon.com/ko/hpc/parallelcluster/
