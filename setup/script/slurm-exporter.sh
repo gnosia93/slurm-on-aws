@@ -11,6 +11,7 @@ for i in $(seq 1 30); do
 done
 
 # --- Node Exporter (포트: 9100) ---
+docker rm -f node-exporter 2>/dev/null || true
 docker run -d --restart always \
   --name node-exporter \
   --net host \
@@ -28,6 +29,7 @@ elif [ "${OS}" = "Amazon Linux" ]; then
 fi
 
 cd /tmp
+rm -rf prometheus-slurm-exporter
 git clone https://github.com/vpenso/prometheus-slurm-exporter.git
 cd prometheus-slurm-exporter
 go mod download
