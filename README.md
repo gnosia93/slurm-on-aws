@@ -8,7 +8,7 @@
     
 * [C4. 클러스터 상태 진단](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/4-system-diag.md)     
      
-* [C5. 컨테이너 설정]
+* [C5. 컨테이너 설정](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-slurm-container.md)
 
 * [C6. Megatron]
 
