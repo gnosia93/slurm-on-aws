@@ -4,8 +4,9 @@
 
 ### CUDA ###
 * [[Winter school 2019] Week #1-2. Introduction to parallel computing (Part 1) [한국어/KOR]](https://www.youtube.com/watch?v=si3B4mYVWrE&list=PLBrGAFAIyf5pp3QNigbh2hRU5EUD0crgI)
-* [CUDA Thread Hierarchy (Introduction to CUDA Week1-3) / CUDA 강의](https://www.youtube.com/watch?v=my1U4QY59Bg)
-* [CUDA Memory Model (1/4) - CUDA memory hierarchy / CUDA 강의](https://www.youtube.com/watch?v=ipARGT0HfBM)
+* [CUDA Thread Hierarchy (Introduction to CUDA Week1-3)](https://www.youtube.com/watch?v=my1U4QY59Bg)
+* [CUDA Execution Model (Introduction to CUDA Week1-5)](https://www.youtube.com/watch?v=MM04LrNlq2I&list=PLBrGAFAIyf5pp3QNigbh2hRU5EUD0crgI&index=19)
+* [CUDA Memory Model (1/4) - CUDA memory hierarchy](https://www.youtube.com/watch?v=ipARGT0HfBM)
 
 
 ### Parallelism ###
