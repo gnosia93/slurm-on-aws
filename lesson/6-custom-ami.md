@@ -33,6 +33,8 @@ Installed plugin github.com/hashicorp/ansible v1.1.4 in "/home/ec2-user/.config/
 
 ### 3. AMI 빌드 ###
 ```
+export AWS_REGION=ap-northeast-2
+
 make ami_pcluster_gpu
 ```
 Packer는 인스턴스와 관련 리소스(EC2 키, 보안 그룹 등)를 생성하고, 설치 스크립트를 실행한 뒤, 인스턴스를 종료하고 이미지(AMI)를 생성한 다음 인스턴스를 삭제한다.
