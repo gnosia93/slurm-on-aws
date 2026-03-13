@@ -17,6 +17,12 @@ docker compose version
 
 ### 커피그 파일 생성 ###
 ```
+mkdir -p /opt/monitoring
+cd /opt/monitoring
+```
+
+[프로메테우스]
+```
 cat <<EOF > prometheus.yml
 global:
   scrape_interval: 15s
@@ -44,6 +50,7 @@ scrape_configs:
 EOF
 ```
 
+[LOKI]
 ```
 cat <<EOF > loki-config.yaml
 auth_enabled: false
@@ -80,7 +87,7 @@ compactor:
   retention_enabled: true
 ```
 
-### 모니터링 설치 ###
+[docker-compose]
 ```
 cat <<EOF > docker-compose.yml
 services:
@@ -126,23 +133,8 @@ volumes:
 EOF
 ```
 
+도커 컴포즈를 실행한다. 
 ```
-#!/bin/bash
-set -e
-
-# Docker Compose 설치 (없는 경우)
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
-  mkdir -p ~/.docker/cli-plugins
-  curl -SL https://github.com/docker/compose/releases/download/v2.32.4/docker-compose-linux-x86_64 \
-    -o ~/.docker/cli-plugins/docker-compose
-  chmod +x ~/.docker/cli-plugins/docker-compose
-fi
-
-# 디렉토리 생성 및 실행
-mkdir -p /opt/monitoring
-cd /opt/monitoring
-
-# config 파일들이 위치에 있다고 가정
 docker compose up -d
 
 echo "============================================"
