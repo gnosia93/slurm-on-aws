@@ -42,6 +42,13 @@ sed -i 's/default = "3.7.0"/default = "3.14.2"/' packer-ami.pkr.hcl
 sed -i 's/amzn2-\*/ubuntu-2204-lts-hvm-x86_64-*/' packer-ami.pkr.hcl
 sed -i 's/default = "ec2-user"/default = "ubuntu"/' packer-ami.pkr.hcl
 
+echo $PUBLIC_SUBNET_ID
+sed -i '120a\  subnet_id     = "subnet-0d5b51bf0cfc3ebaf"' packer-ami.pkr.hcl
+sed -i 's/ssh_username  = "ec2-user"/ssh_username  = "ubuntu"/' packer-ami.pkr.hcl
+sed -i 's/"OS" =  "Amazon Linux 2"/"OS" =  "Ubuntu 22.04"/' packer-ami.pkr.hcl
+sed -i 's/"parallelcluster:os" = "alinux2"/"parallelcluster:os" = "ubuntu2204"/' packer-ami.pkr.hcl
+sed -i 's/user                = "ec2-user"/user                = "ubuntu"/' packer-ami.pkr.hcl
+
 make ami_pcluster_gpu
 ```
 Packer는 인스턴스와 관련 리소스(EC2 키, 보안 그룹 등)를 생성하고, 설치 스크립트를 실행한 뒤, 인스턴스를 종료하고 이미지(AMI)를 생성한 다음 인스턴스를 삭제한다.
