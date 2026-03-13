@@ -29,8 +29,8 @@ cd /opt/monitoring
 
 [프로메테우스]
 ```
-
-
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
 
 cat <<EOF > prometheus.yml
 global:
@@ -39,11 +39,11 @@ global:
 scrape_configs:
   - job_name: 'node-exporter'
     ec2_sd_configs:
-      - region: ap-northeast-2
+      - region: ${AWS_REGION}
         port: 9100
         filters:
           - name: vpc-id
-            values: ["vpc-xxxxxxxx"]
+            values: ["${VPC_ID}"]
           - name: instance-state-name
             values: ["running"]
     relabel_configs:
@@ -55,11 +55,11 @@ scrape_configs:
 
   - job_name: 'dcgm-exporter'
     ec2_sd_configs:
-      - region: ap-northeast-2
+      - region: ${AWS_REGION}
         port: 9400
         filters:
           - name: vpc-id
-            values: ["vpc-xxxxxxxx"]
+            values: ["${VPC_ID}"]
           - name: instance-state-name
             values: ["running"]
     relabel_configs:
