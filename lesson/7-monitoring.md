@@ -1,6 +1,6 @@
 ### 도커 및 컴포즈 설치 ###
 ```
-yum install -y docker
+dnf install -y docker
 
 mkdir -p /usr/local/lib/docker/cli-plugins
 curl -SL https://github.com/docker/compose/releases/download/v2.32.4/docker-compose-linux-x86_64 \
