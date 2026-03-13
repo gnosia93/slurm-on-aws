@@ -24,12 +24,12 @@ pcluster version
 ```
 ### 환경변수 설정 ###
 
-클러스터 생성에 필요한 환경변수 값을 설정한다. AZ 의 경우 1번을 사용하도록 한다. GPU 는 [g7e.12xlarge](https://aws.amazon.com/ko/ec2/instance-types/g7e/) 를 사용한다 
+클러스터 생성에 필요한 환경변수 값을 설정한다. AZ 의 경우 2번을 사용하도록 하고 인스턴스는 서버당 2장의 GPU를 가진 [g7e.12xlarge](https://aws.amazon.com/ko/ec2/instance-types/g7e/)를 사용한다 
 ```bash
 export CLUSTER_NAME="slurm-on-aws"
 export CPU_INSTANCE_TYPE="m6i.4xlarge"
 export GPU_INSTACNE_TYPE="g7e.12xlarge"
-export AZ="1"
+export AZ="2"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
