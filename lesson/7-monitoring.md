@@ -116,6 +116,7 @@ limits_config:
 compactor:
   working_directory: /loki/compactor
   retention_enabled: true
+EOF
 ```
 
 [docker-compose]
