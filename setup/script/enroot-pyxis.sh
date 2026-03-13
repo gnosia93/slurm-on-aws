@@ -4,14 +4,28 @@ echo "
 ###################################
 "
 
-# enroot 설치
-ENROOT_VERSION=3.5.0
-curl -fSsL -o /tmp/enroot_${ENROOT_VERSION}-1_amd64.deb \
-    https://github.com/NVIDIA/enroot/releases/download/v${ENROOT_VERSION}/enroot_${ENROOT_VERSION}-1_amd64.deb
-curl -fSsL -o /tmp/enroot+caps_${ENROOT_VERSION}-1_amd64.deb \
-    https://github.com/NVIDIA/enroot/releases/download/v${ENROOT_VERSION}/enroot+caps_${ENROOT_VERSION}-1_amd64.deb
-apt-get install -y /tmp/enroot_${ENROOT_VERSION}-1_amd64.deb /tmp/enroot+caps_${ENROOT_VERSION}-1_amd64.deb
-rm -f /tmp/enroot*.deb
+ENROOT_VERSION=4.1.1
+OS=$(. /etc/os-release; echo $NAME)
+
+if [ "${OS}" = "Amazon Linux" ]; then
+    arch=$(uname -m)
+    dnf install -y epel-release || true
+    dnf install -y \
+        https://github.com/NVIDIA/enroot/releases/download/v${ENROOT_VERSION}/enroot-${ENROOT_VERSION}-1.el8.${arch}.rpm \
+        https://github.com/NVIDIA/enroot/releases/download/v${ENROOT_VERSION}/enroot+caps-${ENROOT_VERSION}-1.el8.${arch}.rpm
+
+elif [ "${OS}" = "Ubuntu" ]; then
+    arch=$(dpkg --print-architecture)
+    cd /tmp
+    curl -fSsL -O https://github.com/NVIDIA/enroot/releases/download/v${ENROOT_VERSION}/enroot_${ENROOT_VERSION}-1_${arch}.deb
+    curl -fSsL -O https://github.com/NVIDIA/enroot/releases/download/v${ENROOT_VERSION}/enroot+caps_${ENROOT_VERSION}-1_${arch}.deb
+    apt install -y ./enroot_${ENROOT_VERSION}-1_${arch}.deb ./enroot+caps_${ENROOT_VERSION}-1_${arch}.deb
+    rm -f enroot*.deb
+else
+    echo "Unsupported OS: ${OS}" && exit 1
+fi
+
+
 
 # pyxis 설치
 PYXIS_VERSION=0.20.0
