@@ -25,6 +25,11 @@ cd awsome-distributed-training/2.ami_and_containers/1.amazon_machine_image
 ```
 packer init -upgrade packer-ami.pkr.hcl
 ```
+[결과]
+```
+Installed plugin github.com/hashicorp/amazon v1.8.0 in "/home/ec2-user/.config/packer/plugins/github.com/hashicorp/amazon/packer-plugin-amazon_v1.8.0_x5.0_linux_amd64"
+Installed plugin github.com/hashicorp/ansible v1.1.4 in "/home/ec2-user/.config/packer/plugins/github.com/hashicorp/ansible/packer-plugin-ansible_v1.1.4_x5.0_linux_amd64"
+```
 
 ### 3. AMI 빌드 ###
 ```
