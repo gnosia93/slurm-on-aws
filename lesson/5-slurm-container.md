@@ -1,6 +1,6 @@
 
 ## Enroot / Pyxis 설치 ##
-slurm 클러스터 생성시 [enroot.sh](https://github.com/gnosia93/slurm-on-aws/blob/main/setup/script/enroot.sh) Post 스크립트가 실행되어 자동으로 설치된다. 두가지 툴을 별도로 설치할 필요는 없다.
+slurm 클러스터 생성시 [enroot.sh](https://github.com/gnosia93/slurm-on-aws/blob/main/setup/script/enroot.sh) 스크립트가 실행되어 자동으로 설치된다. 두가지 툴을 별도로 설치할 필요는 없다.
 
 #### [Enroot](https://github.com/NVIDIA/enroot) ####
 컨테이너는 일반적으로 실행 시 sudo 권한이 필요하다. 하지만 SLURM 클러스터는 POSIX 파일 권한 기반의 다중 사용자 환경이기 때문에, 일반 사용자에게 sudo를 부여하는 것은 보안상 문제가 된다. 이를 해결하기 위해 NVIDIA는 enroot를 만들었고, 이는 리눅스 커널의 chroot 기능을 활용하여 컨테이너를 위한 격리된 런타임 환경을 제공해 준다. 예를 들어 /tmp/container라는 마운트 포인트를 만들어 컨테이너가 자신의 로컬 디렉토리만 볼 수 있게 함으로써, 호스트 OS와 컨테이너의 런타임을 분리한다. 이를 통해 sudo 권한이 필요한 Docker 대신, enroot를 활용해서 루트 권한 없이도 컨테이너를 실행할 수 있다.
