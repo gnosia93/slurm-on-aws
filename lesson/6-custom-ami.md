@@ -33,7 +33,8 @@ Installed plugin github.com/hashicorp/ansible v1.1.4 in "/home/ec2-user/.config/
 
 ### 3. AMI 빌드 ###
 ```
-export AWS_REGION=ap-northeast-2
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+echo ${AWS_REGION}
 
 make ami_pcluster_gpu
 ```
