@@ -29,8 +29,6 @@ pcluster version
 export CLUSTER_NAME="slurm-on-aws"
 export CPU_INSTANCE_TYPE="m6i.4xlarge"
 export GPU_INSTACNE_TYPE="g7e.8xlarge"
-export GPU_MIN=2
-export GPU_MAX=2
 export AZ="1"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
@@ -88,6 +86,9 @@ AdditionalSecurityGroups은 다음과 같은 경우 설정한다.
 * 외부에서 헤드노드에 SSH 접속하려면 22번 포트 인바운드를 열어야 한다.
 * 기존 VPC의 보안 그룹을 사용하고 싶다면 yaml에 지정 가능하다
 ```
+export GPU_MIN=2
+export GPU_MAX=2
+
 cat > cluster.yaml << EOF
 Imds:
   ImdsSupport: v1.0
