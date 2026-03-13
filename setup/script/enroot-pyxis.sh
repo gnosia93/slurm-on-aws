@@ -4,6 +4,7 @@ echo "
 ###################################
 "
 
+# https://github.com/NVIDIA/enroot
 ENROOT_VERSION=4.1.1
 OS=$(. /etc/os-release; echo $NAME)
 
@@ -28,6 +29,7 @@ fi
 
 
 # pyxis 설치
+# https://github.com/NVIDIA/pyxis
 PYXIS_VERSION=0.20.0
 mkdir -p /tmp/pyxis && cd /tmp/pyxis
 curl -fSsL -o pyxis.tar.gz \
