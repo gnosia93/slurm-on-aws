@@ -26,6 +26,8 @@ else
     echo "Unsupported OS: ${OS}" && exit 1
 fi
 
+
+
 # https://github.com/NVIDIA/pyxis
 PYXIS_VERSION=0.21.0
 OS=$(. /etc/os-release; echo $NAME)
