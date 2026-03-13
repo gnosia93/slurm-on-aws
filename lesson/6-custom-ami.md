@@ -76,5 +76,10 @@ Packer는 인스턴스와 관련 리소스(EC2 키, 보안 그룹 등)를 생성
 
 
 
+---
+스크립트가 너무 오래되어서, 대규모의 공사가 필요 ... 나중에 하는 걸로 ^^ 
+---
+
+
 ## 레퍼런스 ##
 * https://catalog.workshops.aws/ml-on-aws-parallelcluster/en-US/08-amis
