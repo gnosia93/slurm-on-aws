@@ -209,7 +209,7 @@ sleep 5
 sed -i 's/127.0.0.1:8080/0.0.0.0:9090/g; s/^password: .*/password: code!@#c/g' /home/ec2-user/.config/code-server/config.yaml
 EC2_USER_SCRIPT
 
-echo 'export PS1="$(uname -m):mon \$ "' >> /home/ec2-user/.bashrc
+echo 'export PS1="slurm-monitor \$ "' >> /home/ec2-user/.bashrc
 sudo systemctl restart code-server@ec2-user
 _DATA
 
