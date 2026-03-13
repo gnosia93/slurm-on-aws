@@ -1,5 +1,5 @@
+* [[Winter school 2019] Week #1-2. Introduction to parallel computing (Part 1) [한국어/KOR]](https://www.youtube.com/watch?v=si3B4mYVWrE&list=PLBrGAFAIyf5pp3QNigbh2hRU5EUD0crgI)
 * [CUDA Thread Hierarchy (Introduction to CUDA Week1-3) / CUDA 강의](https://www.youtube.com/watch?v=my1U4QY59Bg)
-
 * [CUDA Memory Model (1/4) - CUDA memory hierarchy / CUDA 강의](https://www.youtube.com/watch?v=ipARGT0HfBM)
 
 일반적인 분산 학습(Data Parallel, FSDP, TP, PP)에서는 all-reduce, all-gather, reduce-scatter가 주요 통신 패턴인데, 이것들은 대용량 메시지를 순차적으로 전달하는 방식이라 bandwidth 위주입니다. EFA로 충분합니다.
