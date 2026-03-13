@@ -201,16 +201,14 @@ pcluster create-cluster -n ${CLUSTER_NAME} -c cluster.yaml --rollback-on-failure
   "cluster": {
     "clusterName": "slurm-on-aws",
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
-    "cloudformationStackArn": "arn:aws:cloudformation:ap-northeast-2:499514681453:stack/slurm-on-aws/2bed8870-1c98-11f1-b93a-0617e7ce90ef",
+    "cloudformationStackArn": "arn:aws:cloudformation:ap-northeast-2:499514681453:stack/slurm-on-aws/45cd1ba0-1ec0-11f1-ae57-0aa0bd5694a3",
     "region": "ap-northeast-2",
     "version": "3.14.2",
     "clusterStatus": "CREATE_IN_PROGRESS",
     "scheduler": {
       "type": "slurm"
     }
-  },
-  "validationMessages": [
-  ]
+  }
 }
 ```
 
