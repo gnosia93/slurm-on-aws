@@ -73,8 +73,8 @@ dmesg | grep -i efa
 dmesg -T | grep -i error | tail -20
 ```
 
-### ulimit -a 리소스 제한 ###
-
+### 리소스 제한(ulimit) ###
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/ulimit-a.png)
 
 * lspci | grep -i nvidia — PCIe 장치 인식
 * lspci -vv -s <gpu_bus_id> | grep -i width — PCIe bandwidth (x16 확인)
