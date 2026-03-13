@@ -1,6 +1,15 @@
 #!/bin/bash
 set -e
 
+# --- Node Exporter (포트: 9100) ---
+docker run -d --restart always \
+  --name node-exporter \
+  --net host \
+  --pid host \
+  -v /:/host:ro,rslave \
+  quay.io/prometheus/node-exporter:v1.8.2 \
+  --path.rootfs=/host
+
 # --- SLURM Exporter (포트: 9341) - Head Node 전용 ---
 docker run -d --restart always \
   --name slurm-exporter \
