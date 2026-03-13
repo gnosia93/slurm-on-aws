@@ -37,7 +37,7 @@ After=network.target slurmd.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/prometheus-slurm-exporter
+ExecStart=/usr/local/bin/prometheus-slurm-exporter :9341
 Restart=always
 
 [Install]
