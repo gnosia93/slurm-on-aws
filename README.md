@@ -10,9 +10,11 @@
      
 * [C5. 컨테이너 사용하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-slurm-container.md)
 
-* [C6. Megatron]
-
+* [C6. 커스컴 AMI 만들기]()
+  
 * [C7. 모니터링 설정하기]
+
+* [C8. Megatron]
 
 * [C9. 클러스터 변경/삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-cluster-delete.md)
 
