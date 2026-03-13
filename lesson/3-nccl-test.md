@@ -17,6 +17,7 @@ cat <<EOF > nccl-test.sbatch
 
 export LD_LIBRARY_PATH=/opt/amazon/openmpi/lib:/opt/nccl/build/lib:/opt/aws-ofi-nccl/lib:/opt/amazon/efa/lib:\$LD_LIBRARY_PATH
 export NCCL_DEBUG=INFO
+export NCCL_DEBUG_FILE=nccl-log.%h.%p
 export FI_PROVIDER=efa
 export FI_EFA_USE_DEVICE_RDMA=1
 
@@ -28,6 +29,7 @@ EOF
 * -e 1G: end, 최대 메시지 크기 1GB
 * -f 2: factor, 매 반복마다 크기를 2배씩 증가 (8B → 16B → 32B → ... → 1GB)
 * -g 1: 노드당 사용할 GPU 수 1개
+* %h는 hostname, %p는 PID로 치환
 
 8 바이트부터 1GB 까지 메시지 크기를 2배씩 늘려가며 all_reduce 성능을 측정한다.
 실제 AI 학습에서 all_reduce로 교환하는 gradient 크기가 보통 수백 MB ~ 1GB 수준이라, 1GB까지 테스트하면 실전 성능을 잘 반영하는 것이다
