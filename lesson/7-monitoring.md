@@ -170,6 +170,7 @@ volumes:
 EOF
 ```
 
+### 모니터링 스팩 설치 ###
 restart always 모드로 도커 컴포즈를 실행한다. EC2가 재부팅되더라도 모니터링 에이전트들은 재실행된다. 
 ```
 docker compose up -d
@@ -177,18 +178,17 @@ docker compose up -d
 echo "============================================"
 echo "Monitoring stack installed"
 echo "============================================"
-echo "Grafana:    http://${PUBLIC_HOSTNAME}:3000  (admin/changeme)"
+echo "Grafana:    http://${PUBLIC_HOSTNAME}:3000"
 echo "Loki:       http://${PUBLIC_HOSTNAME}:3100"
 echo "Prometheus: http://${PUBLIC_HOSTNAME}:9090"
 ```
 
-
-설치 후 Grafana에서 할 일:
-
+### 그라파나 설정 ###
 http://<EC2_IP>:3000 접속 (admin/changeme)
-Data Sources 추가:
-Loki: http://loki:3100
-Prometheus: http://prometheus:9090
-Explore에서 로그/메트릭 조회 가능
-Prometheus의 static_configs에 compute 노드 IP를 수동으로 넣어야 하는데, ParallelCluster는 노드가 동적으로 변하니까 file-based service discovery를 쓰는 게 더 좋습니다. 필요하면 그 부분도 안내해 드릴게요.
+
+* Data Sources 추가:
+  * Loki: http://loki:3100
+  * Prometheus: http://prometheus:9090
+
+* Explore에서 로그/메트릭 조회 가능
 
