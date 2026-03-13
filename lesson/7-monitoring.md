@@ -31,6 +31,11 @@ cd /opt/monitoring
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
+export SLURM_HEAD_NODE=$(pcluster describe-cluster --cluster-name ${CLUSTER_NAME} --query "headNode.privateIpAddress")
+
+echo "region: ${AWS_REGION}"
+echo "vpc: ${VPC_ID}"
+echo "slurm head: ${SLURM_HEAD_NODE}"
 
 cat <<EOF > prometheus.yml
 global:
@@ -72,7 +77,7 @@ scrape_configs:
   - job_name: 'slurm-exporter'
     static_configs:
       - targets:
-          - '<HEAD_NODE_IP>:9341'
+          - '${SLURM_HEAD_NODE}:9341'
 EOF
 ```
 
