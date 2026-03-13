@@ -170,7 +170,7 @@ volumes:
 EOF
 ```
 
-### 모니터링 스팩 설치 ###
+### 모니터링 스택 설치 ###
 restart always 모드로 도커 컴포즈를 실행한다. EC2가 재부팅되더라도 모니터링 에이전트들은 재실행된다. 
 ```
 docker compose up -d
