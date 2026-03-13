@@ -73,10 +73,12 @@ dmesg | grep -i efa
 dmesg -T | grep -i error | tail -20
 ```
 
+### ulimit -a 리소스 제한 ###
+
+
 * lspci | grep -i nvidia — PCIe 장치 인식
 * lspci -vv -s <gpu_bus_id> | grep -i width — PCIe bandwidth (x16 확인)
 * numactl --hardware — NUMA 토폴로지 (GPU-CPU affinity)
-* ulimit -a — 리소스 제한 (memlock 등)
 
 
 ---
