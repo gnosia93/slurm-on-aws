@@ -11,7 +11,16 @@ nvidia-smi --query-gpu=index,name,clocks_throttle_reasons.active,clocks_throttle
 clocks_throttle_reasons.hw_thermal_slowdown,clocks_throttle_reasons.sw_thermal_slowdown,\
 clocks_throttle_reasons.sw_power_cap --format=csv
 ```
-
+아래 명령어로 실시간으로 전력, 온도 및 쓰로틀링을 모니터링 할 수 있다.
+```
+nvidia-smi dmon -s pt -d 1
+```
+* p: 전력/온도, t: 쓰로틀링 상태, -d 1: 1초 간격
+  
+#### GPU Clock 비교 (현재 클럭과 최대 클럭) ####
+```
+nvidia-smi --query-gpu=index,clocks.current.graphics,clocks.max.graphics,clocks.current.mem,clocks.max.mem --format=csv
+```
 #### GPU 토폴로지 ####
 ```
 nvidia-smi topo -m -i all
