@@ -22,5 +22,5 @@
 ### _Appendiex_ ##
 
 * https://www.youtube.com/watch?v=a_zIs0KxLbc
-
+* https://docs.aws.amazon.com/parallelcluster/latest/ug/troubleshooting-fc-v3-create-cluster.html
 
