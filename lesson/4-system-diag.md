@@ -16,7 +16,7 @@ nvidia-smi topo -mp
 * PIX	- 같은 PCIe 스위치	(~32GB/s)
 * PHB	- 같은 CPU 소켓, 다른 PCIe 스위치 (~32GB/s)
 * SYS	- 다른 CPU 소켓 (~16GB/s)
-* NODE - 같은 NUMA 노드	(~32GB/s)
+* NODE - 같은 NUMA 노드	(~32GB/s) 
 
 #### GPU 진단 ####
 ```
