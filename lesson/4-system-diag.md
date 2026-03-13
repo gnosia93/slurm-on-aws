@@ -1,11 +1,9 @@
 ### GPU 관련 ###
 
+#### GPU 온도 파워 등 ####
 ```
 nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.errors.corrected.volatile.total, ecc.errors.uncorrected.volatile.total --format=csv
 ```
-
-* nvidia-smi — GPU 상태, 온도, 전력, ECC 에러
-* nvidia-smi topo -m — GPU/NVLink/PCIe 토폴로지
 
 #### GPU 토폴로지 ####
 ```
