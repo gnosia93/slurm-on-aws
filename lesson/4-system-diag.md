@@ -1,9 +1,24 @@
 ### GPU 관련 ###
 
+```
+nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.errors.corrected.volatile.total, ecc.errors.uncorrected.volatile.total --format=csv
+```
+
 * nvidia-smi — GPU 상태, 온도, 전력, ECC 에러
 * nvidia-smi topo -m — GPU/NVLink/PCIe 토폴로지
 * dcgmi diag -r 3 — GPU 전체 진단
 * dcgmi health -c — GPU health 모니터링 설정
+
+
+### GPU 진단 ###
+```
+srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
+```
+
+
+
+
+
 
 ### 네트워크 관련 ###
 
