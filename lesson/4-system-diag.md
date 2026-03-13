@@ -85,8 +85,19 @@ dmesg -T | grep -i error | tail -20
 ```
 
 ### lspci ###
-* lspci | grep -i nvidia — PCIe 장치 인식
+```
+# GPU 장치 목록
+lspci | grep -i nvidia
 
+# 상세 정보 (PCIe 링크 속도, 폭 포함)
+lspci -vvv | grep -A 20 -i nvidia | grep -E "NVIDIA|LnkSta|LnkCap"
+```
+[출력]
+```
+00:1e.0 3D controller: NVIDIA Corporation L40S (rev a1)
+    LnkCap: Speed 16GT/s, Width x16    ← PCIe 최대 스펙
+    LnkSta: Speed 16GT/s, Width x16    ← 현재 실제 링크 상태
+```
   
 * lspci -vv -s <gpu_bus_id> | grep -i width — PCIe bandwidth (x16 확인)
 * numactl --hardware — NUMA 토폴로지 (GPU-CPU affinity)
