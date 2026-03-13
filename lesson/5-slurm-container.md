@@ -22,3 +22,10 @@ python -c 'import torch ; print(torch.__version__)'
 ```
 srun --container-image=nvidia/cuda:11.6.2-base-ubuntu20.04 nvidia-smi
 ```
+또는 
+```
+#!/bin/bash
+#SBATCH --container-image=nvidia/cuda:11.6.2-base-ubuntu20.04
+
+nvidia-smi
+```
