@@ -115,7 +115,7 @@ HeadNode:
   CustomActions:
     OnNodeConfigured:
       Sequence:
-        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
+#        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
         - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
           Args:
             - 1.18.2-1                         # NVIDIA_CONTAINER_TOOLKIT_VERSION version
@@ -160,16 +160,16 @@ Scheduling:
       CustomActions:
         OnNodeConfigured:
           Sequence:
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
+#            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
               Args:
                 - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'
-              Args:
-                - v2.29.2-1             # NCCL version
-                - v1.18.0               # AWS OFI NCCL version
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot.sh'
+#            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
+#            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'
+#              Args:
+#                - v2.29.2-1             # NCCL version
+#                - v1.18.0               # AWS OFI NCCL version
+#            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot.sh'
 #SharedStorage:
 #  - Name: HomeDirs
 #    MountDir: /home
