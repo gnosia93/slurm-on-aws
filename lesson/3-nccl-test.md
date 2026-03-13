@@ -265,6 +265,36 @@ sed -i 's/MaxCount: 2/MaxCount: 8/' cluster.yaml
 
 pcluster update-cluster --cluster-name ${CLUSTER_NAME} --cluster-configuration cluster.yaml
 ```
+[결과]
+```
+{
+  "cluster": {
+    "clusterName": "slurm-on-aws",
+    "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
+    "cloudformationStackArn": "arn:aws:cloudformation:ap-northeast-2:499514681453:stack/slurm-on-aws/f0e787d0-1e6d-11f1-89fb-0ab44030f523",
+    "region": "ap-northeast-2",
+    "version": "3.14.2",
+    "clusterStatus": "UPDATE_IN_PROGRESS",
+    "scheduler": {
+      "type": "slurm"
+    }
+  },
+  "changeSet": [
+    {
+      "parameter": "Scheduling.SlurmQueues[gpu].ComputeResources[ml].MaxCount",
+      "requestedValue": "8",
+      "currentValue": "2"
+    },
+    {
+      "parameter": "Scheduling.SlurmQueues[gpu].ComputeResources[ml].MinCount",
+      "requestedValue": "8",
+      "currentValue": "2"
+    }
+  ]
+}
+```
+
+
 nccl-test 노드의 크기를 2에서 8로 증가시킨 후 ncc-test를 실행한다. 
 ```
 sed -i 's/--nodes=2/--nodes=8/' nccl-test.sbatch
