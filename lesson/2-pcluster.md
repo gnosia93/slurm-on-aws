@@ -321,6 +321,10 @@ sudo cat /var/log/cloud-init-output.log
 sudo cat /var/log/parallelcluster/slurm_resume
 ```
 
+### srun nvidia-smi ###
+```
+srun --partition=gpu --nodes=2 --ntasks-per-node=1 nvidia-smi
+```
 
 ### 컴퓨트 노드 확인 ###
 ssh 를 이용하여 컴퓨트 노드로 접속한다. 
