@@ -126,7 +126,7 @@ Scheduling:
     ScaledownIdletime: 300               # Idle 상태의 노드의 경우 5분후 삭제
     QueueUpdateStrategy: DRAIN           # 클러스터 업데이트시 DRAIN은 실행 중인 작업이 끝날 때까지 대기후 업데이트, TERMINATE은 실행 중인 작업을 즉시 종료하고 바로 업데이트
     CustomSlurmSettings:
-      - SlurmdTimeout: 180               # slurmctld가 slurmd의 응답 최대 대기 시간(초), 이 시간 내에 slurmd가 응답하지 않으면, 해당 노드를 DOWN 상태로 전환, 기본값 3분(180)
+      - SlurmdTimeout: 1800              # slurmctld가 slurmd의 응답 최대 대기 시간(초), 이 시간 내에 slurmd가 응답하지 않으면, 해당 노드를 DOWN 상태로 전환, 기본값 3분(180)
       # Simple accounting to text file /home/slurm/slurm-job-completions.txt.
       - JobCompType: jobcomp/filetxt
       - JobCompLoc: /home/slurm/slurm-job-completions.txt
