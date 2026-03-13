@@ -1,5 +1,5 @@
 
-## Enroot/Pyxis 설치 ##
+## Enroot / Pyxis 설치 ##
 slurm 클러스터 생성시 [enroot.sh post-nstall](https://github.com/gnosia93/slurm-on-aws/blob/main/setup/script/enroot.sh) 스크립트가 실행되어 자동으로 설치된다. 두가지 툴을 별도로 설치할 필요는 없다.
 
 #### [Enroot](https://github.com/NVIDIA/enroot) ####
