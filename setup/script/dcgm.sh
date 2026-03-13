@@ -2,7 +2,7 @@
 set -e
 
 # ============================================
-# DCGM + DCGM Exporter + Node Exporter + SLURM Exporter Install Script
+# DCGM + DCGM Exporter + Node Exporter Install Script
 # Target: Amazon Linux 2 / Ubuntu 22.04
 # All exporters run as Docker containers
 # ============================================
@@ -42,22 +42,8 @@ docker run -d --restart always \
   quay.io/prometheus/node-exporter:v1.8.2 \
   --path.rootfs=/host
 
-# --- SLURM Exporter (포트: 9341) - Head Node 전용 ---
-docker run -d --restart always \
-  --name slurm-exporter \
-  --network host \
-  -v /etc/slurm:/etc/slurm:ro \
-  -v /usr/bin/sinfo:/usr/bin/sinfo:ro \
-  -v /usr/bin/squeue:/usr/bin/squeue:ro \
-  -v /usr/bin/sdiag:/usr/bin/sdiag:ro \
-  -v /usr/bin/sacctmgr:/usr/bin/sacctmgr:ro \
-  -v /usr/lib64:/usr/lib64:ro \
-  -v /run/munge:/run/munge:ro \
-  ghcr.io/rivosinc/prometheus-slurm-exporter:latest
-
 echo "============================================"
 echo "All exporters installed successfully"
 echo "============================================"
 echo "DCGM Exporter:  http://localhost:9400/metrics"
 echo "Node Exporter:  http://localhost:9100/metrics"
-echo "SLURM Exporter: http://localhost:9341/metrics"
