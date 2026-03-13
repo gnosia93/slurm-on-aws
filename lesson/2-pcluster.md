@@ -86,7 +86,7 @@ AdditionalSecurityGroups은 다음과 같은 경우 설정한다.
 * 외부에서 헤드노드에 SSH 접속하려면 22번 포트 인바운드를 열어야 한다.
 * 기존 VPC의 보안 그룹을 사용하고 싶다면 yaml에 지정 가능하다
 ```
-export GPU_MIN=2
+export GPU_MIN=1
 export GPU_MAX=2
 
 cat > cluster.yaml << EOF
