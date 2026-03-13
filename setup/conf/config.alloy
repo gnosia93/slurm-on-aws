@@ -1,0 +1,86 @@
+// /opt/alloy/config.alloy
+
+// ============================================
+// 로그 수집 대상 정의
+// ============================================
+
+// SLURM 잡 로그
+local.file_match "slurm_logs" {
+  path_targets = [
+    {__path__ = "/var/log/slurm/slurmd.log", job = "slurm", component = "slurmd"},
+    {__path__ = "/var/log/slurm/slurmstepd.log*", job = "slurm", component = "slurmstepd"},
+  ]
+}
+
+// syslog
+local.file_match "syslog" {
+  path_targets = [
+    {__path__ = "/var/log/syslog", job = "syslog"},
+    {__path__ = "/var/log/messages", job = "syslog"},
+  ]
+}
+
+// ParallelCluster 로그
+local.file_match "parallelcluster_logs" {
+  path_targets = [
+    {__path__ = "/var/log/parallelcluster/*.log", job = "parallelcluster"},
+    {__path__ = "/var/log/cloud-init-output.log", job = "cloud-init"},
+  ]
+}
+
+// GPU 관련 로그 (nvidia)
+local.file_match "gpu_logs" {
+  path_targets = [
+    {__path__ = "/var/log/nvidia*.log", job = "gpu"},
+  ]
+}
+
+// ============================================
+// 로그 수집 (loki.source.file)
+// ============================================
+
+loki.source.file "slurm" {
+  targets    = local.file_match.slurm_logs.targets
+  forward_to = [loki.process.add_labels.receiver]
+}
+
+loki.source.file "syslog" {
+  targets    = local.file_match.syslog.targets
+  forward_to = [loki.process.add_labels.receiver]
+}
+
+loki.source.file "parallelcluster" {
+  targets    = local.file_match.parallelcluster_logs.targets
+  forward_to = [loki.process.add_labels.receiver]
+}
+
+loki.source.file "gpu" {
+  targets    = local.file_match.gpu_logs.targets
+  forward_to = [loki.process.add_labels.receiver]
+}
+
+// ============================================
+// 라벨 추가 (호스트명)
+// ============================================
+
+loki.process "add_labels" {
+  stage.static_labels {
+    values = {
+      hostname = env("HOSTNAME"),
+      cluster  = "slurm-on-aws",
+      role     = "compute",
+    }
+  }
+
+  forward_to = [loki.write.default.receiver]
+}
+
+// ============================================
+// Loki 전송
+// ============================================
+
+loki.write "default" {
+  endpoint {
+    url = "http://<LOKI_HOST>:3100/loki/api/v1/push"
+  }
+}
