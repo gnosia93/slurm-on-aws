@@ -2,7 +2,8 @@
 
 ### GPU 온도 파워 등 ###
 ```
-nvidia-smi --query-gpu=index,name,temperature.gpu, power.draw, power.limit,ecc.errors.corrected.volatile.total, ecc.errors.uncorrected.volatile.total --format=csv
+nvidia-smi --query-gpu=index,name,temperature.gpu,power.draw,power.limit,\
+ ecc.errors.corrected.volatile.total,ecc.errors.uncorrected.volatile.total --format=csv
 ```
 
 ### GPU 쓰로틀링 ###
