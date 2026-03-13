@@ -17,18 +17,36 @@ docker run -d --restart always \
   quay.io/prometheus/node-exporter:v1.8.2 \
   --path.rootfs=/host
 
+
 # --- SLURM Exporter (포트: 9341) - Head Node 전용 ---
-docker run -d --restart always \
-  --name slurm-exporter \
-  --network host \
-  -v /etc/slurm:/etc/slurm:ro \
-  -v /usr/bin/sinfo:/usr/bin/sinfo:ro \
-  -v /usr/bin/squeue:/usr/bin/squeue:ro \
-  -v /usr/bin/sdiag:/usr/bin/sdiag:ro \
-  -v /usr/bin/sacctmgr:/usr/bin/sacctmgr:ro \
-  -v /usr/lib64:/usr/lib64:ro \
-  -v /run/munge:/run/munge:ro \
-  ghcr.io/rivosinc/prometheus-slurm-exporter:latest
+# Go 설치
+sudo snap install go --classic
+
+# prometheus-slurm-exporter 빌드
+cd /tmp
+git clone https://github.com/vpenso/prometheus-slurm-exporter.git
+cd prometheus-slurm-exporter
+go mod download
+sudo go build -o /usr/local/bin/prometheus-slurm-exporter
+
+# systemd 서비스 등록
+sudo tee /etc/systemd/system/slurm-exporter.service <<EOF
+[Unit]
+Description=Prometheus SLURM Exporter
+After=network.target slurmd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/prometheus-slurm-exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable slurm-exporter
+sudo systemctl start slurm-exporter
 
 echo "============================================"
 echo "SLURM exporter installed successfully"
