@@ -67,4 +67,8 @@ rm -rf /tmp/pyxis*
 ##############################
 # slurmd 재시작
 ##############################
-systemctl restart slurmd
+if systemctl is-active slurmctld &>/dev/null; then
+    systemctl restart slurmctld
+else
+    systemctl restart slurmd
+fi
