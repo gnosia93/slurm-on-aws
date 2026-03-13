@@ -1,3 +1,5 @@
+* [CUDA Thread Hierarchy (Introduction to CUDA Week1-3) / CUDA 강의](https://www.youtube.com/watch?v=my1U4QY59Bg)
+
 일반적인 분산 학습(Data Parallel, FSDP, TP, PP)에서는 all-reduce, all-gather, reduce-scatter가 주요 통신 패턴인데, 이것들은 대용량 메시지를 순차적으로 전달하는 방식이라 bandwidth 위주입니다. EFA로 충분합니다.
 
 latency에 민감한 케이스는 MoE 외에도:
