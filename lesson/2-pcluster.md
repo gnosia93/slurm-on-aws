@@ -41,13 +41,13 @@ export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Val
 export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=ec2-host-sg" \
   --query "SecurityGroups[0].GroupId" --output text)
 
-echo ${CLUSTER_NAME}
-echo ${AWS_DEFAULT_REGION}
-echo ${AWS_ACCOUNT_ID}
-echo ${VPC_ID}
-echo ${PUBLIC_SUBNET_ID}
-echo ${PRIVATE_SUBNET_ID}
-echo ${SECURITY_GROUP}
+echo "CLUSTER_NAME: ${CLUSTER_NAME}"
+echo "AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}"
+echo "AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID}"
+echo "VPC_ID: ${VPC_ID}"
+echo "PUBLIC_SUBNET_ID: ${PUBLIC_SUBNET_ID}"
+echo "PRIVATE_SUBNET_ID: ${PRIVATE_SUBNET_ID}"
+echo "SECURITY_GROUP: ${SECURITY_GROUP}"
 ```
 
 GPU_INSTACNE_TYPE 인스턴스의 efa 정보를 조회한다. 
