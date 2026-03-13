@@ -19,3 +19,17 @@ docker run -d --restart always \
   -v /:/host:ro,rslave \
   quay.io/prometheus/node-exporter:v1.8.2 \
   --path.rootfs=/host
+
+
+# --- SLURM Exporter (포트: 9341) - Head Node 전용 ---
+if [ "${OS}" = "Ubuntu" ]; then
+  apt-get install -y git golang-go
+elif [ "${OS}" = "Amazon Linux" ]; then
+  dnf install -y git golang
+fi
+
+cd /tmp
+git clone https://github.com/vpenso/prometheus-slurm-exporter.git
+cd prometheus-slurm-exporter
+go mod download
+go build -o /usr/local/bin/prometheus-slurm-exporter
