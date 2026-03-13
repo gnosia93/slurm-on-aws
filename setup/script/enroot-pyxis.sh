@@ -26,18 +26,33 @@ else
     echo "Unsupported OS: ${OS}" && exit 1
 fi
 
-
-
-# pyxis 설치
 # https://github.com/NVIDIA/pyxis
-PYXIS_VERSION=0.20.0
-mkdir -p /tmp/pyxis && cd /tmp/pyxis
+PYXIS_VERSION=0.21.0
+OS=$(. /etc/os-release; echo $NAME)
+
+cd /tmp
 curl -fSsL -o pyxis.tar.gz \
     https://github.com/NVIDIA/pyxis/archive/refs/tags/v${PYXIS_VERSION}.tar.gz
 tar xzf pyxis.tar.gz
 cd pyxis-${PYXIS_VERSION}
-SLURM_DIR=/opt/slurm make install
-echo "required /usr/local/lib/slurm/spank_pyxis.so" > /opt/slurm/etc/plugstack.conf
+
+if [ "${OS}" = "Amazon Linux" ]; then
+    make install
+    mkdir -p /opt/slurm/etc/plugstack.conf.d
+    ln -sf /usr/local/share/pyxis/pyxis.conf /opt/slurm/etc/plugstack.conf.d/pyxis.conf
+elif [ "${OS}" = "Ubuntu" ]; then
+    apt-get install -y make gcc libslurm-dev
+    make orig
+    make deb
+    dpkg -i ../nvslurm-plugin-pyxis_*_amd64.deb
+    mkdir -p /opt/slurm/etc/plugstack.conf.d
+    ln -sf /usr/share/pyxis/pyxis.conf /opt/slurm/etc/plugstack.conf.d/pyxis.conf
+else
+    echo "Unsupported OS: ${OS}" && exit 1
+fi
+
+rm -rf /tmp/pyxis*
+systemctl restart slurmd
 
 echo "
 ###################################
