@@ -15,6 +15,35 @@ docker --version
 docker compose version
 ```
 
+### 커피그 파일 생성 ###
+```
+cat <<EOF > prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  # Head Node exporters
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets:
+        - 'localhost:9100'
+        - '10.0.1.10:9100'   # compute node 1
+        - '10.0.1.11:9100'   # compute node 2
+        # 필요시 추가
+
+  - job_name: 'dcgm-exporter'
+    static_configs:
+      - targets:
+        - '10.0.1.10:9400'
+        - '10.0.1.11:9400'
+
+  - job_name: 'slurm-exporter'
+    static_configs:
+      - targets:
+        - 'localhost:9341'
+EOF
+```
+
 
 ### 모니터링 설치 ###
 ```
