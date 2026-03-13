@@ -1,3 +1,9 @@
+>> 모니터링 아키텍처 그림이 필요하다... 
+
+* Head Node: SLURM Exporter + Node Exporter
+* Compute Node: DCGM Exporter + Node Exporter
+* 모니터링 EC2: Prometheus + Grafana + Loki
+
 ### 도커 및 컴포즈 설치 ###
 ```
 sudo dnf install -y docker
@@ -23,31 +29,46 @@ cd /opt/monitoring
 
 [프로메테우스]
 ```
-cat <<EOF > prometheus.yml
 global:
   scrape_interval: 15s
 
 scrape_configs:
-  # Head Node exporters
   - job_name: 'node-exporter'
-    static_configs:
-      - targets:
-        - 'localhost:9100'
-        - '10.0.1.10:9100'   # compute node 1
-        - '10.0.1.11:9100'   # compute node 2
-        # 필요시 추가
+    ec2_sd_configs:
+      - region: ap-northeast-2
+        port: 9100
+        filters:
+          - name: vpc-id
+            values: ["vpc-xxxxxxxx"]
+          - name: instance-state-name
+            values: ["running"]
+    relabel_configs:
+      - source_labels: [__meta_ec2_private_ip]
+        target_label: __address__
+        replacement: "${1}:9100"
+      - source_labels: [__meta_ec2_tag_Name]
+        target_label: node
 
   - job_name: 'dcgm-exporter'
-    static_configs:
-      - targets:
-        - '10.0.1.10:9400'
-        - '10.0.1.11:9400'
+    ec2_sd_configs:
+      - region: ap-northeast-2
+        port: 9400
+        filters:
+          - name: vpc-id
+            values: ["vpc-xxxxxxxx"]
+          - name: instance-state-name
+            values: ["running"]
+    relabel_configs:
+      - source_labels: [__meta_ec2_private_ip]
+        target_label: __address__
+        replacement: "${1}:9400"
+      - source_labels: [__meta_ec2_tag_Name]
+        target_label: node
 
   - job_name: 'slurm-exporter'
     static_configs:
       - targets:
-        - 'localhost:9341'
-EOF
+          - '<HEAD_NODE_IP>:9341'
 ```
 
 [LOKI]
