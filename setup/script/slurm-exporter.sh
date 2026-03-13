@@ -33,7 +33,7 @@ rm -rf prometheus-slurm-exporter
 git clone https://github.com/vpenso/prometheus-slurm-exporter.git
 cd prometheus-slurm-exporter
 go mod download
-go build -buildvcs=false -o /usr/local/bin/prometheus-slurm-exporter
+go build -o /usr/local/bin/prometheus-slurm-exporter
 
 tee /etc/systemd/system/slurm-exporter.service <<EOF
 [Unit]
