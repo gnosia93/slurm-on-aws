@@ -1,4 +1,22 @@
-### 파티션 노드 줄이기 ###
+### 컴퓨트 노드 줄이기 ###
+#### 변경전 ####
+```
+sinfo -N
+```
+[결과]
+```
+NODELIST     NODES PARTITION STATE 
+gpu-st-ml-1      1      gpu* idle  
+gpu-st-ml-2      1      gpu* idle  
+gpu-st-ml-3      1      gpu* idle  
+gpu-st-ml-4      1      gpu* idle  
+gpu-st-ml-5      1      gpu* idle  
+gpu-st-ml-6      1      gpu* idle  
+gpu-st-ml-7      1      gpu* idle  
+gpu-st-ml-8      1      gpu* idle  
+```
+
+#### 노드 수 변경 ####
 ```
 pcluster update-compute-fleet --cluster-name slurm-on-aws --status STOP_REQUESTED --region ap-northeast-2
 pcluster describe-compute-fleet --cluster-name slurm-on-aws --region ap-northeast-2
@@ -18,6 +36,16 @@ pcluster describe-compute-fleet --cluster-name slurm-on-aws --region ap-northeas
   "status": "RUNNING",
   "lastStatusUpdatedTime": "2026-03-13T01:17:52.312Z"
 }
+```
+
+#### 변경 후 ####
+```
+sinfo -N
+```
+[결과]
+```
+NODELIST     NODES PARTITION STATE 
+gpu-st-ml-1      1      gpu* idle~ ```
 ```
 
 
