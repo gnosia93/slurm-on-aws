@@ -97,6 +97,17 @@ cat /sys/class/infiniband/*/device/numa_node
 # NCCL에 NUMA 바인딩 힌트
 export NCCL_NET_GDR_LEVEL=LOC  # GPU Direct RDMA 레벨
 ```
+[slurm 에서 강제하는 방법]
+```
+# job 실행시 --gpu-bind=closest 설정
+srun --gpus=4 --gpu-bind=closest ./train.sh
+
+# 그리고 gres.conf 에 아애와 같이 Cores 설정
+Name=gpu File=/dev/nvidia[0-3] Cores=0-47
+Name=gpu File=/dev/nvidia[4-7] Cores=48-95
+```
+
+
 
 * GPU Direct RDMA 비활성화
 ```
