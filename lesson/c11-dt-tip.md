@@ -9,6 +9,13 @@
 * NVLink/EFA 네트워크 성능 저하
 
 #### 특정 노드의 스토리지 I/O 병목 (Lustre OST 불균형 등) ####
+```
+학습 파이프라인:
+
+스토리지(Lustre) → CPU(DataLoader) → GPU(학습)
+      ↑
+  여기가 느리면 GPU가 데이터를 기다림 (GPU starvation)
+```
 
 #### 백그라운드 프로세스 (OS 업데이트, 로그 수집 등) ####
 ```
