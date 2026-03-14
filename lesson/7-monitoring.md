@@ -1,7 +1,7 @@
 >> 모니터링 아키텍처 그림이 필요하다... 
 
 * Head Node: SLURM Exporter + Node Exporter
-* Compute Node: DCGM Exporter + Node Exporter
+* Compute Node: DCGM / DCGM Exporter + Node Exporter + Alloy(Log)
 * 모니터링 EC2: Prometheus + Grafana + Loki
 
 ### 도커 및 컴포즈 설치 ###
