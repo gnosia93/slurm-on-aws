@@ -35,7 +35,7 @@
                               백그라운드 스레드가 디스크에 저장 (GPU 안 기다림)
 ```
 
-#### 3. Pytorch 예시 ####
+#### 3. Pytorch 비동기 예시 ####
 ```
 import torch.distributed.checkpoint as dcp
 from torch.distributed.checkpoint.state_dict import get_state_dict
