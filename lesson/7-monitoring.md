@@ -174,8 +174,6 @@ docker-compose.yml 최하단의 volumes: 섹션은 Docker named volume을 선언
 docker compose down으로 컨테이너를 삭제해도 데이터는 유지된다. 볼륨까지 삭제하려면 docker compose down -v를 써야 한다. prometheus-data 볼륨의 경우 호스트 경로는 /var/lib/docker/volumes/prometheus-data/_data/ 이며 컨테이너 내부에서는 /prometheus 에 저장된다. 
 
 
-
-
 ### 모니터링 스택 설치 ###
 restart always 모드로 도커 컴포즈를 실행한다. EC2가 재부팅되더라도 모니터링 에이전트들은 재실행된다. 
 ```
@@ -186,7 +184,7 @@ echo "Monitoring stack installed"
 echo "============================================"
 echo "Grafana:    http://${PUBLIC_HOSTNAME}:3000"
 echo "Loki:       http://${PUBLIC_HOSTNAME}:3100"
-echo "Prometheus: http://${PUBLIC_HOSTNAME}:9090"
+echo "Prometheus: http://${PUBLIC_HOSTNAME}:9091"
 ```
 
 docker 컨테이너 실행여부를 확인한다. 
