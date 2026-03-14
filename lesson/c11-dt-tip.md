@@ -142,7 +142,6 @@ NCCL_DEBUG=INFO torchrun ...
 export NCCL_NET_GDR_LEVEL=SYS
 ```
 
-
 #### GPU 메모리 ECC(Error Correcting Code) 에러 ####
 ```
 • SBE (Single-Bit Error): ECC가 감지하고 자동 교정 → 빈발 시 오버헤드 누적으로 느려짐
@@ -151,4 +150,3 @@ export NCCL_NET_GDR_LEVEL=SYS
   └── 경우 2: XID 48 → GPU 크래시 → GPU 교체
 ```
 
-### lustre ###
