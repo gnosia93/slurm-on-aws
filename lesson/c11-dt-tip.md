@@ -11,17 +11,14 @@
 * CPU throttling (온도, 전력)
 * 백그라운드 프로세스 (OS 업데이트, 로그 수집 등)
 * NCCL 통신 경로 이슈
-* GPU 메모리 ECC(Error Correcting Code) 에러 
-  * SBE (Single-Bit Error): ECC가 감지하고 자동 교정 및 재계산 -> 느려짐 
-  * DBE (Double-Bit Error): 경우 1은 체크포인트에서 학습 재실행, 경우 2는 GPU 교체
-  * DBE 발생
-  ```
-  ├── 경우 1: 해당 메모리 페이지를 retire (다시 안 씀)
-  │           → 하지만 이미 그 데이터는 손상됨
-  │           → 해당 연산의 결과를 신뢰할 수 없음
-  │           → XID 63 에러 발생 → 프로세스 크래시 가능
-  │
-  └── 경우 2: 바로 XID 48 에러 → GPU 크래시
-  ```
+
+
+#### GPU 메모리 ECC(Error Correcting Code) 에러 ####
+```
+• SBE (Single-Bit Error): ECC가 감지하고 자동 교정 → 빈발 시 오버헤드 누적으로 느려짐
+• DBE (Double-Bit Error): ECC가 감지하지만 교정 불가 → 데이터 손상
+  ├── 경우 1: 페이지 retire + XID 63 → 프로세스 크래시 → 체크포인트에서 재시작
+  └── 경우 2: XID 48 → GPU 크래시 → GPU 교체
+```
 
 ### lustre ###
