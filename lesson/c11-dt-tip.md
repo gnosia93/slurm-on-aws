@@ -31,6 +31,33 @@ Lustre OST 불균형 - Lustre는 파일 데이터를 여러 OST에 분산 저장
      ↑
   이 OST에서 읽는 노드들이 straggler
 ```
+* 불균형이 발생하는 원인
+```
+1. stripe count = 1 (가장 흔함)
+# 파일이 단일 OST에만 저장됨
+lfs getstripe /shared/dataset/train_00001.tfrecord
+# stripe_count: 1
+# stripe_size:  1048576
+# obdidx   objid   ...
+#   0       12345   ...    ← OST 0에만 있음
+
+2. 데이터셋 파일 배치 편향 - Lustre는 round-robin으로 OST를 배정하지만, 파일 생성 시점의 OST 여유 공간에 따라 편향될 수 있음
+dataset/
+├── shard_0000.tar  → OST 0
+├── shard_0001.tar  → OST 0   ← 같은 OST에 연속 배치
+├── shard_0002.tar  → OST 0
+├── shard_0003.tar  → OST 1
+├── shard_0004.tar  → OST 1
+...
+
+3. 용량 불균형 - OST 0이 거의 차면 새 파일이 다른 OST로 가지만, 기존 파일의 읽기는 여전히 OST 0에 집중.
+lfs df -h /shared
+# UUID                  bytes   Used  Available  Use%  Mounted on
+# OST0000             1.7T    1.6T     100G      94%   /shared[OST:0]  ← 거의 꽉 참
+# OST0001             1.7T    800G     900G      47%   /shared[OST:1]
+# OST0002             1.7T    200G     1.5T      12%   /shared[OST:2]
+# OST0003             1.7T    300G     1.4T      18%   /shared[OST:3]
+```
 
 #### 백그라운드 프로세스 (OS 업데이트, 로그 수집 등) ####
 ```
