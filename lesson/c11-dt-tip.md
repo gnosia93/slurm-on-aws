@@ -44,6 +44,22 @@ PCIe (노드 내)   - ~64 GB/s
 EFA (노드 간)    - ~50 GB/s (400Gbps)
 TCP (노드 간)    - ~12 GB/s (100Gbps)
 ```
+```
+# NVLink 토폴로지 확인
+nvidia-smi topo -m
+
+# 정상 출력 예시 (p5.48xlarge, H100 x 8):
+#         GPU0  GPU1  GPU2  GPU3  GPU4  GPU5  GPU6  GPU7
+# GPU0     X    NV18  NV18  NV18  NV18  NV18  NV18  NV18
+# GPU1    NV18   X    NV18  NV18  NV18  NV18  NV18  NV18
+# ...
+# NV18 = NVLink 18개 연결 (정상)
+
+# 비정상 출력 예시:
+# GPU0     X    NV18  NV18  PHB   NV18  NV18  NV18  NV18
+#                           ↑
+#                     PCIe로 fallback됨 (NVLink 장애)
+```
 
 
 
