@@ -6,7 +6,7 @@
 
 ### Straggler가 발생하는 원인 ###
 
-#### 1. GPU 하드웨어 열화 (메모리 에러, 클럭 다운) ####
+#### 1. GPU 하드웨어 열화 (메모리 에러, 클럭 다운 등) ####
 ```
 # 실시간 클럭/온도 확인
 nvidia-smi dmon -s pcut -d 1
@@ -17,6 +17,25 @@ gpu  pwr  temp  sm   mem   enc  dec  clk   mclk
    1  350   64  97    43    0    0  1980  2619   ← 정상
    2  400   82  99    52    0    0  1410  2619   ← 클럭 다운!
    3  350   66  98    44    0    0  1980  2619   ← 정상
+
+# PCIe 링크 상태 확인
+nvidia-smi -q -d PCIE
+
+# 정상:
+ Link Generation
+   Current: 5        ← PCIe Gen5
+   Max:     5
+ Link Width
+   Current: 16x      ← 16레인
+   Max:     16x
+
+# 비정상:
+ Link Generation
+   Current: 4        ← Gen4로 다운그레이드!
+   Max:     5
+ Link Width
+   Current: 8x       ← 8레인으로 감소!
+   Max:     16x
 ```
 
 
