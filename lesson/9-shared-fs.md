@@ -17,6 +17,8 @@
 ### 네트워크 아키텍처 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-1.png)
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-2.png)
+이러면 학습 중 IB2 트래픽이 거의 없어서, IB2를 IB1과 합쳐서 NCCL 전용 IB 1개 + 이더넷 본딩(스토리지+관리)으로 줄일 수도 있다.
+결국 로컬 NVMe 캐싱을 얼마나 잘 활용하느냐에 따라 IB 2개가 필요한지 1개로 충분한지가 결정된다.
 
 ### 비동기 체크 포인팅 ###
 
