@@ -54,6 +54,10 @@ cat nccl-test-*.out
 ```
 squeue 는 실시간 확인용이고, cat 으로는 최종 결과를 확인할 수 있다. 
 
+### nccl 통신 경로 ###
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/nccl-comm-path.png)
+NVLink를 타는지 여부는 로그 텍스트만으로는 직접 구분이 안 된다. P2P/CUMEM이나 P2P/direct pointer가 NVLink일 수도 있고 PCIe일 수도 있다. 실제 NVLink를 사용하는지는 nvidia-smi topo -m에서 GPU 간 연결이 NV로 표시되는지로 판단해야 한다.
+
 ### [nccl-test 결과 - 2 nodes] ###
 ```
 # Collective test starting: all_reduce_perf
