@@ -107,7 +107,7 @@ HeadNode:
       - ${SECURITY_GROUP}
   LocalStorage:
     RootVolume:
-      Size: 500
+      Size: 100
       DeleteOnTermination: true                 # that's your root and /home volume for users
   Iam:
     AdditionalIamPolicies:
