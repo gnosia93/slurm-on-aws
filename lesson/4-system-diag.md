@@ -31,7 +31,7 @@ index, name, clocks_event_reasons.active, clocks_event_reasons.gpu_idle, clocks_
 1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 0x0000000000000004, Not Active, Not Active, Not Active, Active
 ```
 
-아래 명령어로 실시간으로 전력, 온도 및 쓰로틀링을 모니터링 할 수 있다. 파라미터 p: 전력/온도, t: 쓰로틀링 상태, -d 1: 1초 간격   
+아래 명령어로 실시간으로 전력, 온도 및 쓰로틀링을 모니터링 할 수 있다. (파라미터 p: 전력/온도, t: 쓰로틀링 상태, -d 1: 1초 간격)   
 ```
 nvidia-smi dmon -s pt -d 1
 ```
