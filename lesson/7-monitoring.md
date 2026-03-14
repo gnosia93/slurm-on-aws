@@ -206,5 +206,7 @@ CONTAINER ID   IMAGE                     COMMAND                  CREATED       
   ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-2.png)
     * Loki: http://loki:3100
     * Prometheus: http://prometheus:9090
-* step 3 - Explore에서 로그/메트릭 조회한다.
-
+* step 3 - 대시보드를 생성한다. Grafana에서 Dashboards → Import → ID 입력
+    * Node Exporter Full ->	1860	CPU, 메모리, 디스크, 네트워크
+    * DCGM Exporter	-> 12239	GPU 사용률, 온도, 전력, 메모리
+    * SLURM Dashboard	-> 4323	SLURM 잡, 큐, 노드 상태
