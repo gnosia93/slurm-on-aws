@@ -87,8 +87,26 @@ fi_info -p efa
 └─────────────────────────────────────────────┘
 ```
 
+* GPU Direct RDMA 비활성화
+```
+정상 경로 (GPU Direct RDMA):
+Node A GPU → NIC(EFA) → 네트워크 → NIC(EFA) → Node B GPU
+(GPU 메모리에서 직접 네트워크로, CPU 메모리 경유 안 함)
 
+비정상 경로 (GPU Direct RDMA 없을 때):
+Node A GPU → CPU 메모리 복사 → NIC → 네트워크 → NIC → CPU 메모리 복사 → Node B GPU
+(2번의 추가 복사 발생 → 지연 + CPU 부하)
+```
+```
+# GPU Direct RDMA 지원 확인
+NCCL_DEBUG=INFO torchrun ...
+# 로그에서 확인:
+# NCCL INFO NET/OFI GDR is enabled    ← 정상
+# NCCL INFO NET/OFI GDR is disabled   ← 문제
 
+# 강제 활성화
+export NCCL_NET_GDR_LEVEL=SYS
+```
 
 
 #### GPU 메모리 ECC(Error Correcting Code) 에러 ####
