@@ -17,7 +17,7 @@
 
 * [C8. NVIDIA Nemo Framework](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-nemo-framework.md)
 
-* [C9. 스토리지 (zfs/lustre)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-shared-fs.md)
+* [C9. 스토리지 및 네트워크 구성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-shared-fs.md)
   
 * [C10. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/10-cluster-delete.md)
 
