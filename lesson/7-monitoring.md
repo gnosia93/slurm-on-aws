@@ -202,11 +202,9 @@ CONTAINER ID   IMAGE                     COMMAND                  CREATED       
 ### 그라파나 설정 ###
 * step 1 - http://<EC2_IP>:3000 접속 (admin/admin) 한다.
 * step 2 - 그라파나 대시보드 화면에서 Data Sources 를 추가한다. docker compose 로 동일한 Docker 네트워크에서 실행중이기 때문에 loki, prometheus 로 호스트명을 사용해야 한다.
-
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-1.png)
-
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-2.png)
-  * Loki: http://loki:3100
-  * Prometheus: http://prometheus:9090
-* Explore에서 로그/메트릭 조회한다.
+  ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-1.png)
+  ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-2.png)
+    * Loki: http://loki:3100
+    * Prometheus: http://prometheus:9090
+* step 3 - Explore에서 로그/메트릭 조회한다.
 
