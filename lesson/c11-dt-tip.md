@@ -7,9 +7,21 @@
 ### Straggler가 발생하는 원인 ###
 * GPU 하드웨어 열화 (메모리 에러, 클럭 다운)
 * NVLink/EFA 네트워크 성능 저하
-* 특정 노드의 스토리지 I/O 병목 (Lustre OST 불균형 등)
-* CPU throttling (온도, 전력)
-* 백그라운드 프로세스 (OS 업데이트, 로그 수집 등)
+
+#### 특정 노드의 스토리지 I/O 병목 (Lustre OST 불균형 등) ####
+
+#### 백그라운드 프로세스 (OS 업데이트, 로그 수집 등) ####
+```
+64노드 분산 학습 중:
+
+Node 31에서 unattended-upgrades가 갑자기 실행
+→ CPU 4코어를 30초간 점유
+→ DataLoader worker가 CPU를 못 받음
+→ GPU에 다음 배치 데이터 공급 지연
+→ Node 31의 step time: 2.1초 → 3.5초
+→ AllReduce에서 나머지 63노드가 1.4초 대기
+→ 전체 학습 1.4초 × 63노드 = 88.2 GPU·초 낭비 (한 step에)
+```
 
 #### NCCL 통신 경로 이슈 ####
 * GPU간 통신경로
