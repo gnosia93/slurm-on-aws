@@ -140,6 +140,15 @@ Successfully ran diagnostic for group.
 +---------------------------+------------------------------------------------+
 ```
 
+ubuntu 22.04 버전에서는 blackwell 아키텍처에 대해 level 1 테스트만 가능한 것으로 보인다. 대신 아래의 명령어로 추가적인 정보를 조회해 본다.
+```
+# 1. GPU 기본 정보 및 CUDA 동작 확인
+/usr/local/cuda/extras/demo_suite/deviceQuery
+
+# 2. GPU 메모리 대역폭 테스트
+/usr/local/cuda/extras/demo_suite/bandwidthTest
+```
+
 
 ## 네트워크 ##
 
