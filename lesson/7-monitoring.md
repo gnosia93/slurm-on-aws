@@ -189,6 +189,18 @@ echo "Loki:       http://${PUBLIC_HOSTNAME}:3100"
 echo "Prometheus: http://${PUBLIC_HOSTNAME}:9090"
 ```
 
+docker 컨테이너 실행여부를 확인한다. 
+```
+docker ps -a
+```
+[결과]
+```
+CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+7f2b43a2dbd7   grafana/grafana:11.4.0    "/run.sh"                11 seconds ago   Up 10 seconds   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   grafana
+9d56ea36bf6a   prom/prometheus:v2.54.1   "/bin/prometheus --c…"   11 seconds ago   Up 10 seconds   0.0.0.0:9091->9090/tcp, :::9091->9090/tcp   prometheus
+91f67606c727   grafana/loki:3.3.2        "/usr/bin/loki -conf…"   11 seconds ago   Up 10 seconds   0.0.0.0:3100->3100/tcp, :::3100->3100/tcp   loki
+```
+
 ### 그라파나 설정 ###
 http://<EC2_IP>:3000 접속 (admin/changeme)
 
