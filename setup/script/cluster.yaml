@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 export GPU_MIN=2
 export GPU_MAX=2
 
