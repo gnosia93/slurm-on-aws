@@ -13,6 +13,15 @@
 * NCCL 통신 경로 이슈
 * GPU 메모리 ECC(Error Correcting Code) 에러 → 자동 재계산으로 느려짐
   * SBE (Single-Bit Error): ECC가 감지하고 자동 교정까지 완료. 
-  * DBE (Double-Bit Error): ECC가 감지하고 retire한 후 재계산 하거나, XID 에러 발생(GPU 교체필요)
+  * DBE (Double-Bit Error): GPU 교체 고려
+  * DBE 발생
+  ```
+  ├── 경우 1: 해당 메모리 페이지를 retire (다시 안 씀)
+  │           → 하지만 이미 그 데이터는 손상됨
+  │           → 해당 연산의 결과를 신뢰할 수 없음
+  │           → XID 63 에러 발생 → 프로세스 크래시 가능
+  │
+  └── 경우 2: 바로 XID 48 에러 → GPU 크래시
+  ```
 
 ### lustre ###
