@@ -11,7 +11,8 @@
 * CPU throttling (온도, 전력)
 * 백그라운드 프로세스 (OS 업데이트, 로그 수집 등)
 * NCCL 통신 경로 이슈
-* GPU 메모리 ECC 에러 → 자동 재계산으로 느려짐
-
+* GPU 메모리 ECC(Error Correcting Code) 에러 → 자동 재계산으로 느려짐
+  * SBE (Single-Bit Error): ECC가 감지하고 자동 교정까지 완료. 
+  * DBE (Double-Bit Error): ECC가 감지는 했지만 교정 불가. --> GPU 교체
 
 ### lustre ###
