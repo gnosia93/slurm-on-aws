@@ -15,7 +15,8 @@
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/shared-fs.png)
 
 ### 네트워크 아키텍처 ###
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-1.png)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-2.png)
 
 ### 비동기 체크 포인팅 ###
 
