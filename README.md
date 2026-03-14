@@ -11,7 +11,7 @@
      
 * [C5. 컨테이너 사용하기 (enroot/pyxis)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-slurm-container.md)
 
-* > [C6. Custom AMI 만들기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md)
+* > [C6. Custom AMI 만들기 (packer)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md)
   
 * [C7. 모니터링 설정하기 (prometheus/loki/grafana)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
 
