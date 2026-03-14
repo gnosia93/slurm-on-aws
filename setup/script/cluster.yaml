@@ -1,95 +1,107 @@
+export GPU_MIN=2
+export GPU_MAX=2
+
+cat > cluster.yaml << EOF
 Imds:
   ImdsSupport: v1.0
 Image:
   Os: ubuntu2204
 HeadNode:
-  InstanceType: m7.8xlarge
+  InstanceType: ${HEAD_NODE_TYPE}
+  Ssh:
+    KeyName: slurm-key
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
-    AdditionalSecurityGroups:                                  # ParallelCluster는 노드들끼리 통신할 수 있는 기본 보안 그룹을 자동으로 생성
-      - ${SECURITY_GROUP}                                      # ParallelCluster가 기본으로 만드는 보안 그룹 외에, 사용자가 미리 만들어둔 보안 그룹을 추가로 설정
+    AdditionalSecurityGroups:
+      - ${SECURITY_GROUP}
   LocalStorage:
     RootVolume:
-      Size: 500
-      DeleteOnTermination: true 
+      Size: 100
+      DeleteOnTermination: true                 # that's your root and /home volume for users
   Iam:
-    AdditionalIamPolicies:                                     # grant ECR, SSM and S3 read access
+    AdditionalIamPolicies:
       - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
       - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
-#      - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
+      - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
   CustomActions:
     OnNodeConfigured:
       Sequence:
+#        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
         - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
-        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'
           Args:
-            - v2.23.4-1 # NCCL version
-            - v1.11.0-aws # AWS OFI NCCL version
+            - 1.18.2-1                         # NVIDIA_CONTAINER_TOOLKIT_VERSION version
+        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/slurm-exporter.sh'
   Imds:
     Secured: false
 Scheduling:
   Scheduler: slurm
   SlurmSettings:
-    ScaledownIdletime: 600                                     # 600초 동안 IDLE 상태가 지속되면, 인스턴스를 TERMINATE 시킨다.  
-    QueueUpdateStrategy: DRAIN                                 # DRAIN: 클러스터 설정을 변경할 때, 실행 중인 작업은 끝날 때까지 기다리고 새 작업은 받지 않는 방식으로 안전하게 업데이트
+    ScaledownIdletime: 300               # Idle 상태의 노드의 경우 5분후 삭제
+    QueueUpdateStrategy: DRAIN           # 클러스터 업데이트시 DRAIN은 실행 중인 작업이 끝날 때까지 대기후 업데이트, TERMINATE은 실행 중인 작업을 즉시 종료하고 바로 업데이트
     CustomSlurmSettings:
-      - JobCompType: jobcomp/filetxt                           # 작업이 끝났을 때 그 기록을 텍스트 파일(.txt) 형태로 남기겠다는 설정.
-      - JobCompLoc: /home/slurm/slurm-job-completions.txt      # 어떤 사용자가 어떤 스크립트를 돌렸고, 결과(성공/실패)가 어땠는지 한눈에 볼 수 있음.
-      - JobAcctGatherType: jobacct_gather/linux                # 작업의 CPU 사용량, 메모리 점유율 같은 데이터를 수집하는 방식 설정 - linux 방식은 리눅스 커널의 표준 기능을 사용.
+      #- SlurmdTimeout: 1800              # slurmctld가 slurmd의 응답 최대 대기 시간(초), 이 시간 내에 slurmd가 응답하지 않으면, 해당 노드를 DOWN 상태로 전환, 기본값 3분(180)
+      # Simple accounting to text file /home/slurm/slurm-job-completions.txt.
+      - JobCompType: jobcomp/filetxt
+      - JobCompLoc: /home/slurm/slurm-job-completions.txt
+      - JobAcctGatherType: jobacct_gather/linux
   SlurmQueues:
-    - Name: compute-gpu
-      CapacityType: ONDEMAND                                   # ONDEMAND or SPOT 
+    - Name: gpu
+      CapacityType: ONDEMAND
       Networking:
         SubnetIds:
           - ${PRIVATE_SUBNET_ID}
         PlacementGroup:
-          Enabled: true                                        # set this to false if using a targeted ODCR or CB
+          Enabled: true                  # set this to false if using a targeted ODCR
         AdditionalSecurityGroups:
           - ${SECURITY_GROUP}
       ComputeSettings:
         LocalStorage:
           EphemeralVolume:
-            MountDir: /scratch                                 # each instance has a local scratch on NVMe
+            MountDir: /scratch           # each instance has a local scratch on NVMe
           RootVolume:
             Size: 200
-      JobExclusiveAllocation: true                             # GenAI training likes to gobble all GPUs in an instance
+      JobExclusiveAllocation: true       # GenAI training likes to gobble all GPUs in an instance
       ComputeResources:
-        - Name: distributed-ml
-          InstanceType: p5.48xlarge
-          MinCount: 0                                          # if min = max then capacity is maintained and will
-          MaxCount: 4                                          # not scale down
+        - Name: ml
+          InstanceType: ${GPU_NODE_TYPE}
+          MinCount: ${GPU_MIN}
+          MaxCount: ${GPU_MAX}
           Efa:
             Enabled: true
-#         CapacityReservationTarget:
-#           CapacityReservationId: cr-0123456789abcdef0        # 구매한 예약 ID (Capacity Block or ODCR ID) 
       CustomActions:
         OnNodeConfigured:
           Sequence:
-            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/docker/postinstall.sh'
-            - Script: 'https://raw.githubusercontent.com/aws-samples/aws-parallelcluster-post-install-scripts/main/nccl/postinstall.sh'
+#            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/stop-ssm.sh'
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
               Args:
-                - v2.23.4-1 # NCCL version
-                - v1.11.0-aws # AWS OFI NCCL version
-SharedStorage:
-  - Name: HomeDirs
-    MountDir: /home
-    StorageType: FsxOpenZfs
-    FsxOpenZfsSettings:
-      VolumeId: ${FSXO_ID}
-  - MountDir: /fsx
-    Name: fsx
-    StorageType: FsxLustre
-    FsxLustreSettings:
-      FileSystemId: ${FSX_ID}
+                - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'
+              Args:
+                - v2.29.2-1             # NCCL version
+                - v1.18.0               # AWS OFI NCCL version
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot.sh'
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
+#SharedStorage:
+#  - Name: HomeDirs
+#    MountDir: /home
+#    StorageType: FsxOpenZfs
+#    FsxOpenZfsSettings:
+#      VolumeId: ${FSXO_ID}
+#  - MountDir: /fsx
+#    Name: fsx
+#    StorageType: FsxLustre
+#    FsxLustreSettings:
+#      FileSystemId: ${FSX_ID}
 Monitoring:
-  DetailedMonitoring: true
+  DetailedMonitoring: false
   Logs:
     CloudWatch:
-      Enabled: true
-  Dashboards:                                        # AWS가 클러스터 이름으로 된 전용 대시보드를 CloudWatch 콘솔에 자동으로 생성
-    CloudWatch:                                      # 노드 상태: 현재 몇 대의 계산 노드(Compute Nodes)가 켜져 있는지, 몇 대가 작업 중인지
-      Enabled: true                                  # 자원 사용량: HeadNode와 ComputeNode들의 CPU 사용률, 메모리 점유율  
-Tags:                                                # 작업 현황: Slurm 스케줄러를 통해 제출된 작업의 성공/실패 여부
-  - Key: 'Grafana'                                   # 스토리지: /home이나 /scratch 디스크의 남은 용량.
+      Enabled: true # good for debug
+  Dashboards:
+    CloudWatch:
+      Enabled: true # provide basic dashboards
+Tags:
+  - Key: 'Grafana'
     Value: 'true'
+EOF
