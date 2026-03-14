@@ -140,7 +140,7 @@ Successfully ran diagnostic for group.
 +---------------------------+------------------------------------------------+
 ```
 
-ubuntu 22.04 버전에서는 blackwell 아키텍처에 대해 level 1 테스트만 가능한 것으로 보인다. 대신 아래의 명령어로 추가적인 정보를 조회해 본다.
+ubuntu 22.04 버전에서는 blackwell 아키텍처에 대해 level 1 테스트만 가능한 것으로 보인다. DCGM 버전이 3.3.9 로 상당이 낮아 보이는데 ubuntu 22.04 에서 최종 버전인지 추가저긴 확인이 필요하다. 대신 아래의 명령어로 GPU 관련 상세 정보를 조회해 본다.
 ```
 # 1. GPU 기본 정보 및 CUDA 동작 확인
 /usr/local/cuda/extras/demo_suite/deviceQuery
