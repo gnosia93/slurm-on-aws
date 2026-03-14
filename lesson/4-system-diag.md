@@ -56,15 +56,23 @@ nvidia-smi dmon -s pt -d 1
 
 ### GPU 토폴로지 ###
 ```
-nvidia-smi topo -m -i all
 nvidia-smi topo -mp
 ```
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/smi-topology.png)
-* NV#	- NVLink (숫자는 링크 수)
-* PIX	- 같은 PCIe 스위치	(~32GB/s)
-* PHB	- 같은 CPU 소켓, 다른 PCIe 스위치 (~32GB/s)
-* SYS	- 다른 CPU 소켓 (~16GB/s)
-* NODE - 같은 NUMA 노드	(~32GB/s) 
+[결과]
+```
+        GPU0    GPU1    CPU Affinity    NUMA Affinity   GPU NUMA ID
+GPU0     X      PIX     0-47    0               N/A
+GPU1    PIX      X      0-47    0               N/A
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+```
 
 ### GPU 진단 ###
 ```
