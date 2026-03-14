@@ -1,5 +1,11 @@
 ## GPU 관련 ##
 
+gpu-st-ml-1 GPU 노드로 로그인 한 후 아래 명려어들을 실행한다.  
+```
+sinfo -N
+ssh gpu-st-ml-1
+```
+
 ### GPU 온도 파워 등 ###
 ```
 nvidia-smi --query-gpu=index,name,temperature.gpu,power.draw,power.limit,\
