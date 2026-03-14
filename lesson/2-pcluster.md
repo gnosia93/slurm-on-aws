@@ -29,8 +29,8 @@ vscode 웹 콘솔에서 아래 명령어를 순차적으로 실행한다. 클러
 클러스터 생성에 필요한 환경변수 값을 설정한다. AZ 의 경우 2번을 사용하도록 하고 인스턴스는 서버당 2장의 GPU를 가진 [g7e.12xlarge](https://aws.amazon.com/ko/ec2/instance-types/g7e/)를 사용한다 
 ```bash
 export CLUSTER_NAME="slurm-on-aws"
-export CPU_INSTANCE_TYPE="m6i.2xlarge"
-export GPU_INSTACNE_TYPE="g7e.12xlarge"
+export HEAD_NODE_TYPE="m6i.2xlarge"
+export GPU_NODE_TYPE="g7e.12xlarge"
 export AZ="2"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
@@ -56,7 +56,7 @@ echo "SECURITY_GROUP: ${SECURITY_GROUP}"
 GPU_INSTACNE_TYPE 인스턴스의 efa 정보를 조회한다. 
 ```
 aws ec2 describe-instance-types \
-    --instance-types ${GPU_INSTACNE_TYPE} \
+    --instance-types ${GPU_NODE_TYPE} \
     --query "InstanceTypes[*].{InstanceType:InstanceType, \
         EfaSupported:NetworkInfo.EfaSupported, \
         MaxNetworkInterfaces:NetworkInfo.MaximumNetworkInterfaces, \
@@ -98,7 +98,7 @@ Imds:
 Image:
   Os: ubuntu2204
 HeadNode:
-  InstanceType: ${CPU_INSTANCE_TYPE}
+  InstanceType: ${HEAD_NODE_TYPE}
   Ssh:
     KeyName: slurm-key
   Networking:
@@ -155,7 +155,7 @@ Scheduling:
       JobExclusiveAllocation: true       # GenAI training likes to gobble all GPUs in an instance
       ComputeResources:
         - Name: ml
-          InstanceType: ${GPU_INSTACNE_TYPE}
+          InstanceType: ${GPU_NODE_TYPE}
           MinCount: ${GPU_MIN}
           MaxCount: ${GPU_MAX}
           Efa:
