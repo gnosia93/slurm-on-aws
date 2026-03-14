@@ -200,11 +200,9 @@ CONTAINER ID   IMAGE                     COMMAND                  CREATED       
 ```
 
 ### 그라파나 설정 ###
-http://<EC2_IP>:3000 접속 (admin/changeme)
-
-* Data Sources 추가:
+* step 1 - http://<EC2_IP>:3000 접속 (admin/admin) 한다.
+* step 2 - 그라파나 대시보드 화면에서 Data Sources 를 추가한다.
   * Loki: http://loki:3100
   * Prometheus: http://prometheus:9090
-
-* Explore에서 로그/메트릭 조회 가능
+* Explore에서 로그/메트릭 조회한다.
 
