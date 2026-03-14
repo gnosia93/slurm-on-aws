@@ -142,6 +142,28 @@ resource "aws_security_group" "instance_sg" {
     cidr_blocks = local.allowed_ip_cidrs
   }
 
+  # grafana
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = local.allowed_ip_cidrs
+  }
+  # loki
+  ingress {
+    from_port   = 3100
+    to_port     = 3100
+    protocol    = "tcp"
+    cidr_blocks = local.allowed_ip_cidrs
+  }
+  # prometheus
+  ingress {
+    from_port   = 9091
+    to_port     = 9091
+    protocol    = "tcp"
+    cidr_blocks = local.allowed_ip_cidrs
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -175,7 +197,7 @@ sleep 5
 sed -i 's/127.0.0.1:8080/0.0.0.0:9090/g; s/^password: .*/password: code!@#c/g' /home/ec2-user/.config/code-server/config.yaml
 EC2_USER_SCRIPT
 
-echo 'export PS1="$(uname -m) \$ "' >> /home/ec2-user/.bashrc
+echo 'export PS1="vscode \$ "' >> /home/ec2-user/.bashrc
 sudo systemctl restart code-server@ec2-user
 _DATA
 
