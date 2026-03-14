@@ -86,6 +86,17 @@ fi_info -p efa
 │  └──────┘             └──────┘              │
 └─────────────────────────────────────────────┘
 ```
+```
+# GPU의 NUMA affinity 확인
+nvidia-smi topo -m
+# 맨 아래에 NUMA 정보 표시
+
+# EFA의 NUMA 확인
+cat /sys/class/infiniband/*/device/numa_node
+
+# NCCL에 NUMA 바인딩 힌트
+export NCCL_NET_GDR_LEVEL=LOC  # GPU Direct RDMA 레벨
+```
 
 * GPU Direct RDMA 비활성화
 ```
