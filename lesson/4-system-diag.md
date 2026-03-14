@@ -80,6 +80,66 @@ srun --partition=gpu --nodes=2 --ntasks-per-node=1 dcgmi diag -r 3
 ```
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/dcgmi-diag.png)
 
+[결과]
+```
+Successfully ran diagnostic for group.
+Successfully ran diagnostic for group.
++---------------------------+------------------------------------------------+
+| Diagnostic                | Result                                         |
++===========================+================================================+
+|-----  Metadata  ----------+------------------------------------------------|
+| DCGM Version              | 3.3.9                                          |
+| Driver Version Detected   | 570.172.08                                     |
+| GPU Device IDs Detected   | 2bb5,2bb5                                      |
+|-----  Deployment  --------+------------------------------------------------|
+| Denylist                  | Pass                                           |
+| NVML Library              | Pass                                           |
+| CUDA Main Library         | Pass                                           |
+| Permissions and OS Blocks | Pass                                           |
+| Persistence Mode          | Pass                                           |
+| Environment Variables     | Pass                                           |
+| Page Retirement/Row Remap | Pass                                           |
+| Graphics Processes        | Pass                                           |
+| Inforom                   | Pass                                           |
++-----  Integration  -------+------------------------------------------------+
+| PCIe                      | Skip - All                                     |
++-----  Hardware  ----------+------------------------------------------------+
+| GPU Memory                | Skip - All                                     |
++-----  Stress  ------------+------------------------------------------------+
+| Targeted Stress           | Skip - All                                     |
+| Targeted Power            | Skip - All                                     |
+| Memory Bandwidth          | Skip - All                                     |
+| EUD Test                  | Skip - All                                     |
++---------------------------+------------------------------------------------+
++---------------------------+------------------------------------------------+
+| Diagnostic                | Result                                         |
++===========================+================================================+
+|-----  Metadata  ----------+------------------------------------------------|
+| DCGM Version              | 3.3.9                                          |
+| Driver Version Detected   | 570.172.08                                     |
+| GPU Device IDs Detected   | 2bb5,2bb5                                      |
+|-----  Deployment  --------+------------------------------------------------|
+| Denylist                  | Pass                                           |
+| NVML Library              | Pass                                           |
+| CUDA Main Library         | Pass                                           |
+| Permissions and OS Blocks | Pass                                           |
+| Persistence Mode          | Pass                                           |
+| Environment Variables     | Pass                                           |
+| Page Retirement/Row Remap | Pass                                           |
+| Graphics Processes        | Pass                                           |
+| Inforom                   | Pass                                           |
++-----  Integration  -------+------------------------------------------------+
+| PCIe                      | Skip - All                                     |
++-----  Hardware  ----------+------------------------------------------------+
+| GPU Memory                | Skip - All                                     |
++-----  Stress  ------------+------------------------------------------------+
+| Targeted Stress           | Skip - All                                     |
+| Targeted Power            | Skip - All                                     |
+| Memory Bandwidth          | Skip - All                                     |
+| EUD Test                  | Skip - All                                     |
++---------------------------+------------------------------------------------+
+```
+
 
 ## 네트워크 ##
 
