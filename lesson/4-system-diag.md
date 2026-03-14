@@ -9,7 +9,13 @@ ssh gpu-st-ml-1
 ### GPU 온도 파워 등 ###
 ```
 nvidia-smi --query-gpu=index,name,temperature.gpu,power.draw,power.limit,\
- ecc.errors.corrected.volatile.total,ecc.errors.uncorrected.volatile.total --format=csv
+ecc.errors.corrected.volatile.total,ecc.errors.uncorrected.volatile.total --format=csv
+```
+[결과]
+```
+index, name, temperature.gpu, power.draw [W], power.limit [W], ecc.errors.corrected.volatile.total, ecc.errors.uncorrected.volatile.total
+0, NVIDIA RTX PRO 6000 Blackwell Server Edition, 25, 30.39 W, 600.00 W, 0, 0
+1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 25, 28.54 W, 600.00 W, 0, 0
 ```
 
 ### GPU 쓰로틀링 ###
@@ -18,11 +24,35 @@ nvidia-smi --query-gpu=index,name,clocks_throttle_reasons.active,clocks_throttle
 clocks_throttle_reasons.hw_thermal_slowdown,clocks_throttle_reasons.sw_thermal_slowdown,\
 clocks_throttle_reasons.sw_power_cap --format=csv
 ```
+[결과]
+```
+index, name, clocks_event_reasons.active, clocks_event_reasons.gpu_idle, clocks_event_reasons.hw_thermal_slowdown, clocks_event_reasons.sw_thermal_slowdown, clocks_event_reasons.sw_power_cap
+0, NVIDIA RTX PRO 6000 Blackwell Server Edition, 0x0000000000000004, Not Active, Not Active, Not Active, Active
+1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 0x0000000000000004, Not Active, Not Active, Not Active, Active
+```
+
 아래 명령어로 실시간으로 전력, 온도 및 쓰로틀링을 모니터링 할 수 있다.
 ```
 nvidia-smi dmon -s pt -d 1
 ```
-* p: 전력/온도, t: 쓰로틀링 상태, -d 1: 1초 간격
+* p: 전력/온도, t: 쓰로틀링 상태, -d 1: 1초 간격   
+[결과]
+```
+# gpu    pwr  gtemp  mtemp  rxpci  txpci 
+# Idx      W      C      C   MB/s   MB/s 
+    0     30     25      -      0      0 
+    1     28     25      -      0      0 
+    0     30     25      -      0      0 
+    1     28     25      -      0      0 
+    0     30     25      -      0      0 
+    1     28     25      -      0      0 
+    0     30     25      -      0      0 
+    1     27     25      -      0      0 
+    0     30     25      -      0      0 
+    1     28     25      -      0      0 
+    0     30     25      -      0      0 
+    1     27     25      -      1      0 
+```
   
 ### GPU Clock 비교 (현재 클럭과 최대 클럭) ###
 ```
