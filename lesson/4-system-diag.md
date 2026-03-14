@@ -53,10 +53,7 @@ nvidia-smi dmon -s pt -d 1
     1     27     25      -      1      0 
 ```
   
-### GPU Clock 비교 (현재 클럭과 최대 클럭) ###
-```
-nvidia-smi --query-gpu=index,clocks.current.graphics,clocks.max.graphics,clocks.current.mem,clocks.max.mem --format=csv
-```
+
 ### GPU 토폴로지 ###
 ```
 nvidia-smi topo -m -i all
