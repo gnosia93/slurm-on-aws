@@ -11,3 +11,4 @@
   - 수백 GPU가 동시에 읽기/쓰기
   - 초고속 I/O 필요
 ```
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-shared-fs.md)
