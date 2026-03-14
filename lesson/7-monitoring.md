@@ -36,8 +36,8 @@ echo "slurm head: ${SLURM_HEAD_NODE}"
 echo "public hostname: ${PUBLIC_HOSTNAME}"
 
 
-mkdir -p /opt/monitoring
-cd /opt/monitoring
+mkdir -p ~/monitoring
+cd ~/monitoring
 ```
 
 [프로메테우스]
