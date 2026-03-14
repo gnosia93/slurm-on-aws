@@ -5,9 +5,10 @@
 ## Staggler 노드 detection ##
 
 ### Straggler가 발생하는 원인 ###
-* GPU 하드웨어 열화 (메모리 에러, 클럭 다운)
 
-#### 특정 노드의 스토리지 I/O 병목 (Lustre OST 불균형 등) ####
+#### 1. GPU 하드웨어 열화 (메모리 에러, 클럭 다운) ####
+
+#### 2. 특정 노드의 스토리지 I/O 병목 (Lustre OST 불균형 등) ####
 ```
 학습 파이프라인:
 스토리지(Lustre) → CPU(DataLoader) → GPU(학습)
@@ -58,7 +59,7 @@ lfs df -h /shared
 # OST0003             1.7T    300G     1.4T      18%   /shared[OST:3]
 ```
 
-#### 백그라운드 프로세스 (OS 업데이트, 로그 수집 등) ####
+#### 3. 백그라운드 프로세스 (OS 업데이트, 로그 수집 등) ####
 ```
 64노드 분산 학습 중:
 
@@ -71,7 +72,7 @@ Node 31에서 unattended-upgrades가 갑자기 실행
 → 전체 학습 1.4초 × 63노드 = 88.2 GPU·초 낭비 (한 step에)
 ```
 
-#### NCCL 통신 경로 이슈 ####
+#### 4. NCCL 통신 경로 이슈 ####
 * GPU간 통신경로
 ```
 같은 노드 내 GPU 간:
@@ -167,8 +168,6 @@ Name=gpu File=/dev/nvidia[0-3] Cores=0-47
 Name=gpu File=/dev/nvidia[4-7] Cores=48-95
 ```
 
-
-
 * GPU Direct RDMA 비활성화
 ```
 정상 경로 (GPU Direct RDMA):
@@ -190,7 +189,7 @@ NCCL_DEBUG=INFO torchrun ...
 export NCCL_NET_GDR_LEVEL=SYS
 ```
 
-#### GPU 메모리 ECC(Error Correcting Code) 에러 ####
+#### 5. GPU 메모리 ECC(Error Correcting Code) 에러 ####
 ```
 • SBE (Single-Bit Error): ECC가 감지하고 자동 교정 → 빈발 시 오버헤드 누적으로 느려짐
 • DBE (Double-Bit Error): ECC가 감지하지만 교정 불가 → 데이터 손상
