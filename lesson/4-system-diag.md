@@ -76,7 +76,7 @@ Legend:
 
 ### GPU 진단 ###
 ```
-srun --partition=gpu --nodes=1 --ntasks=1 --gpus=2 --exclusive dcgmi diag -r 3
+srun --partition=gpu --nodes=1 --ntasks=1 --gpus=2 --exclusive sudo dcgmi diag -r 3
 ```
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/dcgmi-diag.png)
 
