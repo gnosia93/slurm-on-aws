@@ -79,10 +79,10 @@ scrape_configs:
       - source_labels: [__meta_ec2_tag_Name]
         target_label: node
 
-  - job_name: 'slurm-exporter'
-    static_configs:
-      - targets:
-          - '${SLURM_HEAD_NODE}:9341'
+#  - job_name: 'slurm-exporter'
+#    static_configs:
+#      - targets:
+#          - '${SLURM_HEAD_NODE}:9341'
 EOF
 ```
 
