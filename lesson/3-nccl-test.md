@@ -14,6 +14,7 @@ cat <<EOF > nccl-test.sbatch
 #SBATCH --gpus-per-node=1
 #SBATCH --output=nccl-test-%j.out
 #SBATCH --error=nccl-test-%j.err
+#SBATCH --export=ALL,PMIX_MCA_gds=^shmem2
 
 export LD_LIBRARY_PATH=/opt/amazon/openmpi/lib:/opt/nccl/build/lib:/opt/aws-ofi-nccl/lib:/opt/amazon/efa/lib:\$LD_LIBRARY_PATH
 export NCCL_DEBUG=INFO
