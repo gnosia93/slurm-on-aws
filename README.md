@@ -13,7 +13,7 @@
 
 * > [C6. Custom AMI 만들기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md)
   
-* [C7. Observability with Grafana / Loki](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
+* [C7. 모니터링(Prometheus / Grafana / Loki)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
 
 * > [C8. Nemo Framework](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-nemo-framework.md)
 
