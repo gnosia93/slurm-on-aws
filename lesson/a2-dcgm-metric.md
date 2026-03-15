@@ -97,7 +97,7 @@ DCGM_FI_DEV_GPU_UTIL < 50 and DCGM_FI_PROF_DRAM_ACTIVE < 0.2  # 데이터 공급
 
 # 하드웨어 건강 상태
 DCGM_FI_DEV_ECC_DBE_VOL_TOTAL > 0          # 즉시 교체
-```
-DCGM_FI_DEV_THERMAL_VIOLATION > 0           # 쿨링 문제
+DCGM_FI_DEV_THERMAL_VIOLATION > 0          # 쿨링 문제
 DCGM_FI_DEV_PCIE_REPLAY_COUNTER 증가        # PCIe 불안정
 DCGM_FI_DEV_NVLINK_REPLAY_ERROR_COUNT_TOTAL 증가  # NVLink 불안정
+```
