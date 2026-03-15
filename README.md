@@ -22,18 +22,21 @@
 * [C10. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/10-cluster-delete.md)
 
 
-### _Appendiex_ ##
+### _Appendix_ ##
 
-* [DCGM Metrics](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
+* [DCGM Metrics 레퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
 
-* [GPU OOM](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
+* [GPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
 
-* [CPU OOM](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
+* [CPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
 
-* [Staggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
+* [Straggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
 
-* [좀비 프로세스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
+* [좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
 
+* Slurm 명령어 
+* ParallelCluster 설정 레퍼런스
+  
 ## 참고 ##
 * https://www.youtube.com/watch?v=a_zIs0KxLbc
 
