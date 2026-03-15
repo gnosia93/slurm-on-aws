@@ -36,7 +36,7 @@ nvidia-smi -q -d PCIE
    Current: 8x       ← 8레인으로 감소!
    Max:     16x
 ```
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-degredation%20failure.png)
 
 #### 2. 특정 노드의 스토리지 I/O 병목 (Lustre OST 불균형 등) ####
 ```
