@@ -87,7 +87,14 @@ nvidia-smi --query-compute-apps=pid --format=csv,noheader | while read pid; do
 done
 ```
 
+#### 4. DataLoader 워커 좀비 ####
+```
+# 부모 프로세스가 죽은 DataLoader 워커 찾기
+ps aux | grep "dataloader" | grep -v grep
 
+# 또는 PPID가 1(init)인 python 프로세스 = 고아 프로세스
+ps -eo pid,ppid,cmd | grep python | awk '$2 == 1 {print "ORPHAN:", $0}'
+```
 
 ### OOM 방지 ###
 
