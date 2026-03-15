@@ -52,6 +52,42 @@ while true; do
 done
 ```
 
+### 2. NCCL Hang 감지 ###
+NCCL Hang은 통신에서 상대 노드를 무한 대기하는 상태이다.
+```
+# NCCL hang 상태 확인 - 프로세스 스택 트레이스
+py-spy dump --pid <PID>
+
+# 출력에서 이런 게 보이면 NCCL hang:
+# Thread 1234:
+#   ncclAllReduce (nccl/src/collectives.cc:123)
+#   c10d::ProcessGroupNCCL::allreduce (...)
+#   ← 여기서 멈춰있음
+```
+
+### 3. Slurm Job 기반 감지 ###
+```
+# Slurm job이 끝났는데 프로세스가 남아있는 경우
+#!/bin/bash
+# orphan_detector.sh
+
+# 현재 노드에서 실행 중인 Slurm job 목록
+active_jobs=$(squeue -h -w $(hostname) -o "%A" | sort)
+
+# GPU를 쓰고 있는 프로세스의 Slurm job ID 확인
+nvidia-smi --query-compute-apps=pid --format=csv,noheader | while read pid; do
+    # 프로세스의 cgroup에서 Slurm job ID 추출
+    job_id=$(cat /proc/$pid/cgroup 2>/dev/null | grep slurm | grep -oP 'job_\K\d+')
+    
+    if [ -n "$job_id" ]; then
+        if ! echo "$active_jobs" | grep -q "$job_id"; then
+            echo "ORPHAN: PID $pid belongs to finished job $job_id"
+        fi
+    fi
+done
+```
+
+
 
 ### OOM 방지 ###
 
