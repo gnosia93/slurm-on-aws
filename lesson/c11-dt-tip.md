@@ -190,12 +190,6 @@ KillOnBadExit=1              # 한 태스크 실패 시 전체 job 종료
 ```
 KillOnBadExit=1 의 경우 한 노드가 크래시하면 나머지 노드의 프로세스도 즉시 종료시켜서 NCCL hang을 방지한다.
 
-## OOM 방지 ##
-
-
-
-
-
 ## Staggler 노드 detection ##
 
 #### 1. GPU 하드웨어 열화 (메모리 에러, 클럭 다운 등) ####
