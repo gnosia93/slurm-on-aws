@@ -27,7 +27,7 @@
 * [DCGM Metrics](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
 * [GPU OOM](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
 * [CPU OOM](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
-* [Staggler 노드 detection]()
+* [Staggler 노드 detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
 * [좀비 프로세스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/c11-dt-tip.md)
 * https://www.youtube.com/watch?v=a_zIs0KxLbc
 
