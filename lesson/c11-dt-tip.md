@@ -130,7 +130,65 @@ EpilogSlurmctld=/etc/slurm/epilog.sh
 # Job이 실패하든 성공하든 항상 실행됨
 ```
 
+### 2. 학습 스크립트 내 방어 코드 ###
+```
+import signal
+import sys
+import torch
+import torch.distributed as dist
 
+def cleanup_handler(signum, frame):
+    """시그널 받으면 깨끗하게 종료"""
+    print(f"Rank {dist.get_rank()}: Received signal {signum}, cleaning up...")
+    
+    # NCCL 통신 그룹 정리
+    if dist.is_initialized():
+        dist.destroy_process_group()
+    
+    # GPU 메모리 해제
+    torch.cuda.empty_cache()
+    
+    sys.exit(1)
+
+# SIGTERM, SIGINT 핸들러 등록
+signal.signal(signal.SIGTERM, cleanup_handler)
+signal.signal(signal.SIGINT, cleanup_handler)
+
+# 학습 코드를 try-finally로 감싸기
+try:
+    dist.init_process_group(backend='nccl', timeout=timedelta(minutes=5))
+    train()
+finally:
+    if dist.is_initialized():
+        dist.destroy_process_group()
+    torch.cuda.empty_cache()
+```
+
+### 3. NCCL Watchdog 설정 ###
+```
+# 환경변수로 NCCL hang 방지
+export TORCH_NCCL_HEARTBEAT_TIMEOUT_SEC=300    # 5분 후 자동 abort
+export NCCL_TIMEOUT=300
+export TORCH_NCCL_ENABLE_MONITORING=1          # 모니터링 활성화
+export TORCH_NCCL_DUMP_ON_TIMEOUT=1            # 타임아웃 시 디버그 덤프
+```
+
+### 4. Slurm cgroup 설정 (근본적 방지) ###
+```
+# /etc/slurm/cgroup.conf
+CgroupPlugin=cgroup/v2
+ConstrainCores=yes
+ConstrainDevices=yes         # GPU 디바이스 격리
+ConstrainRAMSpace=yes
+ConstrainSwapSpace=yes
+SignalChildrenProcesses=yes  # Job 종료 시 모든 자식 프로세스에 시그널
+
+# slurm.conf
+TaskPlugin=task/cgroup,task/affinity
+PrologFlags=Alloc            # 할당 시 prolog 실행
+KillOnBadExit=1              # 한 태스크 실패 시 전체 job 종료
+```
+KillOnBadExit=1 의 경우 한 노드가 크래시하면 나머지 노드의 프로세스도 즉시 종료시켜서 NCCL hang을 방지한다.
 
 
 ### OOM 방지 ###
