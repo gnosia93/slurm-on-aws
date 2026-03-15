@@ -11,6 +11,7 @@
   → 타임아웃 후에도 GPU 메모리 안 놓음
   → 좀비 상태 
 ```
+### 존비 감지 ###
 ### 1. GPU 좀비 감지 ###
 ```
 # GPU를 점유하고 있는 프로세스 확인
@@ -95,6 +96,42 @@ ps aux | grep "dataloader" | grep -v grep
 # 또는 PPID가 1(init)인 python 프로세스 = 고아 프로세스
 ps -eo pid,ppid,cmd | grep python | awk '$2 == 1 {print "ORPHAN:", $0}'
 ```
+
+### 방지 방법 ###
+### 1. Slurm Epilog 스크립트 (가장 효과적) ###
+Job이 끝나면 자동으로 정리:
+```
+# /etc/slurm/epilog.sh
+#!/bin/bash
+# Slurm이 job 종료 시 자동 실행
+
+# 해당 job의 모든 프로세스 강제 종료
+scontrol listpids ${SLURM_JOB_ID} | tail -n+2 | awk '{print $1}' | xargs -r kill -9
+
+# GPU 프로세스 정리
+nvidia-smi --query-compute-apps=pid --format=csv,noheader | while read pid; do
+    # 이 프로세스가 현재 활성 job에 속하는지 확인
+    job_id=$(cat /proc/$pid/cgroup 2>/dev/null | grep slurm | grep -oP 'job_\K\d+')
+    if [ -z "$job_id" ] || ! squeue -j "$job_id" &>/dev/null; then
+        echo "Killing orphan GPU process: $pid"
+        kill -9 "$pid" 2>/dev/null
+    fi
+done
+
+# GPU 상태 리셋 (MIG 모드가 아닌 경우)
+nvidia-smi --gpu-reset 2>/dev/null || true
+
+echo "Epilog cleanup completed for job ${SLURM_JOB_ID}"
+```
+```
+# slurm.conf에 등록
+Epilog=/etc/slurm/epilog.sh
+EpilogSlurmctld=/etc/slurm/epilog.sh
+# Job이 실패하든 성공하든 항상 실행됨
+```
+
+
+
 
 ### OOM 방지 ###
 
