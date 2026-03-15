@@ -134,7 +134,7 @@ ZeRO Stage 3: + 파라미터도 분산
 
 
 
-실전 조합 (권장)
+### 실전 조합 (권장) ###
 ```
 7B 모델, 8x H100:
   → BF16 + ZeRO Stage 2 + Gradient Accumulation
@@ -149,9 +149,9 @@ ZeRO Stage 3: + 파라미터도 분산
   → BF16 + TP(8) + PP(8) + DP(N) + Activation Checkpointing + ZeRO-1
 ```
 
-#### GPU OOM이 발생하면 어떻게 대응하나요? ####
-
+### GPU OOM이 발생하면 어떻게 대응하나요? ###
 * 먼저 torch.cuda.max_memory_allocated()로 피크 메모리 확인
 * 배치 크기 줄이기 + Gradient Accumulation으로 effective batch size 유지
 * Activation Checkpointing 적용
 * Deep Zero 적용
+* 3D Parallelism 적용 + 알파 패러랠 (시퀀스, 컨텍스 ....)
