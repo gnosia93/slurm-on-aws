@@ -101,7 +101,7 @@ ZeRO Stage 3: + 파라미터도 분산
   단점: 통신량 증가
 ```
 
-### 5. CPU/NVMe Offloading ###
+#### 5. CPU/NVMe Offloading ####
 ```
 # DeepSpeed ZeRO-Offload
 {
@@ -132,9 +132,11 @@ ZeRO Stage 3: + 파라미터도 분산
 용량:  GPU 80GB  << CPU 2TB << NVMe 수 TB
 ```
 
+### 3. 비교 ###
+
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-oom-handle.png)
 
-### 실전 조합 (권장) ###
+#### 실전 조합 (권장) ####
 ```
 7B 모델, 8x H100:
   → BF16 + ZeRO Stage 2 + Gradient Accumulation
@@ -149,7 +151,7 @@ ZeRO Stage 3: + 파라미터도 분산
   → BF16 + TP(8) + PP(8) + DP(N) + Activation Checkpointing + ZeRO-1
 ```
 
-### GPU OOM이 발생하면 어떻게 대응하나요? ###
+#### GPU OOM이 발생하면 어떻게 대응하나요? ####
 * 먼저 torch.cuda.max_memory_allocated()로 피크 메모리 확인
 * 배치 크기 줄이기 + Gradient Accumulation으로 effective batch size 유지
 * Activation Checkpointing 적용
