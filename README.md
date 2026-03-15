@@ -4,7 +4,6 @@
 * [C1. VPC 생성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/1-vpc.md)
 
 * [C2. 스토리지 및 네트워크 구성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-shared-fs.md)
-  - 스토리지 및 네트워크 구성 (FSx Lustre, EFA, Placement Group)
 
 * [C3. Parallel Cluster 설치](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/2-pcluster.md) 
 
