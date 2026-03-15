@@ -132,7 +132,7 @@ ZeRO Stage 3: + 파라미터도 분산
 용량:  GPU 80GB  << CPU 2TB << NVMe 수 TB
 ```
 
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-oom-handle.png)
 
 ### 실전 조합 (권장) ###
 ```
