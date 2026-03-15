@@ -1,5 +1,56 @@
 ## 좀비 프로세스 ##
-분산 학습이 비정상 종료되면 일부 프로세스가 GPU를 잡고 안 놓는 경우가 생기는데, 이로인해서 다음 학습을 시작을 방해하게 되는데, "CUDA out of memory"가 뜨거나, GPU utilization이 0%인데 메모리가 점유된 상태가 된다.
+분산 학습이 비정상 종료되면 일부 프로세스가 GPU를 잡고 안 놓는 경우가 생기게 된다. 이로인해서 다음 학습을 시작을 방해하게 되는데, "CUDA out of memory"가 뜨거나, GPU utilization이 0%인 상태로 남아 있게 된다.
+```
+정상 종료:
+  학습 완료 → 모든 rank 프로세스 종료 → GPU 메모리 해제 ✅
+
+비정상 종료:
+  Node 3에서 OOM 크래시
+  → Node 3의 프로세스 죽음
+  → Node 0,1,2의 프로세스는 NCCL AllReduce에서 대기 중 (hang)
+  → 타임아웃 후에도 GPU 메모리 안 놓음
+  → 좀비 상태 
+```
+### 1. GPU 좀비 감지 ###
+```
+# GPU를 점유하고 있는 프로세스 확인
+nvidia-smi
+
+# 출력 예시:
++-------+-----+------+-----+-----+---------+
+| GPU   | PID | Type | SM% | Mem | Process |
++-------+-----+------+-----+-----+---------+
+|   0   | 1234| C    |  0% | 40G | python  |  ← SM 0%인데 메모리 40G 점유 = 좀비
+|   1   |  -  |  -   |  -  |  -  |    -    |
++-------+-----+------+-----+-----+---------+
+```
+#### 자동 감지 스크립트 ####
+```
+#!/bin/bash
+# gpu_zombie_detector.sh
+
+while true; do
+    # GPU 사용 중인 프로세스 목록
+    nvidia-smi --query-compute-apps=pid,gpu_uuid,used_memory,gpu_utilization \
+               --format=csv,noheader,nounits | while IFS=, read -r pid gpu mem util; do
+        
+        # SM utilization이 0%인데 메모리를 1GB 이상 점유
+        if [ "$util" -eq 0 ] && [ "$mem" -gt 1024 ]; then
+            # 프로세스가 실제로 살아있는지 확인
+            if ! kill -0 "$pid" 2>/dev/null; then
+                echo "ZOMBIE: PID $pid is dead but holding ${mem}MB on $gpu"
+            else
+                # 살아있지만 10분 이상 GPU 0% → hang 상태
+                age=$(ps -o etimes= -p "$pid" 2>/dev/null | tr -d ' ')
+                if [ -n "$age" ] && [ "$age" -gt 600 ]; then
+                    echo "HANG: PID $pid, GPU 0% for ${age}s, holding ${mem}MB"
+                fi
+            fi
+        fi
+    done
+    sleep 30
+done
+```
 
 
 ### OOM 방지 ###
