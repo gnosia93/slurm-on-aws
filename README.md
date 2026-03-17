@@ -38,6 +38,9 @@
   
 * [G. ParallelCluster 설정 레퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/setup/script/cluster.yaml)
 
-  
+
+## Ref ##
+
+* gnosia93/slurm-on-aws-old
 
 
