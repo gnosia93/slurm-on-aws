@@ -41,6 +41,6 @@
 
 ## Ref ##
 
-* gnosia93/slurm-on-aws-old
+* [slurm-on-ec2 with ansible](https://github.com/gnosia93/slurm-on-ec2)
 
 
