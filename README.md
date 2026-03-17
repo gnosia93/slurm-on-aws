@@ -42,5 +42,5 @@
 ## Ref ##
 
 * [slurm-on-ec2 with ansible](https://github.com/gnosia93/slurm-on-ec2)
-
+* [slurm-on-eks with slinky](https://github.com/gnosia93/slurm-on-eks)
 
