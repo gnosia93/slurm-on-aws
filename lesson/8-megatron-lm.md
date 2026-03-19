@@ -3,7 +3,7 @@
 ;; 테스트 전~ 
 
 ---
-Megatron-LM은 NVIDIA가 만든 대규모 LLM 학습 프레임워크로, 수천 GPU에서 LLM을 효율적으로 학습시키는 엔진이다. 6D Parallelism(DP + TP + PP + SP + EP + CP)을 지원한다.
+Megatron-LM은 NVIDIA가 만든 대규모 LLM 학습 프레임워크로, 수천대 GPU에서 LLM을 효율적으로 학습시킬 수 있는 엔진이다. 6D Parallelism(DP + TP + PP + SP + EP + CP)을 지원한다.
 
 ### Megatron-LM 실행 ###
 ```
