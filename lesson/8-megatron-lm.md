@@ -198,7 +198,12 @@ MLP (표준, 4h):
 ```
 #### 4. 필요 메모리 ####
 * 모델 가중치 = 65B × 2 bytes (FP16) = 130GB
-* 학습 총 메모리 = 130GB × 9 ≈ 1,170GB
+* 학습 총 메모리 = 130GB × 9배 ≈ 1,170GB
+* 9배수 곱하는 이유는
+   * 가중치: 2 bytes
+   * Gradient: 2 bytes
+   * Optimizer Stat: 12 bytes (master weight + 1st momentum m + 2end momentum v)
+   * Activation/임시버퍼 2 bytes
 ```
 가중치 (FP16):     65B × 2                       = 130GB
 그래디언트 (FP16):  65B × 2                       = 130GB
