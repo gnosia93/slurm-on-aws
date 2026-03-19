@@ -218,7 +218,7 @@ MLP (표준, 4h):
 총 필요:                                          ~1,240GB
 ```
 
-### 병렬화(Parallelism) 설정 ###
+#### 4. 병렬화(Parallelism) 설정 ####
 g7e.4xlarge 16대 기준 (총 VRAM = 16 × 96GB = 1,536GB)
 ```
 TP=2, PP=8, DP=1:
@@ -230,7 +230,7 @@ TP=2, PP=2, DP=4:
   GPU당 = 1,040GB / (2×2) = 260GB → OOM ✗
 ```
 
-### slurm batch ###
+### slurm batch 실행 ###
 ```
 #!/bin/bash
 #SBATCH --job-name=megatron-gpt
