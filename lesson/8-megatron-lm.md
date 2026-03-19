@@ -64,6 +64,8 @@ global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
 * DP=16~32 정도면 중규모, 100+ 이면 대규모 학습
 
 ## 훈련하기 ##
+
+### 데이터 전처리 ###
 ```
 # Megatron-LM 클론
 git clone https://github.com/NVIDIA/Megatron-LM.git
@@ -81,7 +83,8 @@ python tools/preprocess_data.py \
 
 # 결과: my-gpt_text_document.bin, my-gpt_text_document.idx
 ```
-g7e.4xlarge(VRAM 96GB) 16대로 테스트 한다. NLINK를 지원하지 않고 노드당 GPU 는 1장이지만 테스트 용도는 TP 값은 2로 설정한다. 
+
+### train 스크립트 ###
 ```
 #!/bin/bash
 # pretrain.sh
@@ -169,7 +172,7 @@ num_kv_heads = num_attention_heads = 64                 (표준 MHA, GQA 아님)
 vocab_size = 50257                                      (GPT-2 토크나이저)
 SwiGLU = OFF (기본은 표준 ReLU MLP)
 ```
-### 파라미터 수 ###
+### 파라미터 수(70B) ###
 ```
 Attention (표준 MHA):
   Q: 8192 × 8192 = 67.1M
@@ -191,6 +194,9 @@ MLP (표준, 4h):
 
 총 ≈ 64.7B ~ 65.1B
 ```
+
+
+
 
 ```
 #!/bin/bash
