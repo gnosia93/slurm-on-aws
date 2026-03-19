@@ -13,7 +13,7 @@ python pretrain_gpt.py \
   --sequence-parallel \                # SP 활성화
   --context-parallel-size 2 \          # CP=2
   --expert-model-parallel-size 4 \     # EP=4 (MoE 모델일 때)
-  --data-parallel-size 16 \            # DP=8
+  --data-parallel-size 8 \             # DP=8
   --num-layers 80 \
   --hidden-size 8192 \
   --num-attention-heads 64 \
