@@ -81,7 +81,7 @@ python tools/preprocess_data.py \
 
 # 결과: my-gpt_text_document.bin, my-gpt_text_document.idx
 ```
-g7e.4xlarge(VRAM 96GB) 16대로 테스트 한다.
+g7e.4xlarge(VRAM 96GB) 16대로 테스트 한다. NLINK를 지원하지 않고 노드당 GPU 는 1장이지만 테스트 용도는 TP 값은 2로 설정한다. 
 ```
 #!/bin/bash
 # pretrain.sh
