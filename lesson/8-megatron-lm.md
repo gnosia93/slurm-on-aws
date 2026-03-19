@@ -164,7 +164,8 @@ torchrun \
   --use-flash-attn
 ```
 
-### Megatron-LM 파라미터 ###
+### 필요 메모리 계산 ###
+#### 1. Megatron-LM 파라미터 ####
 --ffn-hidden-size, --num-query-groups(GQA), --vocab-size 설정이 없어서, Megatron-LM 기본값이 적용
 ```
 ffn_hidden_size = 4 × hidden_size = 4 × 8192 = 32768    (표준 MLP)
@@ -172,7 +173,8 @@ num_kv_heads = num_attention_heads = 64                 (표준 MHA, GQA 아님)
 vocab_size = 50257                                      (GPT-2 토크나이저)
 SwiGLU = OFF (기본은 표준 ReLU MLP)
 ```
-### 파라미터 수(70B) ###
+
+#### 2. 파라미터 수 ####
 ```
 Attention (표준 MHA):
   Q: 8192 × 8192 = 67.1M
@@ -193,6 +195,21 @@ MLP (표준, 4h):
 출력 헤드 = 임베딩과 weight tying → 0 (또는 +0.41B)
 
 총 ≈ 64.7B ~ 65.1B
+```
+#### 4. 필요 메모리 ####
+* 모델 가중치 = 65B × 2 bytes (FP16) = 130GB
+* 학습 총 메모리 = 130GB × 9 ≈ 1,170GB
+```
+가중치 (FP16):     65B × 2        = 130GB
+그래디언트 (FP16):  65B × 2        = 130GB
+옵티마이저 (FP32):  65B × 12       = 780GB
+─────────────────────────────
+합계:                             1,040GB
+
++ Activation (SEQ=4096, MBS=1):  ~150GB
++ 임시 버퍼/fragmentation:         ~50GB
+─────────────────────────────
+총 필요:                           ~1,240GB
 ```
 
 
