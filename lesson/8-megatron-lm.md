@@ -64,8 +64,6 @@ global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
 * DP=16~32 정도면 중규모, 100+ 이면 대규모 학습
 
 ## 훈련하기 ##
->> 아래 코드는 테스트 전이다...
-
 ```
 # Megatron-LM 클론
 git clone https://github.com/NVIDIA/Megatron-LM.git
@@ -83,19 +81,20 @@ python tools/preprocess_data.py \
 
 # 결과: my-gpt_text_document.bin, my-gpt_text_document.idx
 ```
+g7e.4xlarge(VRAM 96GB) 16대로 테스트 한다.
 ```
 #!/bin/bash
 # pretrain.sh
 
 # 클러스터 설정
-NNODES=64                    # 노드 수
-GPUS_PER_NODE=8              # 노드당 GPU
+NNODES=16                    # 노드 수
+GPUS_PER_NODE=1              # 노드당 GPU
 WORLD_SIZE=$((NNODES * GPUS_PER_NODE))  # 총 512 GPU
 
 # 병렬화 설정
-TP=8
-PP=4
-DP=$((WORLD_SIZE / (TP * PP)))  # 512 / 32 = 16
+TP=2
+PP=2
+DP=$((WORLD_SIZE / (TP * PP)))  # 16 / 4 = 4
 
 # 모델 설정
 NUM_LAYERS=80
