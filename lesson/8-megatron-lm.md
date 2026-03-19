@@ -58,6 +58,130 @@ global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
 ```
 * DP=16~32 정도면 중규모, 100+ 이면 대규모 학습
 
+## 훈련하기 ##
+>> 아래 코드는 테스트 전이다...
+
+```
+# Megatron-LM 클론
+git clone https://github.com/NVIDIA/Megatron-LM.git
+cd Megatron-LM
+
+# 학습 데이터를 Megatron 포맷으로 변환 (jsonl → .bin + .idx)
+python tools/preprocess_data.py \
+  --input training_data.jsonl \
+  --output-prefix my-gpt \
+  --tokenizer-type GPT2BPETokenizer \
+  --vocab-file gpt2-vocab.json \
+  --merge-file gpt2-merges.txt \
+  --workers 32 \
+  --append-eod
+
+# 결과: my-gpt_text_document.bin, my-gpt_text_document.idx
+```
+```
+#!/bin/bash
+# pretrain.sh
+
+# 클러스터 설정
+NNODES=64                    # 노드 수
+GPUS_PER_NODE=8              # 노드당 GPU
+WORLD_SIZE=$((NNODES * GPUS_PER_NODE))  # 총 512 GPU
+
+# 병렬화 설정
+TP=8
+PP=4
+DP=$((WORLD_SIZE / (TP * PP)))  # 512 / 32 = 16
+
+# 모델 설정
+NUM_LAYERS=80
+HIDDEN_SIZE=8192
+NUM_ATTENTION_HEADS=64
+SEQ_LENGTH=4096
+MICRO_BATCH_SIZE=1
+GLOBAL_BATCH_SIZE=1024
+
+# 데이터 경로
+DATA_PATH="my-gpt_text_document"
+TOKENIZER_PATH="gpt2-vocab.json"
+MERGE_PATH="gpt2-merges.txt"
+CHECKPOINT_PATH="checkpoints/gpt-80layer"
+
+# 분산 실행 (torchrun)
+torchrun \
+  --nproc_per_node $GPUS_PER_NODE \
+  --nnodes $NNODES \
+  --node_rank $SLURM_NODEID \
+  --master_addr $MASTER_ADDR \
+  --master_port 6000 \
+  pretrain_gpt.py \
+  \
+  --tensor-model-parallel-size $TP \
+  --pipeline-model-parallel-size $PP \
+  --sequence-parallel \
+  --context-parallel-size 2 \
+  \
+  --num-layers $NUM_LAYERS \
+  --hidden-size $HIDDEN_SIZE \
+  --num-attention-heads $NUM_ATTENTION_HEADS \
+  --seq-length $SEQ_LENGTH \
+  --max-position-embeddings $SEQ_LENGTH \
+  \
+  --micro-batch-size $MICRO_BATCH_SIZE \
+  --global-batch-size $GLOBAL_BATCH_SIZE \
+  \
+  --train-iters 100000 \
+  --lr 1.5e-4 \
+  --min-lr 1.5e-5 \
+  --lr-decay-style cosine \
+  --lr-warmup-iters 2000 \
+  --weight-decay 0.1 \
+  --clip-grad 1.0 \
+  \
+  --fp16 \
+  --initial-loss-scale 4096 \
+  \
+  --data-path $DATA_PATH \
+  --vocab-file $TOKENIZER_PATH \
+  --merge-file $MERGE_PATH \
+  --split 98,2,0 \
+  \
+  --save $CHECKPOINT_PATH \
+  --save-interval 1000 \
+  --load $CHECKPOINT_PATH \
+  \
+  --log-interval 10 \
+  --eval-interval 500 \
+  --eval-iters 50 \
+  \
+  --distributed-backend nccl \
+  --use-flash-attn
+```
+```
+#!/bin/bash
+#SBATCH --job-name=megatron-gpt
+#SBATCH --nodes=64
+#SBATCH --ntasks-per-node=8
+#SBATCH --gpus-per-node=8
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=0
+#SBATCH --time=72:00:00
+#SBATCH --partition=gpu
+#SBATCH --exclusive
+
+# NCCL 환경변수
+export NCCL_DEBUG=WARN
+export NCCL_IB_GID_INDEX=3
+export NCCL_IB_TIMEOUT=23
+export NCCL_SOCKET_IFNAME=eth0
+
+# 마스터 노드 설정
+export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
+export MASTER_PORT=6000
+
+# 실행
+srun bash pretrain.sh
+```
+
 
 ## 레퍼런스 ##
 
