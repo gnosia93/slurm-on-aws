@@ -1,7 +1,5 @@
 ;; 작성중
 
-;; 테스트 전~ 
-
 ---
 Megatron-LM은 NVIDIA가 만든 대규모 LLM 학습 프레임워크로, 수천대 GPU에서 LLM을 효율적으로 학습시킬 수 있는 엔진이다. 6D Parallelism(DP + TP + PP + SP + EP + CP)을 지원한다.
 
@@ -92,12 +90,12 @@ python tools/preprocess_data.py \
 # 클러스터 설정
 NNODES=16                    # 노드 수
 GPUS_PER_NODE=1              # 노드당 GPU
-WORLD_SIZE=$((NNODES * GPUS_PER_NODE))  # 총 512 GPU
+WORLD_SIZE=$((NNODES * GPUS_PER_NODE))  # 총 16 GPU
 
 # 병렬화 설정
 TP=2
-PP=2
-DP=$((WORLD_SIZE / (TP * PP)))  # 16 / 4 = 4
+PP=8
+DP=$((WORLD_SIZE / (TP * PP)))  # 16 / 16 = 1
 
 # 모델 설정
 NUM_LAYERS=80
@@ -164,7 +162,7 @@ torchrun \
   --use-flash-attn
 ```
 
-### 필요 메모리 계산 ###
+### 메모리 계산 ###
 #### 1. Megatron-LM 파라미터 ####
 --ffn-hidden-size, --num-query-groups(GQA), --vocab-size 설정이 없어서, Megatron-LM 기본값이 적용
 ```
@@ -196,7 +194,7 @@ MLP (표준, 4h):
 
 총 ≈ 64.7B ~ 65.1B
 ```
-#### 4. 필요 메모리 ####
+#### 3. 총 메모리 ####
 * 모델 가중치 = 65B × 2 bytes (FP16) = 130GB
 * 학습 총 메모리 = 130GB × 9배 ≈ 1,170GB
 * 9배수 곱하는 이유는
@@ -217,9 +215,19 @@ MLP (표준, 4h):
 총 필요:                                          ~1,240GB
 ```
 
+### 병렬화(Parallelism) 설정 ###
+g7e.4xlarge 16대 기준 (총 VRAM = 16 × 96GB = 1,536GB)
+```
+TP=2, PP=8, DP=1:
+  GPU당 = 1,040GB / (2×8) = 65GB
+  + Activation (checkpointing 시) ≈ 10GB
+  = ~75GB → 96GB 안에 OK ✓
 
+TP=2, PP=2, DP=4:
+  GPU당 = 1,040GB / (2×2) = 260GB → OOM ✗
+```
 
-
+### slurm batch ###
 ```
 #!/bin/bash
 #SBATCH --job-name=megatron-gpt
