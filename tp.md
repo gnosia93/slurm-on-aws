@@ -8,7 +8,11 @@
 | EP | All-to-All | MoE 레이어마다 2회 | Expert 수에 따라 다름 | 대역폭 (+ 레이턴시) | 노드 간 |
 | CP | Ring All-to-All | Attention마다 | 큼 (KV 텐서) | 대역폭 | 노드 간 |
 
+정리하면:
 
+* 레이턴시 민감:  TP, SP, PP  ← 작은 메시지를 자주 보냄
+* 대역폭 민감:    DP, FSDP, EP, CP  ← 큰 메시지를 보냄
+그래서 TP/SP는 NVLink(노드 내, 저레이턴시)에서 돌리고, DP/FSDP/EP는 InfiniBand/EFA(노드 간, 고대역폭)에서 돌리는 거예요. 네트워크 토폴로지 설계의 근거가 여기서 나옵니다.
 
 
 
