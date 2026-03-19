@@ -17,7 +17,7 @@ python pretrain_gpt.py \
 ```
 * 총 GPU = TP × PP × DP = 8 × 4 × 16 = 512 GPU
 
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
 ## 레퍼런스 ##
 
