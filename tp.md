@@ -1,3 +1,48 @@
+## Transformer Layer ##
+```
+입력 (토큰 × 히든)
+ │
+ ▼
+LayerNorm
+ │
+ ▼
+┌─────────────── Self-Attention ───────────────┐
+│                                               │
+│  Q = 입력 × W_Q   (Linear)  ← 행렬 곱 1      │
+│  K = 입력 × W_K   (Linear)  ← 행렬 곱 2      │
+│  V = 입력 × W_V   (Linear)  ← 행렬 곱 3      │
+│                                               │
+│  Attention Score = Q × K^T / √d              │
+│  Attention Output = Score × V                │
+│                                               │
+│  Output = Attention Output × W_O  ← 행렬 곱 4 │
+│                                               │
+└───────────────────────────────────────────────┘
+ │
+ ▼
+Residual Connection (입력 + Attention 출력)
+ │
+ ▼
+LayerNorm
+ │
+ ▼
+┌─────────────── MLP (Feed Forward) ───────────┐
+│                                               │
+│  Hidden = 입력 × W_up    (Linear)  ← 행렬 곱 5│
+│  Hidden = Activation(Hidden)  (SiLU/GeLU)    │
+│  Output = Hidden × W_down  (Linear)  ← 행렬 곱 6│
+│                                               │
+└───────────────────────────────────────────────┘
+ │
+ ▼
+Residual Connection (입력 + MLP 출력)
+ │
+ ▼
+출력 → 다음 레이어의 입력
+```
+
+
+
 ## Parallelism 비교 ##
 | 병렬화 | 통신 패턴 | 통신 빈도 | 메시지 크기 | 주요 병목 | 통신 위치 |
 |--------|-----------|-----------|-------------|-----------|-----------|
