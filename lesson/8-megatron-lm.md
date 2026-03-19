@@ -22,6 +22,19 @@ python pretrain_gpt.py \
 * Megatron-LM: 모델을 쪼개는 데 특화 (TP/PP). GPU 효율 최고
 * DeepSpeed: 메모리를 아끼는 데 특화 (ZeRO). 적은 GPU로 큰 모델
 * FSDP: 가장 쉬움. 중소 규모 학습에 적합
+```
+[소규모: GPU 1~8장]
+→ PyTorch FSDP 또는 DeepSpeed ZeRO
+
+[중규모: GPU 8~64장]
+→ DeepSpeed ZeRO + TP
+
+[대규모: GPU 64~수천장]
+→ Megatron-LM (TP + PP + DP)
+   또는 Megatron-DeepSpeed (Megatron의 TP/PP + DeepSpeed의 ZeRO)
+```
+
+
 
 ## 레퍼런스 ##
 
