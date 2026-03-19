@@ -38,7 +38,8 @@ Transformer 레이어:
 출력
 
 TP는 행렬 곱셈을 나누는 거니까, 행렬 곱이 끝날 때마다 결과를 합쳐야 합니다. Attention에서 1번, MLP에서 1번. 그래서 레이어당 2회.
-Llama 8B가 32 레이어니까, forward pass에서 총 64번 All-Reduce가 발생합니다. 이게 TP가 레이턴시에 민감한 이유예요. 작은 메시지를 64번 보내니까요.
+Llama 8B가 32 레이어니까, forward pass에서 총 64번 All-Reduce가 발생합니다.
+이게 TP가 레이턴시에 민감한 이유예요. 작은 메시지를 64번 보내니까요.
 ```
 
 ## EP ##
