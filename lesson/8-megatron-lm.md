@@ -22,7 +22,7 @@ python pretrain_gpt.py \
 ```
 * 총 GPU = TP × PP × DP = 8 × 4 × 16 = 512 GPU
 
-### Framework 비교 ###
+### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 * Megatron-LM: 모델을 쪼개는 데 특화 (TP/PP). GPU 효율 최고
 * DeepSpeed: 메모리를 아끼는 데 특화 (ZeRO). 적은 GPU로 큰 모델
