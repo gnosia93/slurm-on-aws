@@ -160,16 +160,16 @@ torchrun \
   --distributed-backend nccl \
   --use-flash-attn
 ```
-* --ffn-hidden-size, --num-query-groups(GQA), --vocab-size가 없으니 Megatron-LM 기본값이 적용된다.
-```
-Megatron-LM 기본값
 
+### Megatron-LM 파라미터 ###
+--ffn-hidden-size, --num-query-groups(GQA), --vocab-size 설정이 없어서, Megatron-LM 기본값이 적용
+```
 ffn_hidden_size = 4 × hidden_size = 4 × 8192 = 32768    (표준 MLP)
 num_kv_heads = num_attention_heads = 64                 (표준 MHA, GQA 아님)
 vocab_size = 50257                                      (GPT-2 토크나이저)
 SwiGLU = OFF (기본은 표준 ReLU MLP)
 ```
-* 학습 메모리 계산
+### 파라미터 수 ###
 ```
 Attention (표준 MHA):
   Q: 8192 × 8192 = 67.1M
