@@ -14,7 +14,40 @@
 * 대역폭 민감:    DP, FSDP, EP, CP  ← 큰 메시지를 보냄
 그래서 TP/SP는 NVLink(노드 내, 저레이턴시)에서 돌리고, DP/FSDP/EP는 InfiniBand/EFA(노드 간, 고대역폭)에서 돌리는 거예요. 네트워크 토폴로지 설계의 근거가 여기서 나옵니다.
 
+## EP ##
+### 일반 Transformer vs MoE Transformer ###
+```
+[일반 Transformer 레이어]
+입력 → Attention → MLP → 출력
+                    ↑
+              하나의 큰 MLP (모든 토큰이 통과)
 
+
+[MoE Transformer 레이어]
+입력 → Attention → Router → Expert 1 (MLP)  → 출력
+                     │       Expert 2 (MLP)
+                     │       Expert 3 (MLP)
+                     │       Expert 4 (MLP)
+                     │       Expert 5 (MLP)
+                     │       Expert 6 (MLP)
+                     │       Expert 7 (MLP)
+                     │       Expert 8 (MLP)
+                     │
+                     └→ 토큰마다 Top-K Expert 선택 (보통 K=2)
+```
+핵심: MLP를 여러 개(Expert)로 복제하고, Router가 토큰마다 "어떤 Expert를 쓸지" 결정합니다.
+
+```
+입력 → Attention → Router(토큰별 Expert 선택)
+                      │
+                      ▼ All-to-All (토큰을 Expert GPU로 전송)
+                      │
+              각 GPU에서 Expert 연산
+                      │
+                      ▼ All-to-All (결과를 원래 GPU로 반환)
+                      │
+                   → 출력
+```
 
 
 
