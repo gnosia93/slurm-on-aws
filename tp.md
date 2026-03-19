@@ -1,3 +1,19 @@
+| 병렬화 | 통신 패턴 | 통신 빈도 | 메시지 크기 | 주요 병목 | 통신 위치 |
+|--------|-----------|-----------|-------------|-----------|-----------|
+| TP | All-Reduce | 레이어마다 2회 | 작음 (activation) | 레이턴시 | 노드 내 (NVLink) |
+| SP | Reduce-Scatter + All-Gather | 레이어마다 2회 | 작음 (TP와 동일) | 레이턴시 | 노드 내 (NVLink) |
+| PP | Point-to-Point | 스테이지 경계마다 | 중간 (activation) | 레이턴시 + 버블 | 노드 간 |
+| DP | All-Reduce | 스텝마다 1회 | 큼 (전체 gradient) | 대역폭 | 노드 간 |
+| FSDP | All-Gather + Reduce-Scatter | 레이어마다 | 큼 (파라미터) | 대역폭 | 노드 간 |
+| EP | All-to-All | MoE 레이어마다 2회 | Expert 수에 따라 다름 | 대역폭 (+ 레이턴시) | 노드 간 |
+| CP | Ring All-to-All | Attention마다 | 큼 (KV 텐서) | 대역폭 | 노드 간 |
+
+
+
+
+
+
+
 ## TP (Tensor Parallem) ##
 ```
 "나는 밥을 먹었다"
