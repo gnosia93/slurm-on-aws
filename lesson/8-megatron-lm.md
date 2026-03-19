@@ -231,20 +231,23 @@ TP=2, PP=2, DP=4:
 ```
 #!/bin/bash
 #SBATCH --job-name=megatron-gpt
-#SBATCH --nodes=64
-#SBATCH --ntasks-per-node=8
-#SBATCH --gpus-per-node=8
+#SBATCH --nodes=16
+#SBATCH --ntasks-per-node=1
+#SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=12
-#SBATCH --mem=0
+#SBATCH --mem=0                     # 노드의 전체 RAM 할당
 #SBATCH --time=72:00:00
 #SBATCH --partition=gpu
 #SBATCH --exclusive
 
 # NCCL 환경변수
-export NCCL_DEBUG=WARN
-export NCCL_IB_GID_INDEX=3
-export NCCL_IB_TIMEOUT=23
-export NCCL_SOCKET_IFNAME=eth0
+export NCCL_DEBUG=INFO
+#export NCCL_IB_GID_INDEX=3
+#export NCCL_IB_TIMEOUT=23
+export NCCL_SOCKET_IFNAME=eth0      # 제어 통신에 사용할 네트워크 인터페이스
+export FI_PROVIDER=efa              # EFA 설정
+export FI_EFA_USE_DEVICE_RDMA=1     # GPU Direct RDMA (p4d/p5 등 지원 시)
+export NCCL_PROTO=simple            # EFA에서 안정적인 프로토콜
 
 # 마스터 노드 설정
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
