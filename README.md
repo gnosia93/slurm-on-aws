@@ -30,7 +30,7 @@
 * [D. Straggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
 * [E. 좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
 
-## _See Also_ ##
+## See Also ##
 
 * [slurm-on-ec2 with ansible](https://github.com/gnosia93/slurm-on-ec2)
 * [slurm-on-eks with slinky](https://github.com/gnosia93/slurm-on-eks)
