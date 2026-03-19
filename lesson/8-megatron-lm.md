@@ -34,7 +34,7 @@ python pretrain_gpt.py \
    또는 Megatron-DeepSpeed (Megatron의 TP/PP + DeepSpeed의 ZeRO)
 ```
 
-### 설계 예시 ###
+### DP 사이즈 설계 ###
 ```
 Llama 3 405B 학습 (Meta):
 TP=8 × PP=16 × DP=? = 16,384 GPU
@@ -44,8 +44,6 @@ GPT-4 급 (추정):
 TP=8 × PP=8 × DP=? = 25,000+ GPU
 → DP = 수백
 ```
-
-#### DP 사이즈 설계 #### 
 
 * DP가 크면 좋은 점
   * 배치 사이즈가 커짐 → 학습 step 수 줄어듦 → 학습 시간 단축
