@@ -13,14 +13,14 @@ python pretrain_gpt.py \
   --sequence-parallel \                # SP 활성화
   --context-parallel-size 2 \          # CP=2
   --expert-model-parallel-size 4 \     # EP=4 (MoE 모델일 때)
-  --data-parallel-size 16 \            # DP=16
+  --data-parallel-size 16 \            # DP=8
   --num-layers 80 \
   --hidden-size 8192 \
   --num-attention-heads 64 \
   --micro-batch-size 1 \
   --global-batch-size 1024
 ```
-* 총 GPU = TP × PP × DP = 8 × 4 × 16 = 512 GPU
+* 총 GPU = TP × PP × DP x CP x EP = 8 × 4 × 8 x 2 x 4 = 2048 GPU
 
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
