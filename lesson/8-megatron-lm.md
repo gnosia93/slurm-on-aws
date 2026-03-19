@@ -14,8 +14,10 @@ python pretrain_gpt.py \
   --num-attention-heads 64 \
   --micro-batch-size 1 \
   --global-batch-size 1024
-
 ```
+* 총 GPU = TP × PP × DP = 8 × 4 × 16 = 512 GPU
+
+
 
 ## 레퍼런스 ##
 
