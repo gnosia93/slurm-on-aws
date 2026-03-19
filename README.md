@@ -17,7 +17,7 @@
   
 * [C8. 모니터링 설정하기 (prometheus/loki/grafana)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
 
-* > [C9. NVIDIA Nemo Framework](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-nemo-framework.md)
+* > [C9. Megatron-LM](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-nemo-framework.md)
   
 * [C10. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/10-cluster-delete.md)
 
