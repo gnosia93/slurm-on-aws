@@ -33,6 +33,9 @@ python pretrain_gpt.py \
 → Megatron-LM (TP + PP + DP)
    또는 Megatron-DeepSpeed (Megatron의 TP/PP + DeepSpeed의 ZeRO)
 ```
+```
+global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
+```
 
 
 
