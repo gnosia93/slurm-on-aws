@@ -50,6 +50,57 @@ Backward: 32 레이어 × 2회 = 64회 All-Reduce
 * 1 step 당 총 128회 All-Reduce (Llama 8B 기준)
 * 배치 안에 샘플이 몇 개든 한번에 행렬 곱으로 처리하니까, 샘플 수와는 무관하고 step 당 횟수입니다.
 
+## PP ##
+기본 개념
+```
+Llama 8B = 32 레이어, GPU 4장:
+
+GPU 0: Layer 1~8    (Stage 0)
+GPU 1: Layer 9~16   (Stage 1)
+GPU 2: Layer 17~24  (Stage 2)
+GPU 3: Layer 25~32  (Stage 3)
+
+
+데이터가 순서대로 흘러갑니다:
+
+입력 → GPU 0 → GPU 1 → GPU 2 → GPU 3 → 출력
+        │         │         │         │
+     Layer 1~8  Layer 9~16 Layer 17~24 Layer 25~32
+
+
+통신은 앞뒤 GPU끼리만 (Point-to-Point):
+
+GPU 0 → GPU 1: Layer 8의 출력 (activation)
+GPU 1 → GPU 2: Layer 16의 출력
+GPU 2 → GPU 3: Layer 24의 출력
+```
+### 문제: 파이프라인 버블 ###
+```
+배치 1개를 그냥 흘리면:
+
+시간 →
+GPU 0: [연산]  [대기]  [대기]  [대기]
+GPU 1: [대기]  [연산]  [대기]  [대기]
+GPU 2: [대기]  [대기]  [연산]  [대기]
+GPU 3: [대기]  [대기]  [대기]  [연산]
+GPU 0이 끝나야 GPU 1이 시작하고, GPU 1이 끝나야 GPU 2가 시작. 대부분의 시간을 놀고 있어요. 이 유휴 시간이 "버블"입니다.
+```
+### 해결: 마이크로배치 ###
+배치를 작은 조각(마이크로배치)으로 쪼개서 파이프라인에 연속 투입:
+```
+배치를 4개 마이크로배치(MB)로 분할:
+
+시간 →
+GPU 0: [MB1] [MB2] [MB3] [MB4]
+GPU 1:       [MB1] [MB2] [MB3] [MB4]
+GPU 2:             [MB1] [MB2] [MB3] [MB4]
+GPU 3:                   [MB1] [MB2] [MB3] [MB4]
+```
+* GPU 0이 MB1을 끝내면 바로 MB2를 시작하고, 동시에 GPU 1이 MB1을 처리. 파이프라인이 채워지면 모든 GPU가 동시에 일합니다.
+
+* 하지만 시작과 끝에 여전히 버블이 있어요:
+* PP는 통신 빈도가 낮아서 노드 간(InfiniBand/EFA)에서 써도 괜찮고, TP는 빈도가 높아서 노드 내(NVLink)에서만 쓰는 거예요.
+
 ## EP ##
 ### 일반 Transformer vs MoE Transformer ###
 ```
