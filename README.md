@@ -24,20 +24,11 @@
 
 ### _Appendix_ ##
 
-* [A. DCGM Metrics 레퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
-
+* [A. DCGM 메트릭](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
 * [B. GPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
-
 * [C. CPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
-
 * [D. Straggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
-
 * [E. 좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
-
-* F. slurm 명령어
-  
-* [G. ParallelCluster 설정 레퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/setup/script/cluster.yaml)
-
 
 ## Ref ##
 
