@@ -1,3 +1,4 @@
+## TP (Tensor Parallem) ##
 ```
 Y = X × W
 
