@@ -45,14 +45,11 @@ TP=8 × PP=8 × DP=? = 25,000+ GPU
 → DP = 수백
 ```
 
-* DP가 크면 좋은 점
-  * 배치 사이즈가 커짐 → 학습 step 수 줄어듦 → 학습 시간 단축
-  * GPU 활용률 높음 (버블 없음)
-* DP가 너무 크면 문제
-  * gradient All-Reduce 통신량 증가 (대역폭 병목)
-  * 배치가 너무 커지면 학습 수렴이 불안정해질 수 있음
+* DP 사이즈가 크면 배치 사이즈가 커짐 → 학습 step 수 줄어듦 → 학습 시간 단축
+* DP 증가는 gradient All-Reduce 통신량 증가 (대역폭 병목)
+* 배치가 너무 커지면 학습 수렴이 불안정해질 수 있음
 
-이러한 문제를 방지하기 위해서 global batch size를 먼저 정하고, 거기서 역산한다.
+DP 사이즈 계산시 global batch size를 먼저 정하고, 거기서 역산한다.
 ```
 global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
 
