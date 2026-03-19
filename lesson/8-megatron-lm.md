@@ -33,10 +33,35 @@ python pretrain_gpt.py \
 → Megatron-LM (TP + PP + DP)
    또는 Megatron-DeepSpeed (Megatron의 TP/PP + DeepSpeed의 ZeRO)
 ```
+
+## 설계 예시 ##
 ```
-global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
+Llama 3 405B 학습 (Meta):
+TP=8 × PP=16 × DP=? = 16,384 GPU
+→ DP = 16384 / (8×16) = 128
+
+GPT-4 급 (추정):
+TP=8 × PP=8 × DP=? = 25,000+ GPU
+→ DP = 수백
 ```
 
+### DP 사이즈 설계 ### 
+
+* DP가 크면 좋은 점
+  * 배치 사이즈가 커짐 → 학습 step 수 줄어듦 → 학습 시간 단축
+  * GPU 활용률 높음 (버블 없음)
+* DP가 너무 크면 문제
+  * gradient All-Reduce 통신량 증가 (대역폭 병목)
+  * 배치가 너무 커지면 학습 수렴이 불안정해질 수 있음
+
+이러한 문제를 방지하기 위해서 global batch size를 먼저 정하고, 거기서 역산한다.
+```
+global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
+
+예: global_batch=1024, micro_batch=1, grad_accum=4
+→ DP = 1024 / (1 × 4) = 256
+```
+* DP=16~32 정도면 중규모, 100+ 이면 대규모 학습
 
 
 ## 레퍼런스 ##
