@@ -82,7 +82,7 @@ python tools/preprocess_data.py \
 # 결과: my-gpt_text_document.bin, my-gpt_text_document.idx
 ```
 
-### train 스크립트 ###
+### train command 쉘 ###
 ```
 #!/bin/bash
 # pretrain.sh
