@@ -262,6 +262,48 @@ export MASTER_PORT=6000
 srun bash pretrain.sh
 ```
 
+
+
+```mermaid
+graph TB
+    subgraph TOPO["병렬화 매핑 (Llama 70B, 32 GPU)"]
+        subgraph TP0["Node 0 — TP Group (NVLink)"]
+            G00["GPU0"] --- G01["GPU1"] --- G02["GPU2"] --- G03["GPU3"]
+            G04["GPU4"] --- G05["GPU5"] --- G06["GPU6"] --- G07["GPU7"]
+        end
+        subgraph TP1["Node 1 — TP Group (NVLink)"]
+            G10["GPU0"] --- G11["GPU1"] --- G12["GPU2"] --- G13["GPU3"]
+            G14["GPU4"] --- G15["GPU5"] --- G16["GPU6"] --- G17["GPU7"]
+        end
+        subgraph TP2["Node 2 — TP Group (NVLink)"]
+            G20["GPU0"] --- G21["GPU1"] --- G22["GPU2"] --- G23["GPU3"]
+            G24["GPU4"] --- G25["GPU5"] --- G26["GPU6"] --- G27["GPU7"]
+        end
+        subgraph TP3["Node 3 — TP Group (NVLink)"]
+            G30["GPU0"] --- G31["GPU1"] --- G32["GPU2"] --- G33["GPU3"]
+            G34["GPU4"] --- G35["GPU5"] --- G36["GPU6"] --- G37["GPU7"]
+        end
+    end
+
+    TP0 ==>|"PP: EFA<br/>Stage0→Stage1"| TP1
+    TP1 ==>|"PP: EFA<br/>Stage1→Stage2"| TP2
+    TP2 ==>|"PP: EFA<br/>Stage2→Stage3"| TP3
+
+    style TP0 fill:#ffcdd2,stroke:#b71c1c
+    style TP1 fill:#bbdefb,stroke:#0d47a1
+    style TP2 fill:#c8e6c9,stroke:#1b5e20
+    style TP3 fill:#fff9c4,stroke:#f57f17
+    style TOPO fill:#fafafa,stroke:#424242
+```
+
+
+
+
+
+
+
+
+
 ## 레퍼런스 ##
 
 * [GPT‑OSS 20B 미세 조정 방법](https://www.youtube.com/watch?v=AFhDi1ACB0k)
