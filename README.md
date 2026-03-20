@@ -35,6 +35,7 @@
 ### _AWS P-Instance Architecture_ ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/aws-p5en.png)
 
+* Job 설정
 ```
  1. GRES (Generic Resources) - GPU 할당
 #SBATCH --gres=gpu:8              # 노드당 GPU 8장 요청
