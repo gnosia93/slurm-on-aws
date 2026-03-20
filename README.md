@@ -43,12 +43,9 @@
 # 2. CPU-GPU affinity
 #SBATCH --gpu-bind=closest         # GPU와 가장 가까운 CPU 코어에 바인딩
 
-# 3. 네트워크 토폴로지 (On-Prom)
-#SBATCH --switches=1               # 같은 스위치 아래 노드 배치 (최대 대기시간 지정 가능)
-#SBATCH --switches=1@00:10:00      # 10분까지 기다림
-
-# 4. Placement Group (AWS 특화)
-#SBATCH --constraint=cluster       # 클러스터 배치 그룹 내 노드 할당
+# 3. 네트워크 토폴로지 
+#SBATCH --switches=1@00:10:00      # 온프람인 경우 - 10분까지 기다림
+#SBATCH --constraint=cluster       # AWS 인 경우 - 클러스터 배치 그룹 내 노드 할당
 
 #SBATCH --exclusive                # 노드 독점 (다른 잡과 공유 안 함)
 ```
