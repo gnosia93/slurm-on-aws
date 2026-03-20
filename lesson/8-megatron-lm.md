@@ -25,6 +25,92 @@ python pretrain_gpt.py \
 ```
 * 총 GPU = TP × PP × DP x CP x EP = 8 × 4 × 8 x 2 x 4 = 2048 GPU
 
+```mermaid
+graph TB
+    subgraph CLUSTER["Megatron-LM 6D Parallelism — 2048 GPU (256 Nodes)"]
+
+        subgraph CONFIG["설정"]
+            CFG["pretrain_gpt.py<br/>TP=8 | PP=4 | SP=ON | CP=2 | EP=4 | DP=8<br/>Layers=80 | Hidden=8192 | Heads=64<br/>MBS=1 | GBS=1024<br/><br/>총 2048 GPU = 256 노드 (8 GPU/node)"]
+        end
+
+        subgraph DP_GROUP["DP 차원 (×8 복제)"]
+
+            subgraph EP_GROUP["EP 차원 (×4 Expert 분할)"]
+
+                subgraph CP_GROUP["CP 차원 (×2 시퀀스 분할)"]
+
+                    subgraph PP_PIPE["PP 파이프라인 (4 Stage)"]
+
+                        subgraph S0["Stage 0<br/>Layer 0-19"]
+                            TP0["8 GPU (TP=8)<br/>NVLink All-Reduce<br/>+ SP (LayerNorm/Dropout 분할)"]
+                        end
+
+                        subgraph S1["Stage 1<br/>Layer 20-39"]
+                            TP1["8 GPU (TP=8)<br/>NVLink All-Reduce<br/>+ SP"]
+                        end
+
+                        subgraph S2["Stage 2<br/>Layer 40-59"]
+                            TP2["8 GPU (TP=8)<br/>NVLink All-Reduce<br/>+ SP"]
+                        end
+
+                        subgraph S3["Stage 3<br/>Layer 60-79"]
+                            TP3["8 GPU (TP=8)<br/>NVLink All-Reduce<br/>+ SP"]
+                        end
+
+                        S0 ==>|"PP: Point-to-Point<br/>Forward →"| S1
+                        S1 ==>|"PP: Point-to-Point"| S2
+                        S2 ==>|"PP: Point-to-Point"| S3
+                        S3 -.->|"← Backward"| S0
+
+                    end
+
+                end
+
+            end
+
+        end
+
+        subgraph COMM["통신 패턴 요약"]
+            C1["TP: All-Reduce (NVLink 900GB/s) — 노드 내, 레이어당 2회"]
+            C2["SP: Reduce-Scatter + All-Gather (NVLink) — TP와 함께, 추가 비용 0"]
+            C3["PP: Point-to-Point (EFA) — 스테이지 간 activation 전달"]
+            C4["DP: All-Reduce (EFA) — gradient 동기화, 8개 복제본"]
+            C5["CP: Ring Attention (EFA) — KV 블록 교환, 시퀀스 2분할"]
+            C6["EP: All-to-All (EFA) — 토큰→Expert 라우팅, 4개 Expert 그룹"]
+        end
+
+        subgraph MATH["GPU 계산"]
+            M1["TP(8) × PP(4) = 32 GPU — 하나의 모델 복제본"]
+            M2["× CP(2) = 64 GPU — 시퀀스 분할"]
+            M3["× EP(4) = 256 GPU — Expert 분할"]
+            M4["× DP(8) = 2048 GPU — 데이터 병렬 복제"]
+        end
+
+    end
+
+    style CONFIG fill:#e8eaf6,stroke:#283593
+    style DP_GROUP fill:#e8f5e9,stroke:#2e7d32
+    style EP_GROUP fill:#fff3e0,stroke:#f57c00
+    style CP_GROUP fill:#f3e5f5,stroke:#6a1b9a
+    style PP_PIPE fill:#e1f5fe,stroke:#0288d1
+    style S0 fill:#ffcdd2,stroke:#b71c1c
+    style S1 fill:#ffcdd2,stroke:#b71c1c
+    style S2 fill:#ffcdd2,stroke:#b71c1c
+    style S3 fill:#ffcdd2,stroke:#b71c1c
+    style COMM fill:#fffde7,stroke:#f57f17
+    style MATH fill:#fafafa,stroke:#424242
+```
+
+
+
+
+
+
+
+
+
+
+
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 * Megatron-LM: 모델을 쪼개는 데 특화 (TP/PP). GPU 효율 최고
