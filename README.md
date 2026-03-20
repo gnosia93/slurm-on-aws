@@ -51,6 +51,7 @@
 # 4. Placement Group (AWS 특화)
 #SBATCH --constraint=cluster      # 클러스터 배치 그룹 내 노드 할당
 ```
+* NIC 의 경우 NCCL 알아서 가까운 경로에 있는 NIC을 사용한다.
 ```
 # slurm.conf
 # topology.conf - 네트워크 토폴로지 정의
