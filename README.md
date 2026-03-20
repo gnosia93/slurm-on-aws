@@ -42,7 +42,6 @@
 
 # 2. CPU-GPU affinity
 #SBATCH --gpu-bind=closest         # GPU와 가장 가까운 CPU 코어에 바인딩
-#SBATCH --gpu-bind=map_gpu:0,1,2,3,4,5,6,7
 
 # 3. 네트워크 토폴로지 (On-Prom)
 #SBATCH --switches=1               # 같은 스위치 아래 노드 배치 (최대 대기시간 지정 가능)
