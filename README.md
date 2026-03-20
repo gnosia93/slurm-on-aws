@@ -38,18 +38,19 @@
 * Job 설정
 ```
  1. GRES (Generic Resources) - GPU 할당
-#SBATCH --gpus-per-node=8         # 노드당 GPU 8장 요청
+#SBATCH --gpus-per-node=8          # 노드당 GPU 8장 요청
+#SBATCH --exclusive                # 노드 독점 (다른 잡과 공유 안 함)
 
 # 2. CPU-GPU affinity
-#SBATCH --gpu-bind=closest        # GPU와 가장 가까운 CPU 코어에 바인딩
+#SBATCH --gpu-bind=closest         # GPU와 가장 가까운 CPU 코어에 바인딩
 #SBATCH --gpu-bind=map_gpu:0,1,2,3,4,5,6,7
 
 # 3. 네트워크 토폴로지 (On-Prom)
-#SBATCH --switches=1              # 같은 스위치 아래 노드 배치 (최대 대기시간 지정 가능)
-#SBATCH --switches=1@00:10:00     # 10분까지 기다림
+#SBATCH --switches=1               # 같은 스위치 아래 노드 배치 (최대 대기시간 지정 가능)
+#SBATCH --switches=1@00:10:00      # 10분까지 기다림
 
 # 4. Placement Group (AWS 특화)
-#SBATCH --constraint=cluster      # 클러스터 배치 그룹 내 노드 할당
+#SBATCH --constraint=cluster       # 클러스터 배치 그룹 내 노드 할당
 ```
 * NIC 의 경우 NCCL 알아서 가까운 경로에 있는 NIC을 사용한다.
 ```
