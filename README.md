@@ -38,8 +38,7 @@
 * Job 설정
 ```
  1. GRES (Generic Resources) - GPU 할당
-#SBATCH --gres=gpu:8              # 노드당 GPU 8장 요청
-#SBATCH --gpus-per-node=8
+#SBATCH --gpus-per-node=8         # 노드당 GPU 8장 요청
 
 # 2. CPU-GPU affinity
 #SBATCH --gpu-bind=closest        # GPU와 가장 가까운 CPU 코어에 바인딩
