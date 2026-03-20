@@ -37,7 +37,7 @@
 
 * Job 설정
 ```
- 1. GRES (Generic Resources) - GPU 할당
+# 1. GRES (Generic Resources) - GPU 할당
 #SBATCH --gpus-per-node=8          # 노드당 GPU 8장 요청
 
 # 2. CPU-GPU affinity
