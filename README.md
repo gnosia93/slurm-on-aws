@@ -35,6 +35,43 @@
 ### _AWS P-Instance Architecture_ ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/aws-p5en.png)
 
+```
+ 1. GRES (Generic Resources) - GPU 할당
+#SBATCH --gres=gpu:8              # 노드당 GPU 8장 요청
+#SBATCH --gpus-per-node=8
+
+# 2. CPU-GPU affinity
+#SBATCH --gpu-bind=closest        # GPU와 가장 가까운 CPU 코어에 바인딩
+#SBATCH --gpu-bind=map_gpu:0,1,2,3,4,5,6,7
+
+# 3. 네트워크 토폴로지 (On-Prom)
+#SBATCH --switches=1              # 같은 스위치 아래 노드 배치 (최대 대기시간 지정 가능)
+#SBATCH --switches=1@00:10:00     # 10분까지 기다림
+
+# 4. Placement Group (AWS 특화)
+#SBATCH --constraint=cluster      # 클러스터 배치 그룹 내 노드 할당
+```
+```
+# slurm.conf
+# topology.conf - 네트워크 토폴로지 정의
+# On-Prom 에 해당, AWS 의 경우 PlacementGroup 으로 대체
+TopologyPlugin=topology/tree
+
+# gres.conf - p5en.48xlarge (8× H200, 듀얼 소켓)
+# NUMA 0 — CPU Socket 0 (Cores 0-47)
+Name=gpu Type=h200 File=/dev/nvidia0 Cores=0-47
+Name=gpu Type=h200 File=/dev/nvidia1 Cores=0-47
+Name=gpu Type=h200 File=/dev/nvidia2 Cores=0-47
+Name=gpu Type=h200 File=/dev/nvidia3 Cores=0-47
+
+# NUMA 1 — CPU Socket 1 (Cores 48-95)
+Name=gpu Type=h200 File=/dev/nvidia4 Cores=48-95
+Name=gpu Type=h200 File=/dev/nvidia5 Cores=48-95
+Name=gpu Type=h200 File=/dev/nvidia6 Cores=48-95
+Name=gpu Type=h200 File=/dev/nvidia7 Cores=48-95
+```
+
+
 ## See Also ##
 
 * [slurm-on-ec2 with ansible](https://github.com/gnosia93/slurm-on-ec2)
