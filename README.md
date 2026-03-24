@@ -21,6 +21,7 @@
   
 * [C10. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/10-cluster-delete.md)
 
+* [C11. Slurm 의 이해]()
 
 ### _Appendix_ ##
 
