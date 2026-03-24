@@ -17,7 +17,7 @@ gpu  pwr  temp  sm   mem   enc  dec  clk   mclk
 nvidia-smi -q -d PCIE
 
 # 정상:
- Link Generation
+ PCIe Generation
    Current: 5        ← PCIe Gen5
    Max:     5
  Link Width
@@ -25,7 +25,7 @@ nvidia-smi -q -d PCIE
    Max:     16x
 
 # 비정상:
- Link Generation
+ PCIe Generation
    Current: 4        ← Gen4로 다운그레이드!
    Max:     5
  Link Width
