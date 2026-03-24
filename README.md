@@ -39,10 +39,10 @@
 * Job 설정
 ```
 # 1. GRES (Generic Resources) - GPU 할당
-#SBATCH --gpus-per-node=8          # 노드당 GPU 8장 요청
+#SBATCH --gpus-per-node=2          # 노드당 GPU 2장 요청
 
 # 2. CPU-GPU affinity
-#SBATCH --gpu-bind=closest         # GPU와 가장 가까운 CPU 코어에 바인딩
+#SBATCH --gpu-bind=closest         # GPU와 가장 가까운 CPU 코어에 바인딩, cf> gpus-per-node=8 인 경우는 의미 없음.
 
 # 3. 네트워크 토폴로지 
 #SBATCH --switches=1@00:10:00      # 온프람인 경우 - 1는 TOR 스위치 하나의 의미, 할당될때 까지 10분까지 기다릴수 있음.
