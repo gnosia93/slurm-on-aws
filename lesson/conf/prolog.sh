@@ -22,6 +22,12 @@ for i in $(seq 0 7); do
     fi
 done
 
+
+# nvidia-smi -q | grep -A 5 "Temperature"
+# GPU Shutdown Temp          : 95 C
+# GPU Slowdown Temp          : 92 C    ← 스로틀링 시작
+# GPU Max Operating Temp     : 89 C
+# Memory Current Temp        : 45 C
 # 3. GPU 온도 체크
 for i in $(seq 0 7); do
     TEMP=$(nvidia-smi -i $i --query-gpu=temperature.gpu --format=csv,noheader,nounits)
