@@ -222,7 +222,8 @@ PHB	1	같은 PCIe 브릿지 아래
 PIX	2	같은 PCIe 스위치 내
 PXB	3	여러 PCIe 스위치 경유
 SYS	5	NUMA/CPU 경계 넘어서도 GDR 허용
-      H100 같은 최신 서버에서는 SYS가 기본 권장.NUMA 경계를 넘더라도 CPU 메모리 경유하는 것보다 GDR이 빠름(?)
+
+* 보통 NCCL 의 자동 판단을 따르는게 좋다. 
 ```
 
 #### 5. GPU 메모리 ECC(Error Correcting Code) 에러 ####
