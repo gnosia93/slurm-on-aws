@@ -1,2 +1,5 @@
 
 ## Configuration ##
+
+ParallelCluster 의 설정 파일은 일반 slurm(/etc/slurm/) 와 달리 /opt/slurm/etc/ 에 있다. 
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-conf.png)
