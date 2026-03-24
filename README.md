@@ -45,8 +45,8 @@
 #SBATCH --gpu-bind=closest         # GPU와 가장 가까운 CPU 코어에 바인딩
 
 # 3. 네트워크 토폴로지 
-#SBATCH --switches=1@00:10:00      # 온프람인 경우 - 10분까지 기다림
-#SBATCH --constraint=cluster       # AWS 인 경우 - 클러스터 배치 그룹 내 노드 할당
+#SBATCH --switches=1@00:10:00      # 온프람인 경우 - 1는 TOR 스위치 하나의 의미, 할당될때 까지 10분까지 기다릴수 있음.
+                                   # AWS 인 경우 - Placement Group 으로 처리, PCluster 생성시 설정해야 함. PlacementGroup.Enabled: true  
 
 #SBATCH --exclusive                # 노드 독점 (다른 잡과 공유 안 함)
 ```
