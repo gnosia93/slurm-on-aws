@@ -87,3 +87,29 @@ ParallelCluster 의 설정 파일은 온프램 slurm(/etc/slurm/) 와 달리 /op
 
 ## CUDA and Architecture Matrix ##
 * https://docs.nvidia.com/datacenter/tesla/drivers/cuda-toolkit-driver-and-architecture-matrix.html
+
+Software 구성
+```
+호스트 (Compute Node)
+  └─ NVIDIA Driver (커널 모듈)     ← 호스트에만 설치
+
+컨테이너 (NGC)
+  ├─ CUDA Toolkit
+  ├─ cuDNN
+  ├─ NCCL
+  ├─ PyTorch
+  └─ NVIDIA Driver 없음 → 호스트 드라이버를 마운트해서 사용
+```
+CUDA Toolkit
+```
+CPU 코드 (Python/C++)
+    │
+    ▼
+CUDA API (cuda, cudnn, cublas 등)
+    │
+    ▼
+NVIDIA Driver (커널 모듈)
+    │
+    ▼
+GPU 하드웨어
+```
