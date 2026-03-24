@@ -1,4 +1,5 @@
 ## Architecture ##
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-arch-nano-ban.png)
 ```mermaid
 graph TB
     %% 외부 레이어: Config (중앙 상단 배치)
