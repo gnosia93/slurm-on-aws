@@ -2,7 +2,8 @@
 ### Job Fail의 원인 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/jobfail-type.png)
 * nccl timeout 의 경우 rank 중 일부가 죽어서 발생하는 케이스가 훨씬 빈번하다.
-* 네트워크 스위치단에서의 문제는 거의 없는 듯 ^^ 
+* 네트워크 스위치단에서의 문제는 거의 없는 듯 ^^
+* OOM 및 코드버그의 경우 slurm job 로그를 관찰하면 상세한 정보를 확인할 수 있다. 
 * GPU 장애가 가장 빈번할 것으로 예상되며, 아래는 GPU 장애시 해당 노드를 drain 하고 학습을 재시작하는 아키텍처에 대한 내용을 다룬다.  
 
 ### _GPU Cluster Resilience Architecture_ ###
