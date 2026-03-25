@@ -1,3 +1,4 @@
+## 작업 실패 디버깅 (장애 원인파악) ##
 ```mermaid
 flowchart TD
     START["잡 실패"] --> SACCT["sacct -j <jobid><br/>상태 확인"]
