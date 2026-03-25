@@ -27,4 +27,4 @@ Lustre 네트워크를 타지 않고 각 노드의 로컬 디스크를 활용하
 #### 2. Prefetching & Multi-node Prefetch ####
 데이터가 필요하기 직전에 미리 가져오는 설정을 정교화한다.
 * Prefetch Factor: DataLoader의 prefetch_factor 값을 높여 CPU가 미리 다음 배치를 준비.
-* Async Loading: I/O 작업과 연산 작업을 완벽히 오버랩(Overlap)시켜, 데이터 로딩 시간이 학습 시간에 가려지게(Hiding).
+* Async Loading: I/O 작업과 연산 작업을 완벽히 오버랩(Overlap)시켜, 데이터 로딩 시간이 학습 시간에 가려지게(Hiding) 됨.
