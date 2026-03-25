@@ -161,5 +161,5 @@ K8s 이벤트 확인 (= slurmctld.log)
 
 ## 비교 ##
 본질은 동일하다. 잡 로그 → 시스템 로그 → 스케줄러 로그 순서로 확인한다.
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/job-incident.png)
 
