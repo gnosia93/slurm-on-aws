@@ -29,7 +29,7 @@
 * [C. CPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
 * [D. Straggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
 * [E. 좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
-* [E. 좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
+* [G. GPU 클러스터 장애대응 및 학습 자동복구](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a7-resilliency.md)
 
 
   
