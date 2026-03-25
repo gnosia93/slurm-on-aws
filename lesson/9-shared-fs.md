@@ -1,7 +1,12 @@
+## FSX for Lustre 파일 시스템 생성 ##
+
+
+
 - 스토리지 및 네트워크 구성 (FSx Lustre, EFA, Placement Group)
 
 
 
+## Background ##
 ### 스토리지 구성 ###
 ```
 /home (ZFS - Zetta):
