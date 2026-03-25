@@ -40,7 +40,7 @@ flowchart TD
     style NETTEAM fill:#4a9eff,color:#fff
     style MONITOR fill:#868e96,color:#fff
 ```
-
+잡 실패 시 sacct로 상태 먼저 확인하고, 잡 로그에서 에러 메시지를 살펴본다. 대부분 여기서 원인이 나오는데, 안 보이면 dmesg에서 Xid나 OOM을 확인하고, 그래도 안 보이면 slurmctld 로그에서 스케줄링/노드 문제를 확인합니다. GPU 하드웨어 문제면 drain, OOM이면 리소스 조정, 네트워크면 ibstat으로 링크 상태 확인한다.
 
 ```
 잡 실패
