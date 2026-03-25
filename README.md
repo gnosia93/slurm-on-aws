@@ -73,7 +73,7 @@ Name=gpu Type=h200 File=/dev/nvidia7 Cores=48-95
 ### _Resilience_ ###
 * 감지(Detect) -> 격리(Isolate) -> 복구(Job Recover)
 * 프로메테우스 스택 : 감지와 webhook 을 통한 노드 격리 담당
-* Job 복구 : slurm 의 #SBATCH --requeue 활동 \
+* Job 복구 : slurm 의 #SBATCH --requeue 활동 
 * 체크 포인트 : 매 epoch 또는 일정 step 마다 체크포인트 저장 / Job 재시작시 읽음
 * srun torchrun 를 활용하여 slurm job 구성 --> fast fail 유도   
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/detect-isolate-recover.png)
