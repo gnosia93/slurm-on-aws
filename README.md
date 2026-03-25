@@ -70,60 +70,8 @@ Name=gpu Type=h200 File=/dev/nvidia6 Cores=48-95
 Name=gpu Type=h200 File=/dev/nvidia7 Cores=48-95
 ```
 
-```mermaid
-graph TB
-    subgraph Targets["데이터 소스 (Exporters)"]
-        DCGM["DCGM Exporter<br/>:9400<br/>(GPU 메트릭)"]
-        NODE["Node Exporter<br/>:9100<br/>(CPU/메모리/디스크)"]
-        KSM["kube-state-metrics<br/>(K8s 오브젝트 상태)"]
-        CADV["cAdvisor<br/>(컨테이너 리소스)<br/>kubelet 내장"]
-        SLURM_EXP["Slurm Exporter<br/>(잡/노드 상태)"]
-    end
+### _Resilience_ ###
 
-    subgraph Prometheus["Prometheus Server :9090"]
-        SCRAPER["Scraper<br/>(HTTP Pull, 15초 주기)"]
-        TSDB["TSDB<br/>(시계열 DB, 로컬 디스크)"]
-        RULE["Rule Engine<br/>(Alert 룰 평가)"]
-        SCRAPER --> TSDB
-        TSDB --> RULE
-    end
-
-    subgraph Alert["AlertManager :9093"]
-        DEDUP["중복 제거<br/>그룹핑"]
-        ROUTE["라우팅"]
-        DEDUP --> ROUTE
-    end
-
-    subgraph Notify["알림 채널"]
-        SLACK["Slack"]
-        PAGER["PagerDuty"]
-        WEBHOOK["Webhook<br/>(drain 자동화)"]
-    end
-
-    subgraph Visual["시각화"]
-        GRAFANA["Grafana :3000<br/>(대시보드)"]
-    end
-
-    DCGM -->|"pull"| SCRAPER
-    NODE -->|"pull"| SCRAPER
-    KSM -->|"pull"| SCRAPER
-    CADV -->|"pull"| SCRAPER
-    SLURM_EXP -->|"pull"| SCRAPER
-
-    RULE -->|"HTTP POST"| DEDUP
-    TSDB -->|"PromQL"| GRAFANA
-
-    ROUTE --> SLACK
-    ROUTE --> PAGER
-    ROUTE --> WEBHOOK
-
-    style Targets fill:#51cf66,color:#fff
-    style Prometheus fill:#ff6b6b,color:#fff
-    style Alert fill:#ffd43b,color:#000
-    style Notify fill:#cc5de8,color:#fff
-    style Visual fill:#4a9eff,color:#fff
-
-```
 
 ## See Also ##
 
