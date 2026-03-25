@@ -100,3 +100,4 @@ DataReadBytes / DataWriteBytes → 기대 처리량 대비 낮으면 OSS 병목
 lfs df -h
 # 특정 OST만 100% 가까우면 → 핫스팟 (데이터 편중)
 ```
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/lustre-bottleck-compare.png)
