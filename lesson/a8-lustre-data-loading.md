@@ -16,3 +16,15 @@
 * DataLoader: CPU에서 압축 해제 및 전처리를 수행.
 * Pinned Memory: CPU와 GPU 사이의 빠른 데이터 전송을 위한 징검다리 역할.
 * GPU Cluster: 노드당 8개의 GPU가 실제 모델 연산을 수행하며, DMA 전송을 통해 데이터 로딩 병목을 최소화 (GPU 내부에 있는 복사 엔진(Copy Engine)이 CPU 대산 복사 작업 수행)
+
+### 추가적인 최적화 기법 ###
+
+#### 1. 로컬 NVMe 캐싱 (Local SSD 활용) ####
+Lustre 네트워크를 타지 않고 각 노드의 로컬 디스크를 활용하는 전략이다.
+* 방법: 학습 시작 전 또는 첫 에포크(Epoch) 동안 Lustre의 데이터를 각 노드의 로컬 NVMe SSD로 복사.
+* 효과: 두 번째 에포크부터는 네트워크 I/O 없이 로컬 읽기 속도(수 GB/s)로 데이터를 로드할 수 있어 가장 확실한 성능 향상을 보장.
+
+#### 2. Prefetching & Multi-node Prefetch ####
+데이터가 필요하기 직전에 미리 가져오는 설정을 정교화한다.
+* Prefetch Factor: DataLoader의 prefetch_factor 값을 높여 CPU가 미리 다음 배치를 준비.
+* Async Loading: I/O 작업과 연산 작업을 완벽히 오버랩(Overlap)시켜, 데이터 로딩 시간이 학습 시간에 가려지게(Hiding).
