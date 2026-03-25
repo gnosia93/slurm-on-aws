@@ -19,6 +19,39 @@
 
 ### 2. Lustre 파일시스템 생성 ###
 
+```
+# FSx for Lustre 생성
+aws fsx create-file-system \
+  --file-system-type LUSTRE \
+  --storage-capacity 1200 \
+  --subnet-ids subnet-12345678 \
+  --lustre-configuration \
+    DeploymentType=PERSISTENT_2,\
+    PerUnitStorageThroughput=250,\
+    DataCompressionType=LZ4 \
+  --tags Key=Name,Value=my-lustre-fs
+
+# S3 연동 (옵션)
+aws fsx create-file-system \
+  --file-system-type LUSTRE \
+  --storage-capacity 1200 \
+  --subnet-ids subnet-12345678 \
+  --lustre-configuration \
+    DeploymentType=PERSISTENT_2,\
+    PerUnitStorageThroughput=250,\
+    ImportPath=s3://my-bucket/data,\
+    ExportPath=s3://my-bucket/output
+
+# 생성 확인
+aws fsx describe-file-systems \
+  --file-system-ids fs-0123456789abcdef0
+```
+
+
+
+
+
+
 
 ### 3. OpenSFS 생성하기 ###
 
