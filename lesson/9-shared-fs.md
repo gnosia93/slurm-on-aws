@@ -1,13 +1,6 @@
 ## FSX for Lustre 파일 시스템 생성 ##
 
-
-
-- 스토리지 및 네트워크 구성 (FSx Lustre, EFA, Placement Group)
-
-
-
-## Background ##
-### 스토리지 구성 ###
+### 1. 스토리지 구성 레이아웃 ###
 ```
 /home (ZFS - Zetta):
   - 소스 코드, 설정 파일, 스크립트
@@ -23,7 +16,15 @@
   - 수백 GPU가 동시에 읽기/쓰기
   - 초고속 I/O 필요
 ```
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/shared-fs.png)
+
+### 2. Lustre 파일시스템 생성 ###
+
+
+### 3. OpenSFS 생성하기 ###
+
+
+
+## Background ##
 
 ### 네트워크 아키텍처 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-1.png)
