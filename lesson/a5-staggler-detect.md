@@ -267,5 +267,6 @@ SYS	5	NUMA/CPU 경계 넘어서도 GDR 허용
   ├── 경우 1: 페이지 retire + XID 63 → 프로세스 크래시 → 체크포인트에서 재시작
   └── 경우 2: XID 48 → GPU 크래시 → GPU 교체
 ```
+빈번한 SBE 가 발생하는 경우 ECC(Error Correction Code) 실행으로 GPU 연산의 효율의 떨어지게 되고, 이 또한 Straggler 의 원인이 된다.
 
 
