@@ -101,3 +101,38 @@ lfs df -h
 # 특정 OST만 100% 가까우면 → 핫스팟 (데이터 편중)
 ```
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/lustre-bottleck-compare.png)
+
+네트워크 병목 확인
+```
+# 1. 네트워크 대역폭 테스트
+iperf3 -c oss-server-01 -t 30
+# 기대값: 25Gbps/100Gbps (NIC 스펙에 따라)
+# 낮으면 네트워크 병목
+
+
+# 2. 지연 확인
+lctl ping oss-server-01@tcp
+# 응답 시간 확인
+
+
+# 3. NIC 사용률 확인 (클라이언트 노드에서)
+sar -n DEV 1
+# eth0: rxkB/s  txkB/s → NIC 대역폭 대비 사용률
+# -n    → 네트워크 통계
+# DEV   → 디바이스별 (eth0, ib0 등)
+# 1     → 1초 간격
+
+# 출력:
+# IFACE   rxpck/s  txpck/s  rxkB/s   txkB/s
+# eth0    15000    12000    950000   820000
+# ib0     25000    24000    3200000  3100000
+
+
+# 4. CloudWatch (AWS - ENA 메트릭)
+NetworkIn / NetworkOut → 인스턴스 네트워크 대역폭 한계 확인
+```
+
+
+
+
+
