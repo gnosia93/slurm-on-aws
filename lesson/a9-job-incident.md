@@ -40,3 +40,29 @@ flowchart TD
     style NETTEAM fill:#4a9eff,color:#fff
     style MONITOR fill:#868e96,color:#fff
 ```
+```
+잡 실패
+  │
+  ▼
+sacct → 상태 확인 (FAILED/TIMEOUT/OOM/NODE_FAIL)
+  │
+  ▼
+잡 로그 (slurm-<jobid>.out)
+  ├─ Python traceback     → 코드 버그 → 코드 수정
+  ├─ CUDA out of memory   → GPU OOM → 배치 사이즈 줄이기
+  ├─ NCCL Timeout         → 통신 문제 → Step 3으로
+  ├─ I/O Error            → 스토리지 문제 → lfs check servers
+  └─ 원인 불명            → Step 3으로
+  │
+  ▼
+dmesg / syslog
+  ├─ Xid 에러             → GPU 장애 → drain + GPU 교체
+  ├─ OOM kill             → CPU OOM → 메모리 늘리기
+  ├─ Lustre Error         → 스토리지 → lfs 진단
+  └─ IB Error             → 네트워크 → ibstat/perfquery
+  │
+  ▼
+slurmctld.log
+  ├─ NODE_FAIL            → 노드 장애
+  └─ Prolog failed        → GPU 헬스체크 실패
+```
