@@ -86,6 +86,12 @@ groups:
   - name: gpu-xid-alerts
     rules:
       # 치명적 Xid 감지
+      # Xid 48: ECC Uncorrectable Error (HBM 메모리 데이터 손상, 복구 불가)
+      # Xid 63: Row Remap Failure (ECC 복구용 Row Remap 한계 초과)
+      # Xid 74: NVLink Error (NVLink 통신 장애)
+      # Xid 79: Fallen Off Bus (GPU가 PCIe 버스에서 사라짐)
+      # Xid 94: SRAM ECC Uncorrectable - Contained (GPU 내부 SRAM 손상, 격리됨)
+      # Xid 95: SRAM ECC Uncorrectable - Uncontained (GPU 내부 SRAM 손상, 전파됨)
       - alert: GPUCriticalXid
         expr: >
           DCGM_FI_DEV_XID_ERRORS == 48
