@@ -1,23 +1,45 @@
 ## Straggler detection ##
 
+## 감지 방법 ##   
+AI 학습에 참여한 GPU 들의 GPU Utilization (SM Activity) 를 확인하여 사용률이 저조한 Rank 가 바로 Straggler 이다.
+
+
+## 원인 ##
+
 AI 클러스터에서 발생하는 Straggler는 주로 GPU 하드웨어 이슈(Throttling), 네트워크 병목(NCCL/NVLink/NIC fallback), 또는 스토리지 I/O 지연에서 기인한다.
 
 #### 1. GPU 하드웨어 열화 (메모리 에러, 클럭 다운 등) ####
 GPU 열화는 그래픽 카드(특히 GPU와 메모리)가 장시간 고온에 노출되면서 성능 저하나 안정성 문제를 일으키는 현상을 뜻한다.
-```
-# 실시간 클럭/온도 확인
-nvidia-smi dmon -s pcut -d 1
 
+#### 실시간 클럭/온도 확인 ####
+```
+# dmon = Device Monitoring (실시간 모니터링)
+# -s pcut: 모니터링 항목
+#   p = Power (전력)
+#   c = Clock (클럭)
+#   u = Utilization (사용률)
+#   t = Temperature (온도)
+# -d 1: 1초마다 업데이트
+nvidia-smi dmon -s pcut -d 1
+```
+[출력]
+```
 # 출력:
  gpu  pwr  temp  sm   mem   enc  dec  pclk  mclk
    0  350   65  98    45    0    0    1980  2619   ← 정상
    1  350   64  97    43    0    0    1980  2619   ← 정상
    2  400   82  99    52    0    0    1410  2619   ← 클럭 다운!
    3  350   66  98    44    0    0    1980  2619   ← 정상
+```
 
-# PCIe 링크 상태 확인
+#### PCIe 링크 상태 확인 ####
+```
 nvidia-smi -q -d PCIE
-
+# -q: Query (상세 정보)
+# -d PCIE: PCIe 관련 정보만
+```
+[결과]
+```
 # 정상:
  PCIe Generation
    Current: 5        ← PCIe Gen5
