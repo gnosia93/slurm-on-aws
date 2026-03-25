@@ -80,6 +80,7 @@ AI 클러스터의 GPU 하드웨어 Fail 로 인한 "GPU 클러스터 자동 장
 * srun torchrun 를 활용하여 slurm job 구성 --> fast fail 유도   
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/detect-isolate-recover.png)
 
+[프로메테우스 룰설정]
 ```
 # 1. prometheus-rules.yaml — Alert 룰 (Prometheus 쪽)
 groups:
@@ -126,6 +127,7 @@ groups:
         annotations:
           summary: "GPU temp {{ $value }}C on {{ $labels.instance }}"
 ```
+[AlertManager 라우팅]
 ```
 # 2. alertmanager.yaml — 알림 라우팅 (AlertManager 쪽)
 global:
