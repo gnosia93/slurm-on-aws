@@ -71,13 +71,13 @@ Name=gpu Type=h200 File=/dev/nvidia7 Cores=48-95
 ```
 
 ### _GPU Cluster Resilience Architecture_ ###
-AI 클러스터의 GPU 하드웨어 Fail 로 인한 "GPU 클러스터 자동 장애 복구 아키텍처" 는 다음과 같다. XID 
+AI 클러스터의 GPU 하드웨어 Fail 로 인한 "GPU 클러스터 자동 장애 복구 아키텍처" 는 다음과 같다. 치명적 GPU XID 를 감지하여 해당 노드를 자동 Drain 한다. 
+    * 감지(Detect) -> 격리(Isolate) -> 복구(Job Recover)
+    * 프로메테우스 스택 : 감지와 webhook 을 통한 노드 격리 담당
+    * Job 복구 : slurm 의 #SBATCH --requeue 활동 
+    * 체크 포인트 : 매 epoch 또는 일정 step 마다 체크포인트 저장 / Job 재시작시 읽음
+    * srun torchrun 를 활용하여 slurm job 구성 --> fast fail 유도   
 
-* 감지(Detect) -> 격리(Isolate) -> 복구(Job Recover)
-* 프로메테우스 스택 : 감지와 webhook 을 통한 노드 격리 담당
-* Job 복구 : slurm 의 #SBATCH --requeue 활동 
-* 체크 포인트 : 매 epoch 또는 일정 step 마다 체크포인트 저장 / Job 재시작시 읽음
-* srun torchrun 를 활용하여 slurm job 구성 --> fast fail 유도   
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/detect-isolate-recover.png)
 
 [프로메테우스 룰설정]
