@@ -71,7 +71,8 @@ Name=gpu Type=h200 File=/dev/nvidia7 Cores=48-95
 ```
 
 ### _Resilience_ ###
-
+* 감지(Detect) -> 격리(Isolate) -> 복구(Job Recover)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/detect-isolate-recover.png)
 
 ## See Also ##
 
