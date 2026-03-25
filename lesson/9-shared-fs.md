@@ -18,17 +18,20 @@
 ```
 
 ### 2. Lustre 파일시스템 생성 ###
+lustre 는 성능을 위해 하나의 AZ 에만 생성된다.
+PerUnitStorageThroughput 옵션은 PERSISTENT_2 의 경우 125, 250, 500, 1000 까지 지원하며, AI 클러스터의 경우 500 이상을 설정하는 것이 좋다. (필요 IO Throughput 계산 결과에 따라 설정).
+아래 예시에서는 125 값을 설정하는데 → 1 TiB당 125 MB/s 의 처리량(Troughput) 을 제공한다.  
+
 
 ```
 # 서브넷 조회
-
-
+SUBNET_ID=$()
 
 # FSx for Lustre 생성
 aws fsx create-file-system \
   --file-system-type LUSTRE \
   --storage-capacity 1200 \
-  --subnet-ids subnet-12345678 \
+  --subnet-ids ${SUBNET_ID} \
   --lustre-configuration \
     DeploymentType=PERSISTENT_2,\
     PerUnitStorageThroughput=250,\
