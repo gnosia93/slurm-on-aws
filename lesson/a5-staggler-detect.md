@@ -1,6 +1,6 @@
 ## Straggler detection ##
 
-AI 클러스터에서 발생하는 Straggler는 주로 GPU 하드웨어 이슈(Throttling), 네트워크 병목(NCCL/NVLink), 또는 스토리지 I/O 지연에서 기인한다.
+AI 클러스터에서 발생하는 Straggler는 주로 GPU 하드웨어 이슈(Throttling), 네트워크 병목(NCCL/NVLink/NIC fallback), 또는 스토리지 I/O 지연에서 기인한다.
 
 #### 1. GPU 하드웨어 열화 (메모리 에러, 클럭 다운 등) ####
 GPU 열화는 그래픽 카드(특히 GPU와 메모리)가 장시간 고온에 노출되면서 성능 저하나 안정성 문제를 일으키는 현상을 뜻한다.
