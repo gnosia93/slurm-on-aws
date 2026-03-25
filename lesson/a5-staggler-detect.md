@@ -1,7 +1,7 @@
 ## Straggler 감지(detection) ##
 
 AI 학습에 참여한 RANK 들의 GPU Utilization (SM Activity) 또는 NIC RX/TX 를 확인하여, 그 값이 다른 RANK 에 비해서 현저히 저조한지를 확인한다. 하지만 AI 훈련 코드에 interations/sec 를 측정하는 디버깅 코드를 넣는것이 훨씬더 직관적이다. 
-그라파나 대시보드에서 GPU 히트맵을 설치하면 좀더 쉽게 GPU Utilization 을 확인할 수 있다.
+그라파나의 GPU 히트맵을 설정하는 경우 좀더 손쉽게 RANK 별 GPU Utilization 을 확인할 수 있다.
 
 ```
 GPU 7 ████████████████████  95%
