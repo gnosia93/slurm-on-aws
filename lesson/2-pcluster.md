@@ -94,7 +94,7 @@ export GPU_MAX=2
 
 cat > cluster.yaml << EOF
 Imds:
-  ImdsSupport: v1.0
+  ImdsSupport: v2.0
 Image:
   Os: ubuntu2204
 HeadNode:
