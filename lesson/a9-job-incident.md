@@ -43,6 +43,13 @@ flowchart TD
 잡 실패 시 sacct로 상태 먼저 확인하고, 잡 로그에서 에러 메시지를 살펴본다. 대부분 여기서 원인이 나오는데, 안 보이면 dmesg에서 Xid나 OOM을 확인하고, 그래도 안 보이면 slurmctld 로그에서 스케줄링/노드 문제를 확인합니다. GPU 하드웨어 문제면 drain, OOM이면 리소스 조정, 네트워크면 ibstat으로 링크 상태 확인한다.
 
 ```
+sacct -j 12345 --format=JobID,JobName,State,ExitCode,Elapsed,MaxRSS,NodeList
+
+# JobID    JobName     State          ExitCode  Elapsed   MaxRSS    NodeList
+# 12345    llm-train   FAILED         1:0       02:30:15  450G      gpu-node-[01-04]
+```
+
+```
 잡 실패
   │
   ▼
