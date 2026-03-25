@@ -75,3 +75,4 @@ Name=gpu Type=h200 File=/dev/nvidia7 Cores=48-95
 
 * [slurm-on-ec2 with ansible](https://github.com/gnosia93/slurm-on-ec2)
 * [slurm-on-eks with slinky](https://github.com/gnosia93/slurm-on-eks)
+* https://www.naddod.com/blog/differences-between-infiniband-and-ethernet-networks
