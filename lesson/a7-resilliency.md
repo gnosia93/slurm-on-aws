@@ -1,12 +1,14 @@
 
 ### Job Fail의 원인 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/jobfail-type.png)
-* nccl timeout 의 경우 rank 중 일부가 죽어서 발생하는 케이스가 훨씬 빈번하다.
-* 네트워크 스위치단에서의 문제는 거의 없는 듯 ^^
-* OOM 및 코드버그의 경우 slurm job 로그를 관찰하면 상세한 정보를 확인할 수 있다. 
-* 좀비의 경우 AI클러스터를 구성하는 모든 노드를 살펴보는것이 쉽지 않으므로, slurm job 의 epilog 에서 해당 잡을 Kill 하는 것으로 구현하거나
-  srun 을 이용하여 이를 감지하고 KILL 하는 shell script 를 실행할 수도 있다.
+
 > [!NOTE]
+
+> * nccl timeout 의 경우 rank 중 일부가 죽어서 발생하는 케이스가 훨씬 빈번하다.
+> * 네트워크 스위치단에서의 문제는 거의 없는 듯 ^^
+> * OOM 및 코드버그의 경우 slurm job 로그를 관찰하면 상세한 정보를 확인할 수 있다. 
+> * 좀비의 경우 AI클러스터를 구성하는 모든 노드를 살펴보는것이 쉽지 않으므로, slurm job 의 epilog 에서 해당 잡을 Kill 하는 것으로 구현하거나
+  srun 을 이용하여 이를 감지하고 KILL 하는 shell script 를 실행할 수도 있다.
 > * 실제로는 GPU 장애가 가장 빈번하다. 아래는 GPU 장애시 해당 노드를 자동 drain 하고 학습을 재시작하는 아키텍처에 대한 내용이다. 
 
 ### _GPU Cluster Resilience Architecture_ ###
