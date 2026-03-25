@@ -20,6 +20,10 @@
 ### 2. Lustre 파일시스템 생성 ###
 
 ```
+# 서브넷 조회
+
+
+
 # FSx for Lustre 생성
 aws fsx create-file-system \
   --file-system-type LUSTRE \
