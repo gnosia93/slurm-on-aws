@@ -34,3 +34,69 @@ Lustre 네트워크를 타지 않고 각 노드의 로컬 디스크를 활용하
 * Parquet	: 텍스트, 테이블 데이터	컬럼 기반, 압축 효율 좋음
 * TFRecord : TensorFlow 생태계	TF 전용
 * Arrow	HuggingFace datasets : 메모리 매핑, 빠른 랜덤 접근
+
+## IO 밴치마크 ##
+IOR은 멀티노드 병렬 I/O 성능을 정확히 측정할 때 쓰고, 단순 확인은 dd로 충분하다.
+### 1. ior ###
+```
+# 1. IOR 설치 (컴퓨트 노드에서)
+sudo apt install ior
+# 또는 소스 빌드
+git clone https://github.com/hpc/ior.git
+cd ior
+./configure
+make
+sudo make install
+
+# 2. FSx for Lustre가 /fsx에 마운트된 상태에서 실행
+# 단일 노드 테스트
+srun -N 1 ior -t 1m -b 16g -s 1 -F -o /fsx/test_file
+
+# 멀티 노드 테스트 (4노드)
+srun -N 4 --ntasks-per-node=8 ior -t 1m -b 4g -s 1 -F -o /fsx/test_file
+# 4노드 × 8프로세스 = 32개가 동시에 읽기/쓰기
+```
+### 2. dd ###
+```
+# 쓰기 테스트
+dd if=/dev/zero of=/fsx/test bs=1M count=10000 oflag=direct
+# 10GB 쓰기 → 속도 확인
+
+# 읽기 테스트
+dd if=/fsx/test of=/dev/null bs=1M iflag=direct
+```
+
+### 3. container ###
+```
+# IOR 컨테이너로 실행
+kubectl run ior-test --image=hpc/ior \
+  --overrides='{"spec":{"containers":[{
+    "name":"ior",
+    "command":["ior","-t","1m","-b","16g","-s","1","-F","-o","/data/test_file"],
+    "volumeMounts":[{"name":"fsx","mountPath":"/data"}]
+  }],"volumes":[{"name":"fsx","persistentVolumeClaim":{"claimName":"fsx-pvc"}}]}}'
+```
+## 병목 확인 ##
+
+MDS(메타데이터) 병목 확인
+```
+# 1. 파일 열기/조회가 느린지 확인
+time ls /fsx/training/          # 느리면 MDS 병목
+time stat /fsx/training/file    # 느리면 MDS 병목
+
+# 2. CloudWatch (AWS)
+MetadataOperations → 급증하면 MDS 과부하
+```
+
+OSS(데이터) 병목 확인
+```
+# 1. 데이터 읽기/쓰기가 느린지 확인
+dd if=/fsx/test of=/dev/null bs=1M iflag=direct    # 느리면 OSS 병목
+
+# 2. CloudWatch (AWS)
+DataReadBytes / DataWriteBytes → 기대 처리량 대비 낮으면 OSS 병목
+
+# 3. OST별 사용률 확인
+lfs df -h
+# 특정 OST만 100% 가까우면 → 핫스팟 (데이터 편중)
+```
