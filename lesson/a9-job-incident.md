@@ -76,3 +76,85 @@ slurmctld.log
   ├─ NODE_FAIL            → 노드 장애
   └─ Prolog failed        → GPU 헬스체크 실패
 ```
+
+
+## k8s ##
+```mermaid
+flowchart TD
+    START["Pod 실패"] --> KUBECTL["kubectl describe pod<br/>상태 확인"]
+
+    KUBECTL --> |"Failed/Error"| PODLOG["Pod 로그 확인<br/>kubectl logs <pod>"]
+    KUBECTL --> |"OOMKilled"| RESOURCE["CPU/GPU OOM<br/>→ 리소스 리밋 조정"]
+    KUBECTL --> |"Pending"| EVENTS["kubectl get events<br/>스케줄링 문제 확인"]
+    KUBECTL --> |"CrashLoopBackOff"| PODLOG_PREV["kubectl logs --previous<br/>죽기 전 로그 확인"]
+
+    PODLOG --> |"Python traceback"| FIX_CODE["코드 버그<br/>→ 코드 수정"]
+    PODLOG --> |"CUDA out of memory"| FIX_GPU_OOM["GPU OOM<br/>→ 배치 사이즈 줄이기"]
+    PODLOG --> |"NCCL Timeout"| NCCL_DEBUG["통신 문제<br/>→ dmesg + ibstat"]
+    PODLOG --> |"I/O Error"| STORAGE["스토리지 문제<br/>→ lfs check servers"]
+    PODLOG --> |"원인 불명"| DMESG["노드 레벨 확인<br/>dmesg / syslog"]
+
+    PODLOG_PREV --> PODLOG
+
+    EVENTS --> |"FailedScheduling"| NO_RESOURCE["리소스 부족<br/>→ GPU 가용 확인"]
+    EVENTS --> |"NodeNotReady"| NODE_DOWN["노드 장애<br/>→ kubectl describe node"]
+
+    DMESG --> |"Xid 에러"| CORDON["GPU 장애<br/>→ kubectl cordon"]
+    DMESG --> |"OOM kill"| FIX_CPU_OOM["CPU OOM<br/>→ 메모리 리밋 늘리기"]
+    DMESG --> |"Lustre Error"| STORAGE
+    DMESG --> |"IB Error"| NETWORK["네트워크 문제<br/>→ ibstat / perfquery"]
+
+    NCCL_DEBUG --> |"IB 링크 에러"| NETWORK
+    NCCL_DEBUG --> |"Xid 발견"| CORDON
+    NCCL_DEBUG --> |"재현 안 됨"| MONITOR["모니터링 강화<br/>nccl-test 반복<br/>노드 격리로 범위 좁히기"]
+
+    NETWORK --> NETTEAM["네트워크 팀에 전달<br/>포트/케이블 점검"]
+
+    style START fill:#ff6b6b,color:#fff
+    style FIX_CODE fill:#51cf66,color:#fff
+    style FIX_GPU_OOM fill:#51cf66,color:#fff
+    style FIX_CPU_OOM fill:#51cf66,color:#fff
+    style RESOURCE fill:#51cf66,color:#fff
+    style CORDON fill:#ffd43b,color:#000
+    style NODE_DOWN fill:#ffd43b,color:#000
+    style STORAGE fill:#cc5de8,color:#fff
+    style NETWORK fill:#4a9eff,color:#fff
+    style NETTEAM fill:#4a9eff,color:#fff
+    style MONITOR fill:#868e96,color:#fff
+    style NO_RESOURCE fill:#868e96,color:#fff
+```
+```
+잡 실패
+  │
+  ▼
+kubectl → 상태 확인
+  kubectl get pods -n team-a
+  kubectl describe pod train-job-worker-0
+  # Status: Failed / Error / OOMKilled / CrashLoopBackOff
+  │
+  ▼
+Pod 로그 (= Slurm 잡 로그)
+  kubectl logs train-job-worker-0
+  kubectl logs train-job-worker-0 --previous   # 죽기 전 로그
+  ├─ Python traceback     → 코드 버그
+  ├─ CUDA out of memory   → GPU OOM
+  ├─ NCCL Timeout         → 통신 문제
+  ├─ I/O Error            → 스토리지 문제
+  └─ 원인 불명            → 아래로
+  │
+  ▼
+노드 레벨 확인
+  kubectl debug node/gpu-node-05 -it --image=ubuntu
+  # 또는 SSH로 접속
+  dmesg | grep -i "xid\|oom\|lustre"
+  ├─ Xid 에러             → GPU 장애 → kubectl cordon
+  ├─ OOM kill             → CPU OOM → 리소스 리밋 조정
+  └─ IB Error             → 네트워크 → ibstat
+  │
+  ▼
+K8s 이벤트 확인 (= slurmctld.log)
+  kubectl get events -n team-a --sort-by='.lastTimestamp'
+  # FailedScheduling → 리소스 부족
+  # NodeNotReady     → 노드 장애
+  # Evicted          → 리소스 초과로 퇴거
+```
