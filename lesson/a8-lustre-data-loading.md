@@ -15,4 +15,4 @@
 * Lustre Filesystem (상단 보라색 구역): 데이터 샤드(.tar)가 저장되어 있으며, 각 노드(Rank)가 본인에게 할당된 파일을 순차적으로 읽음.
 * DataLoader: CPU에서 압축 해제 및 전처리를 수행.
 * Pinned Memory: CPU와 GPU 사이의 빠른 데이터 전송을 위한 징검다리 역할.
-* GPU Cluster: 노드당 8개의 GPU가 실제 모델 연산을 수행하며, DMA 전송을 통해 데이터 로딩 병목을 최소화
+* GPU Cluster: 노드당 8개의 GPU가 실제 모델 연산을 수행하며, DMA 전송을 통해 데이터 로딩 병목을 최소화 (GPU 내부에 있는 복사 엔진(Copy Engine)이 CPU 대산 복사 작업 수행)
