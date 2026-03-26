@@ -60,7 +60,8 @@ echo ${LUSTRE_ID}
 aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 ```
 
-> [!NOTE] 파일 시스템 삭제:
+> [!NOTE]
+> 파일 시스템 삭제:
 >  
 > aws fsx delete-file-system --file-system-id ${LUSTRE_ID}
 
@@ -99,6 +100,11 @@ ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
 
 echo  ${ZFS_ID}
 ```
+
+> [!NOTE]
+> 시큐리티 그룹 삭제:
+>  
+> aws ec2 delete-security-group --group-id ${SG_ID}
 
 ## Additional Explanation ##
 
