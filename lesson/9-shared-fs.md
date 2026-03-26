@@ -60,6 +60,11 @@ echo ${LUSTRE_ID}
 aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 ```
 
+> [!NOTE]
+> 파일 시스템 삭제:
+> aws fsx delete-file-system --file-system-id ${LUSTRE_ID}
+
+
 ### 3. OpenZFS 생성하기 ###
 
 OpenZFS 파일 시스템을 생성한다. 
