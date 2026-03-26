@@ -12,8 +12,8 @@
   → 노드 장애 시 여기서 복구
 ```
 * 비동기 체크 포인팅
-* Mixed Precision / Gradient Accumulation / Flash Attention
-* Batch Size
+* Mixed Precision / Gradient Accumulation 
+* Batch Size / Flash Attention
 
 ### 네트워크 최적화 ###
 * NCCL 알고리즘 확인 (Ring/Tree/NVLS)
