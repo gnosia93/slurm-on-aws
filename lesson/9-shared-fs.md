@@ -61,7 +61,8 @@ aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 ```
 
 > [!NOTE]
-> 파일 시스템 삭제: 
+> 파일 시스템 삭제:
+>  
 > aws fsx delete-file-system --file-system-id ${LUSTRE_ID}
 
 
