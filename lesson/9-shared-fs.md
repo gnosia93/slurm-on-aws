@@ -22,12 +22,25 @@ lustre 는 성능을 위해 하나의 AZ 에만 생성된다.
 PerUnitStorageThroughput 옵션은 PERSISTENT_2 의 경우 125, 250, 500, 1000 까지 지원하며, AI 클러스터의 경우 500 이상을 설정하는 것이 좋다. (필요 IO Throughput 계산 결과에 따라 설정).
 아래 예시에서는 125 값을 설정하는데 1 TiB 당 125 MB/s 의 처리량(Troughput) 을 제공한다는 의미이다.
 
-
 ```
-# 서브넷 조회
-SUBNET_ID=$()
+export CLUSTER_NAME="slurm-on-aws"
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
 
-# FSx for Lustre 생성
+echo "cluster name: $CLUSTER_NAME"
+echo "aws regin: $AWS_REGION"
+echo "account id: $AWS_ACCOUNT_ID"
+echo "vpc id: $VPC_ID"
+
+export SUBNET_ID=$(aws ec2 describe-subnets \
+    --filters "Name=tag:Name,Values=SOA-priv-subnet-1" "Name=vpc-id,Values=${VPC_ID}" \
+    --query "Subnets[*].{ID:SubnetId}" --output text)
+echo $SUBNET_IDS
+```
+
+Lustre 파일 시스템을 생성한다.
+```
 aws fsx create-file-system \
   --file-system-type LUSTRE \
   --storage-capacity 1200 \
@@ -39,9 +52,9 @@ aws fsx create-file-system \
 #    ImportPath=s3://my-bucket/data,\
 #    ExportPath=s3://my-bucket/output \
   --tags Key=Name,Value=my-lustre-fs
+```
 
-
-# 생성 확인
+```
 aws fsx describe-file-systems \
   --file-system-ids fs-0123456789abcdef0
 ```
