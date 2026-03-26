@@ -81,7 +81,7 @@ ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
     "RootVolumeConfiguration": {
       "NfsExports": [{
         "ClientConfigurations": [{
-          "Clients": ${VPC_CIDR},
+          "Clients": "'"${VPC_CIDR}"'",
           "Options": ["rw","crossmnt","no_root_squash"]
         }]
       }]
