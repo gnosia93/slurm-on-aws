@@ -118,3 +118,27 @@ receivers:
     slack_configs:
       - channel: '#gpu-alerts'
 ```
+
+## 참고 ##
+```
+예방 (Proactive):
+  - ECC SBE 트렌드 모니터링 → 선제적 GPU 교체
+  - 온도/클럭 트렌드 → 쿨링 문제 사전 감지
+  - PCIe 링크 다운그레이드 확인
+
+감지 (Detection):
+  - DCGM → Prometheus → AlertManager
+  - Xid 에러 (48, 63, 74, 79, 94, 95)
+  - prolog 헬스체크 (2차 방어)
+
+격리 (Isolation):
+  - Slurm: AlertManager webhook → scontrol drain
+  - K8s: NPD → custom controller → kubectl cordon
+  - torchrun → 나머지 rank 즉시 kill (fast fail)
+
+복구 (Recovery):
+  - epilog → GPU 리셋 + 좀비 정리
+  - --requeue → 잡 자동 재제출
+  - 체크포인트 로드 → 정상 노드에서 이어서 학습
+  - 노드 복구 후 → scontrol resume / kubectl uncordon
+```
