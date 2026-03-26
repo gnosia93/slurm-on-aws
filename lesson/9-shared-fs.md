@@ -52,7 +52,7 @@ aws fsx describe-file-systems \
 
 
 
-### 3. OpenSFS 생성하기 ###
+### 3. OpenZFS 생성하기 ###
 
 
 
