@@ -41,20 +41,21 @@ echo $SUBNET_IDS
 
 Lustre 파일 시스템을 생성한다.
 ```
-aws fsx create-file-system --file-system-type LUSTRE \
+LUSTRE_ID=$(aws fsx create-file-system --file-system-type LUSTRE \
   --storage-capacity 1200 \
   --subnet-ids ${SUBNET_ID} \
   --lustre-configuration DeploymentType=PERSISTENT_2,PerUnitStorageThroughput=125,DataCompressionType=LZ4 \
   --tags Key=Name,Value=${CLUSTER_NAME} \
   --query "FileSystem.FileSystemId" \
-  --output text
+  --output text)
 #    ImportPath=s3://my-bucket/data,\
 #    ExportPath=s3://my-bucket/output \
-```
 
+echo ${LUSTRE_ID}
 ```
-aws fsx describe-file-systems \
-  --file-system-ids fs-0123456789abcdef0
+생성된 파일시스템을 조회한다. 
+```
+aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 ```
 
 ### 3. OpenZFS 생성하기 ###
