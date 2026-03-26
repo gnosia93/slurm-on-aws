@@ -11,8 +11,10 @@
   → 어떤 노드에서든 읽기 가능
   → 노드 장애 시 여기서 복구
 ```
+* 비동기 체크 포인팅
 * Mixed Precision
-  
+* Gradient Accumulation
+* Flash Attention
 
 ### 네트워크 최적화 ###
 * NCCL 알고리즘 확인 (Ring/Tree/NVLS)
@@ -40,10 +42,8 @@
 * NUMA affinity (노드 공유 시)
 
 ### 스토리지 최적화 ###
-* 체크포인트 저장 속도 (스트라이핑 -c -1)
-* 비동기 체크포인팅 / 분산 체크포인팅 
+* 체크포인트 저장 속도 (스트라이핑 -c -1 / 사이즈)
 * OST 추가 / 더 높은 IOPS 할당 
-* Lustre 스트라이핑 설정 (갯수/사이즈)
 
 ### OS 레벨 최적화 ###
 * memlock unlimited (RDMA)
