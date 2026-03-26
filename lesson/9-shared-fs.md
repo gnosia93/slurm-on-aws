@@ -101,16 +101,6 @@ ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
 echo  ${ZFS_ID}
 ```
 
-```
-aws fsx describe-file-systems \
-  --query "FileSystems[?FileSystemType=='OPENZFS'].[FileSystemId,DNSName,Lifecycle]" \
-  --output table
-```
-[결과]
-```
-```
-
-
 ## Additional Explanation ##
 
 ### 네트워크 아키텍처 ###
