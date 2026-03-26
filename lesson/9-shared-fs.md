@@ -70,7 +70,8 @@ SG_ID=$(aws ec2 create-security-group --group-name fsx-openzfs-sg \
 
 aws ec2 authorize-security-group-ingress \
   --group-id ${SG_ID} --protocol tcp --port 2049 --cidr ${VPC_CIDR}
-
+```
+```
 ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
   --storage-capacity 64 --storage-type SSD \
   --subnet-ids ${SUBNET_ID} \
