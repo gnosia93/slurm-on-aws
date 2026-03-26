@@ -64,22 +64,35 @@ aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 
 OpenZFS 파일 시스템을 생성한다. 
 ```
-aws fsx create-file-system --file-system-type OPENZFS \
+SG_ID=$(aws ec2 create-security-group --group-name fsx-openzfs-sg \
+  --vpc-id ${VPC_ID} --query "GroupId" --output text)
+
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SG_ID} --protocol tcp --port 2049 --cidr ${VPC_CIDR}
+
+ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
   --storage-capacity 64 --storage-type SSD \
-  --subnet-ids ${SUBNET_ID} --security-group-ids ${SG_ID} \
+  --subnet-ids ${SUBNET_ID} \
+  --security-group-ids ${SG_ID} \
   --open-zfs-configuration '{
     "DeploymentType": "SINGLE_AZ_1",
     "ThroughputCapacity": 64,
     "RootVolumeConfiguration": {
       "NfsExports": [{
         "ClientConfigurations": [{
-          "Clients": "${VPC_CIDR}",
+          "Clients": ${VPC_CIDR},
           "Options": ["rw","crossmnt","no_root_squash"]
         }]
       }]
     }
-  }'
+  }' \
+  --query "FileSystem.FileSystemId" \
+  --output text)
 
+echo  ${ZFS_ID}
+```
+
+```
 aws fsx describe-file-systems \
   --query "FileSystems[?FileSystemType=='OPENZFS'].[FileSystemId,DNSName,Lifecycle]" \
   --output table
