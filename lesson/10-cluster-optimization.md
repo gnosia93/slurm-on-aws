@@ -16,7 +16,7 @@
 * 학습 데이터 sharding
 * DataLoader num_workers / prefetch_factor 튜닝
 * 로컬 NVMe 캐시 활용
-* Lustre 스트라이핑 설정
+* /dev/shm 크기 조정
 
 ## 스케줄링 최적화 ##
 * 백필 스케줄링 활성화 (GPU 유휴 시간 최소화)
@@ -26,14 +26,15 @@
 
 ## 스토리지 최적화 ##
 * 체크포인트 저장 속도 (스트라이핑 -c -1)
-* 비동기 체크포인팅
-* /dev/shm 크기 조정
+* 비동기 체크포인팅 / 분산 체크포인팅 
+* OST 추가 / 더 높은 IOPS 할당 
+* Lustre 스트라이핑 설정 (갯수/사이즈)
 
 ## OS 레벨 최적화 ##
 * memlock unlimited (RDMA)
-* Huge Pages
+* Huge Pages (RDMA)
 * GPU Persistence Mode
-* 커널 버전 고정
+* 커널 버전 고정 (GPU 드라이버 오동작 방지)
 
 ## 측정 도구 ##
 * nccl-test → 네트워크 대역폭
