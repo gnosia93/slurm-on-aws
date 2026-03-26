@@ -1,5 +1,5 @@
 ## GPU 학습 및 클러스터 최적화 ##
-### 학습 최적화 ###
+### 학습코드 최적화 ###
 * 분산 체크 포인팅
 ```
 빠른 체크포인트 (로컬 NVMe):
@@ -12,9 +12,8 @@
   → 노드 장애 시 여기서 복구
 ```
 * 비동기 체크 포인팅
-* Mixed Precision
-* Gradient Accumulation
-* Flash Attention
+* Mixed Precision / Gradient Accumulation / Flash Attention
+* Batch Size
 
 ### 네트워크 최적화 ###
 * NCCL 알고리즘 확인 (Ring/Tree/NVLS)
@@ -26,8 +25,6 @@
 ### GPU 활용률 최적화 ###
 * sm 사용률 모니터링 → 데이터 로딩 병목 식별
 * pclk 모니터링 → 스로틀링 식별
-* 배치 사이즈 튜닝 (GPU 메모리 최대 활용)
-* Mixed Precision (FP16/BF16) 적용 확인
 
 ### 데이터 로딩 최적화 ###
 * 학습 데이터 sharding
