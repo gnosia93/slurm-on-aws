@@ -46,13 +46,41 @@ aws fsx describe-file-systems \
   --file-system-ids fs-0123456789abcdef0
 ```
 
-
-
-
-
-
-
 ### 3. OpenZFS 생성하기 ###
+```
+aws fsx create-file-system \
+  --file-system-type OPENZFS \
+  --storage-capacity 256 \
+  --storage-type SSD \
+  --subnet-ids ${SUBNET_ID} \
+  --security-group-ids ${SG_ID} \
+  --open-zfs-configuration '{
+    "DeploymentType": "SINGLE_AZ_1",
+    "ThroughputCapacity": 160,
+    "RootVolumeConfiguration": {
+      "NfsExports": [{
+        "ClientConfigurations": [{
+          "Clients": "10.0.0.0/16",
+          "Options": ["rw","crossmnt","no_root_squash"]
+        }]
+      }]
+    }
+  }'
+
+# 2. 생성 확인
+aws fsx describe-file-systems \
+  --query "FileSystems[?FileSystemType=='OPENZFS'].[FileSystemId,DNSName,Lifecycle]" \
+  --output table
+
+# 3. 마운트 (각 노드에서)
+# DNS 이름 확인 후
+sudo mkdir -p /home
+sudo mount -t nfs -o nfsvers=4.1 fs-xxxx.fsx.ap-northeast-2.amazonaws.com:/fsx /home
+
+# 4. 영구 마운트 (/etc/fstab)
+echo "fs-xxxx.fsx.ap-northeast-2.amazonaws.com:/fsx /home nfs4 nfsvers=4.1,defaults 0 0" | sudo tee -a /etc/fstab
+```
+
 
 
 
