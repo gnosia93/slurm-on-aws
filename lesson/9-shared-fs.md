@@ -41,17 +41,13 @@ echo $SUBNET_IDS
 
 Lustre 파일 시스템을 생성한다.
 ```
-aws fsx create-file-system \
-  --file-system-type LUSTRE \
+aws fsx create-file-system --file-system-type LUSTRE \
   --storage-capacity 1200 \
   --subnet-ids ${SUBNET_ID} \
-  --lustre-configuration \
-    DeploymentType=PERSISTENT_2,\
-    PerUnitStorageThroughput=125,\
-    DataCompressionType=LZ4 \
+  --lustre-configuration DeploymentType=PERSISTENT_2,PerUnitStorageThroughput=125,DataCompressionType=LZ4 \
 #    ImportPath=s3://my-bucket/data,\
 #    ExportPath=s3://my-bucket/output \
-  --tags Key=Name,Value=my-lustre-fs
+  --tags Key=Name,Value=${CLUSTER_NAME}
 ```
 
 ```
