@@ -1,3 +1,6 @@
+* TODO - Ansible 로 실제 설치하는 내용으로 수정한다.
+
+---
 >> 모니터링 아키텍처 그림이 필요하다... 
 
 * Head Node: SLURM Exporter + Node Exporter
