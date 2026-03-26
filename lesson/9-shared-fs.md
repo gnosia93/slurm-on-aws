@@ -48,40 +48,38 @@ aws fsx describe-file-systems \
 
 ### 3. OpenZFS 생성하기 ###
 ```
+VPC_CIDR=$(aws ec2 describe-vpcs --query "Vpcs[].[VpcId,CidrBlock,Tags[?Key=='Name'].Value|[0]]" --output table)
+SUBNET_ID=$()
+SG_ID=$()
+```
+파일 시스템을 생성한다. 
+```
 aws fsx create-file-system \
   --file-system-type OPENZFS \
-  --storage-capacity 256 \
+  --storage-capacity 64 \
   --storage-type SSD \
   --subnet-ids ${SUBNET_ID} \
   --security-group-ids ${SG_ID} \
   --open-zfs-configuration '{
     "DeploymentType": "SINGLE_AZ_1",
-    "ThroughputCapacity": 160,
+    "ThroughputCapacity": 64,
     "RootVolumeConfiguration": {
       "NfsExports": [{
         "ClientConfigurations": [{
-          "Clients": "10.0.0.0/16",
+          "Clients": "${VPC_CIDR}",
           "Options": ["rw","crossmnt","no_root_squash"]
         }]
       }]
     }
   }'
 
-# 2. 생성 확인
 aws fsx describe-file-systems \
   --query "FileSystems[?FileSystemType=='OPENZFS'].[FileSystemId,DNSName,Lifecycle]" \
   --output table
-
-# 3. 마운트 (각 노드에서)
-# DNS 이름 확인 후
-sudo mkdir -p /home
-sudo mount -t nfs -o nfsvers=4.1 fs-xxxx.fsx.ap-northeast-2.amazonaws.com:/fsx /home
-
-# 4. 영구 마운트 (/etc/fstab)
-echo "fs-xxxx.fsx.ap-northeast-2.amazonaws.com:/fsx /home nfs4 nfsvers=4.1,defaults 0 0" | sudo tee -a /etc/fstab
 ```
-
-
+[결과]
+```
+```
 
 
 ## Additional Explanation ##
@@ -125,4 +123,15 @@ train_step(model, data)
 future.result()
 ```
 핵심은 GPU → CPU 메모리 복사는 빠르고(수 초), CPU → 디스크 저장은 느리지만(수십 초) 백그라운드에서 처리되니까 GPU가 놀지 않는다.
+
+
+### ZFS 마운트 ###
+```
+# DNS 이름 확인 후
+sudo mkdir -p /home
+sudo mount -t nfs -o nfsvers=4.1 fs-xxxx.fsx.ap-northeast-2.amazonaws.com:/fsx /home
+
+# 영구 마운트 (/etc/fstab)
+echo "fs-xxxx.fsx.ap-northeast-2.amazonaws.com:/fsx /home nfs4 nfsvers=4.1,defaults 0 0" | sudo tee -a /etc/fstab
+```
 
