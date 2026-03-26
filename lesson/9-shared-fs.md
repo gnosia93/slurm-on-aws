@@ -27,11 +27,13 @@ export CLUSTER_NAME="slurm-on-aws"
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
+export VPC_CIDR=$(aws ec2 describe-vpcs --vpc-ids ${VPC_ID} --query "Vpcs[0].CidrBlock" --output text)
 
 echo "cluster name: $CLUSTER_NAME"
 echo "aws regin: $AWS_REGION"
 echo "account id: $AWS_ACCOUNT_ID"
 echo "vpc id: $VPC_ID"
+echo "vpc cidr: $VPC_CIDR"
 
 export SUBNET_ID=$(aws ec2 describe-subnets \
     --filters "Name=tag:Name,Values=SOA-priv-subnet-1" "Name=vpc-id,Values=${VPC_ID}" \
@@ -59,12 +61,8 @@ aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 ```
 
 ### 3. OpenZFS 생성하기 ###
-```
-VPC_CIDR=$(aws ec2 describe-vpcs --query "Vpcs[].[VpcId,CidrBlock,Tags[?Key=='Name'].Value|[0]]" --output table)
-SUBNET_ID=$()
-SG_ID=$()
-```
-파일 시스템을 생성한다. 
+
+OpenZFS 파일 시스템을 생성한다. 
 ```
 aws fsx create-file-system \
   --file-system-type OPENZFS \
