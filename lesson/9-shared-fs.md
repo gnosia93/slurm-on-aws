@@ -67,16 +67,17 @@ aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 
 
 ### 3. OpenZFS 생성하기 ###
-
-OpenZFS 파일 시스템을 생성한다. 
+NFS 용 시큐리티 그룹을 생성한다. 
 ```
 SG_ID=$(aws ec2 create-security-group --group-name fsx-openzfs-sg \
   --description "FSx OpenZFS NFS access" \
   --vpc-id ${VPC_ID} --query "GroupId" --output text)
+echo "sg-id: ${SG_ID}"
 
 aws ec2 authorize-security-group-ingress \
   --group-id ${SG_ID} --protocol tcp --port 2049 --cidr ${VPC_CIDR}
 ```
+OpenZFS 파일 시스템을 생성한다. 
 ```
 ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
   --storage-capacity 64 --storage-type SSD \
