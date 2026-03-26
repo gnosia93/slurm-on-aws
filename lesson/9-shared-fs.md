@@ -56,7 +56,7 @@ aws fsx describe-file-systems \
 
 
 
-## Background ##
+## Additional Explanation ##
 
 ### 네트워크 아키텍처 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-1.png)
