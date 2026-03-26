@@ -25,7 +25,7 @@
 
 
 ### _Appendix_ ##
-* [C11. Slurm 의 이해](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-slurm-deepdive.md)
+* [C12. Slurm 의 이해](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-slurm-deepdive.md)
 * [A. DCGM 메트릭](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
 * [B. GPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
 * [C. CPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
