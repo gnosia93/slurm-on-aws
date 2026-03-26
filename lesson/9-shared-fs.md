@@ -64,12 +64,9 @@ aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 
 OpenZFS 파일 시스템을 생성한다. 
 ```
-aws fsx create-file-system \
-  --file-system-type OPENZFS \
-  --storage-capacity 64 \
-  --storage-type SSD \
-  --subnet-ids ${SUBNET_ID} \
-  --security-group-ids ${SG_ID} \
+aws fsx create-file-system --file-system-type OPENZFS \
+  --storage-capacity 64 --storage-type SSD \
+  --subnet-ids ${SUBNET_ID} --security-group-ids ${SG_ID} \
   --open-zfs-configuration '{
     "DeploymentType": "SINGLE_AZ_1",
     "ThroughputCapacity": 64,
