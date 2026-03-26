@@ -65,6 +65,7 @@ aws fsx describe-file-systems --file-system-ids ${LUSTRE_ID}
 OpenZFS 파일 시스템을 생성한다. 
 ```
 SG_ID=$(aws ec2 create-security-group --group-name fsx-openzfs-sg \
+  --description "FSx OpenZFS NFS access" \
   --vpc-id ${VPC_ID} --query "GroupId" --output text)
 
 aws ec2 authorize-security-group-ingress \
