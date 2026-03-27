@@ -258,3 +258,5 @@ docker compose up -d
 
 http://PUBLIC HOSTNAME:3000 접속하여 admin/admin 으로 로그인 한다.
 
+대시보드 메뉴에서 3가지 대시보드를 확인한다.
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-dashboard.png)
