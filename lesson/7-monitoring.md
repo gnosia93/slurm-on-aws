@@ -25,7 +25,9 @@ TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-m
 
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
-#export SLURM_HEAD_NODE=$(pcluster describe-cluster --cluster-name ${CLUSTER_NAME} --query "headNode.privateIpAddress")
+export SLURM_HEAD_NODE=$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=HeadNode" "Name=instance-state-name,Values=running" \
+  --query "Reservations[].Instances[].PrivateIpAddress" --output text)
 export PUBLIC_HOSTNAME=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/public-hostname)
 
 echo "REGION: ${AWS_REGION}"
@@ -76,10 +78,10 @@ scrape_configs:
       - source_labels: [__meta_ec2_tag_Name]
         target_label: node
 
-#  - job_name: 'slurm-exporter'
-#    static_configs:
-#      - targets:
-#          - '${SLURM_HEAD_NODE}:9341'
+  - job_name: 'slurm-exporter'
+    static_configs:
+      - targets:
+          - '${SLURM_HEAD_NODE}:9341'
 EOF
 ```
 
