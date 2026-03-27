@@ -254,26 +254,6 @@ docker compose up -d
  ✔ Container grafana                    Started                                                                                                  1.0s
 ```
 
-docker 컨테이너 실행여부를 확인한다. 
-```
-docker ps -a
-```
-[결과]
-```
-CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS          PORTS                                       NAMES
-7f2b43a2dbd7   grafana/grafana:11.4.0    "/run.sh"                11 seconds ago   Up 10 seconds   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   grafana
-9d56ea36bf6a   prom/prometheus:v2.54.1   "/bin/prometheus --c…"   11 seconds ago   Up 10 seconds   0.0.0.0:9091->9090/tcp, :::9091->9090/tcp   prometheus
-91f67606c727   grafana/loki:3.3.2        "/usr/bin/loki -conf…"   11 seconds ago   Up 10 seconds   0.0.0.0:3100->3100/tcp, :::3100->3100/tcp   loki
-```
+## 그라파나 접속 ##
+http://<EC2_IP>:3000 접속하여 admin/admin 으로 로그인 한다.
 
-## 그라파나 설정 ##
-* step 1 - http://<EC2_IP>:3000 접속 (admin/admin) 한다.
-* step 2 - 그라파나 대시보드 화면에서 Data Sources 를 추가한다. docker compose 로 동일한 Docker 네트워크에서 실행중이기 때문에 loki, prometheus 로 호스트명을 사용해야 한다.
-  ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-1.png)
-  ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-2.png)
-    * Loki: http://loki:3100
-    * Prometheus: http://prometheus:9090
-* step 3 - 대시보드를 생성한다. Grafana에서 Dashboards → Import → ID 입력
-    * Node Exporter Full ->	1860	CPU, 메모리, 디스크, 네트워크
-    * DCGM Exporter	-> 12239	GPU 사용률, 온도, 전력, 메모리
-    * SLURM Dashboard	-> 4323	SLURM 잡, 큐, 노드 상태
