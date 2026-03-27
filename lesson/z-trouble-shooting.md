@@ -42,10 +42,21 @@ vscode $ pcluster list-clusters
 ```
 # 1. 노드 상태 확인
 sinfo -N -l
+```
 
-# 2. 컴퓨트 노드 로그 (Head Node에서)
-less /var/log/parallelcluster/clustermgtd.log
+```
+cat /var/log/parallelcluster/bootstrap_error_msg 
+```
+[결과]
+```
+Cluster has been set to PROTECTED mode due to failures detected in static node provisioning. Please check /var/log/chef-client.log in the head node, or check the chef-client.log in CloudWatch logs. Please refer to https://docs.aws.amazon.com/parallelcluster/latest/ug/troubleshooting-v3.html for more details.
+```
 
+
+
+
+
+```
 # 3. FSx 상태 확인
 aws fsx describe-file-systems --query "FileSystems[].[FileSystemId,Lifecycle]" --output table
 # AVAILABLE이어야 함, CREATING이면 아직 준비 안 됨
