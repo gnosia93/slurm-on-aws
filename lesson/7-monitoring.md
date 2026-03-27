@@ -23,7 +23,7 @@ docker compose version
 ```
 TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 
-export CLUSER_NAME=slurm-on-aws
+export CLUSTER_NAME=slurm-on-aws
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
 export SLURM_HEAD_NODE=$(aws ec2 describe-instances \
