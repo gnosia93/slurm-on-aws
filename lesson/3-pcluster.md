@@ -104,7 +104,7 @@ Image:
 HeadNode:
   InstanceType: ${HEAD_NODE_TYPE}
   Ssh:
-    KeyName: slurm-key
+    KeyName: ${KEY_NAME}
   Networking:
     SubnetId: ${PUBLIC_SUBNET_ID}
     AdditionalSecurityGroups:
