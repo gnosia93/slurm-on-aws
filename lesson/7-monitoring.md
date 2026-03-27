@@ -125,7 +125,42 @@ compactor:
 EOF
 ```
 
-[docker-compose]
+#### [docker-compose] ####
+그라파나 데이터 소스로 prometheus 와 loki 를 등록하고 대시보드를 설정한다. 
+```
+mkdir -p grafana/provisioning/datasources
+mkdir -p grafana/provisioning/dashboards
+
+cat <<EOF > grafana/provisioning/datasources/datasources.yaml
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus:9090
+    isDefault: true
+  - name: Loki
+    type: loki
+    url: http://loki:3100
+EOF
+
+cat <<EOF > grafana/provisioning/dashboards/dashboards.yaml
+apiVersion: 1
+providers:
+  - name: default
+    folder: ''
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards
+EOF
+
+curl -o grafana/dashboards/node-exporter.json \
+  "https://grafana.com/api/dashboards/1860/revisions/latest/download"
+curl -o grafana/dashboards/dcgm.json \
+  "https://grafana.com/api/dashboards/12239/revisions/latest/download"
+curl -o grafana/dashboards/slurm.json \
+  "https://grafana.com/api/dashboards/4323/revisions/latest/download"
+```
+도커 컴포우즈 yaml 파일을 만든다.
 ```
 cat <<EOF > docker-compose.yml
 services:
@@ -148,11 +183,14 @@ services:
       - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
+      - prometheus
 
   prometheus:
     image: prom/prometheus:v2.54.1
