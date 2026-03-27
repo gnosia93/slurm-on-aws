@@ -29,31 +29,6 @@ python pretrain_gpt.py \
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
-
-### DP 사이즈 설계 ###
-```
-Llama 3 405B 학습 (Meta):
-TP=8 × PP=16 × DP=? = 16,384 GPU
-→ DP = 16384 / (8×16) = 128
-
-GPT-4 급 (추정):
-TP=8 × PP=8 × DP=? = 25,000+ GPU
-→ DP = 수백
-```
-
-* DP 사이즈가 크면 배치 사이즈가 커짐 → 학습 step 수 줄어듦 → 학습 시간 단축
-* DP 증가는 gradient All-Reduce 통신량 증가 (대역폭 병목)
-* 배치가 너무 커지면 학습 수렴이 불안정해질 수 있음
-
-DP 사이즈 계산시 global batch size를 먼저 정하고, 거기서 역산한다.
-```
-global_batch_size = micro_batch_size × DP × gradient_accumulation_steps
-
-예: global_batch=1024, micro_batch=1, grad_accum=4
-→ DP = 1024 / (1 × 4) = 256
-```
-* DP=16~32 정도면 중규모, 100+ 이면 대규모 학습
-
 ## 훈련하기 ##
 
 ### 데이터 전처리 ###
