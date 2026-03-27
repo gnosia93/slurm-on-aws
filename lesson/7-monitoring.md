@@ -160,6 +160,20 @@ curl -o grafana/dashboards/dcgm.json \
 curl -o grafana/dashboards/slurm.json \
   "https://grafana.com/api/dashboards/4323/revisions/latest/download"
 ```
+
+> [!TIP]
+> ```
+> /home/ubuntu/monitoring/
+>   ├── docker-compose.yml
+>   ├── prometheus.yml
+>   ├── loki-config.yaml
+>   └── grafana/
+>        ├── provisioning/
+>        └── dashboards/
+> ```
+
+
+
 도커 컴포우즈 yaml 파일을 만든다.
 ```
 cat <<EOF > docker-compose.yml
