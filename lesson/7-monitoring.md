@@ -239,12 +239,19 @@ docker compose up -d
 ```
 [결과]
 ```
-echo "============================================"
-echo "Monitoring stack installed"
-echo "============================================"
-echo "Grafana:    http://${PUBLIC_HOSTNAME}:3000"
-echo "Loki:       http://${PUBLIC_HOSTNAME}:3100"
-echo "Prometheus: http://${PUBLIC_HOSTNAME}:9091"
+ docker compose up -d
+[+] Running 41/41
+ ✔ loki Pulled                                                                                                                                   8.6s 
+ ✔ grafana Pulled                                                                                                                                7.7s 
+ ✔ prometheus Pulled                                                                                                                            11.1s 
+[+] Running 7/7
+ ✔ Network monitoring_default           Created                                                                                                  0.2s 
+ ✔ Volume "monitoring_grafana-data"     Created                                                                                                  0.0s 
+ ✔ Volume "monitoring_prometheus-data"  Created                                                                                                  0.0s 
+ ✔ Volume "monitoring_loki-data"        Created                                                                                                  0.0s 
+ ✔ Container prometheus                 Started                                                                                                  6.0s 
+ ✔ Container loki                       Started                                                                                                  6.0s 
+ ✔ Container grafana                    Started                                                                                                  1.0s
 ```
 
 docker 컨테이너 실행여부를 확인한다. 
