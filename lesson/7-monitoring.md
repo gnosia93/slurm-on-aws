@@ -255,5 +255,6 @@ docker compose up -d
 ```
 
 ## 그라파나 접속 ##
-http://<EC2_IP>:3000 접속하여 admin/admin 으로 로그인 한다.
+
+http://<PUBLIC HOSTNAME>:3000 접속하여 admin/admin 으로 로그인 한다.
 
