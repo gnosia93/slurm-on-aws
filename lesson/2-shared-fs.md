@@ -8,13 +8,13 @@
   - 스냅샷으로 실수 복구 가능
   - 사용자별 환경 관리
 
-/scratch (local NVME)
-
 /fsx (Lustre):
   - 학습 데이터셋 (수 TB)
   - 체크포인트 (수십~수백 GB)
   - 수백 GPU가 동시에 읽기/쓰기
   - 초고속 I/O 필요
+
+/scratch (local NVME)
 ```
 
 ### 2. Lustre 파일시스템 생성 ###
