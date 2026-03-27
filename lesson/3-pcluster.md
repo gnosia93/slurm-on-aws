@@ -32,7 +32,7 @@ vscode 웹 콘솔에서 아래 명령어를 순차적으로 실행한다. 클러
 클러스터 생성에 필요한 환경변수 값을 설정한다. AZ 의 경우 2번을 사용하도록 하고 인스턴스는 서버당 2장의 GPU를 가진 [g7e.12xlarge](https://aws.amazon.com/ko/ec2/instance-types/g7e/)를 사용한다 
 ```bash
 export CLUSTER_NAME="slurm-on-aws"
-export HEAD_NODE_TYPE="m6i.2xlarge"
+export HEAD_NODE_TYPE="m7i.2xlarge"
 export GPU_NODE_TYPE="g7e.12xlarge"
 export AZ="2"
 
