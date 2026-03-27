@@ -28,9 +28,6 @@ python pretrain_gpt.py \
 
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
-* Megatron-LM: 모델을 쪼개는 데 특화 (TP/PP). GPU 효율 최고
-* DeepSpeed: 메모리를 아끼는 데 특화 (ZeRO). 적은 GPU로 큰 모델
-* FSDP: 가장 쉬움. 중소 규모 학습에 적합
 
 
 ### DP 사이즈 설계 ###
