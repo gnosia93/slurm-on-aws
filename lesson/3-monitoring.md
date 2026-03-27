@@ -2,7 +2,7 @@
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-monitoring-arch.png)
 
 ### 도커 및 컴포즈 설치 ###
-slurm monitoring 서버로 로그인 하여 아래 명령어를 실행한다. 
+slurm monitor vscode 서버로 로그인 하여 아래 명령어를 실행한다. 
 ```
 sudo dnf install -y docker
 
