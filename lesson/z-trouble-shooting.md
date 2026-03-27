@@ -34,7 +34,7 @@ nvcc fatal: Unsupported gpu architecture 'compute_70'
 ```
 
 ### 해결 방법 ###
-postinstall 스크립트인 nccl.sh 을 수정한다. 
+postinstall 스크립트인 nccl.sh 을 수정한다. (CUDA 툴킷과 GPU 아키텍처간의 버전 Miss Match) 
 ```
 # 변경 전 (compute_70 포함)
 NVCC_GENCODE="-gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120"
