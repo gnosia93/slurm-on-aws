@@ -45,6 +45,9 @@ export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Val
   --query "Subnets[0].SubnetId" --output text)
 export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=ec2-host-sg" \
   --query "SecurityGroups[0].GroupId" --output text)
+export LOKI_URL="http://$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=slurm-monitor" "Name=instance-state-name,Values=running" \
+  --query "Reservations[].Instances[].PrivateIpAddress" --output text):3100"
 
 echo " "
 echo "CLUSTER_NAME: ${CLUSTER_NAME}"
@@ -54,6 +57,7 @@ echo "VPC_ID: ${VPC_ID}"
 echo "PUBLIC_SUBNET_ID: ${PUBLIC_SUBNET_ID}"
 echo "PRIVATE_SUBNET_ID: ${PRIVATE_SUBNET_ID}"
 echo "SECURITY_GROUP: ${SECURITY_GROUP}"
+echo "LOKI_URL: ${LOKI_URL}
 ```
 
 GPU_INSTACNE_TYPE 인스턴스의 efa 정보를 조회한다. 
