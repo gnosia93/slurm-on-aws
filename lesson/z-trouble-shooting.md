@@ -52,13 +52,23 @@ gpu-st-ml-2      1      gpu*       down~ 48     48:1:1 498073        0      1 st
 
 * 부트스트랩 로그 확인
 ```
-cat /var/log/parallelcluster/bootstrap_error_msg 
-```
-[결과]
-```
-Cluster has been set to PROTECTED mode due to failures detected in static node provisioning. Please check /var/log/chef-client.log in the head node, or check the chef-client.log in CloudWatch logs. Please refer to https://docs.aws.amazon.com/parallelcluster/latest/ug/troubleshooting-v3.html for more details.
-```
+$ ls -la /var/log/parallelcluster/
+total 836
+drwxrwxrwt  2 root           root             4096 Mar 27 04:22 .
+drwxrwxr-x 23 root           syslog           4096 Mar 27 03:58 ..
+-rw-r--r--  1 root           root              310 Mar 27 04:22 bootstrap_error_msg
+-rw-r--r--  1 root           root            32841 Mar 27 04:56 cfn-hup-runner.log
+-rw-r--r--  1 root           root           137808 Mar 27 04:57 clustermgtd
+-rw-------  1 pcluster-admin pcluster-admin  30110 Mar 27 04:57 clustermgtd.events
+-rw-r-----  1 root           root            21687 Mar 27 04:57 clusterstatusmgtd
+-rw-------  1 pcluster-admin pcluster-admin 590148 Mar 27 04:27 compute_console_output.log
+-rw-r-----  1 pcluster-admin pcluster-admin      0 Mar 27 03:56 slurm_fleet_status_manager.log
+-rw-r--r--  1 pcluster-admin pcluster-admin      0 Mar 27 03:56 slurm_resume.events
+-rw-r--r--  1 pcluster-admin pcluster-admin      0 Mar 27 03:56 slurm_resume.log
+-rw-r--r--  1 pcluster-admin pcluster-admin      0 Mar 27 03:56 slurm_suspend.log
 
+$ cat /var/log/parallelcluster/bootstrap_error_msg
+Cluster has been set to PROTECTED mode due to failures detected in static node provisioning. Please check /var/log/chef-client.log in the head node, or check the chef-client.log in CloudWatch logs. Please refer to https://docs.aws.amazon.com/parallelcluster/latest/ug/troubleshooting-v3.html for more details.
 
 
 
