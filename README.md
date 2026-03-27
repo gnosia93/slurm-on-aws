@@ -28,7 +28,7 @@
 * [C12. Slurm 의 이해](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/12-slurm-deepdive.md)
 * [A. DCGM 메트릭](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
 * [B. GPU OOM 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
-* [C. CPU OOM 대응](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
+* [C. CPU OOM 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a4-cpu-oom.md)
 * [D. Straggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
 * [E. 좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
 * [F. GPU 클러스터 장애유형 및 학습 자동복구](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a7-resilliency.md)
