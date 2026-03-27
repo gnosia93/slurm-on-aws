@@ -24,3 +24,4 @@ vscode $ pcluster list-clusters
 ### 확인 방법 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cloudwath-logs-error.png)
 cloudwath logs 에서 error 로 조회한다.
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cloudwath-logs-error-2.png)
