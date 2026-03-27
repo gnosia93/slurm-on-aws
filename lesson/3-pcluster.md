@@ -17,10 +17,13 @@ pcluster version
 
 ## 클러스터 생성하기 ##
 
+볼륨 정보 부터 조회한다. 
 ```
-[INFO] FSX_ID = fs-0cfc8084593407ace
-[INFO] FSX_MOUNTNAME = obmixbev
-[INFO] FSXO_ID = fsvol-0be57cf3806xxxxx
+ZFS_VOL_ID=$(aws fsx describe-volumes --filters Name=file-system-id,Values=${ZFS_ID} \
+  --query "Volumes[].[VolumeId]" --output text)
+
+echo "lustre-id : ${LUSTRE_ID}"
+echo "zfs-vol-id: ${ZFS_VOL_ID}
 ```
 vscode 웹 콘솔에서 아래 명령어를 순차적으로 실행한다. 클러스터 생성에는 약 30분의 시간이 소요된다. 
 
