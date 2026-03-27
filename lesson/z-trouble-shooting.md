@@ -21,7 +21,7 @@ vscode $ pcluster list-clusters
 }
 ```
 
-### 후보 원인 ###
+### 주요 원인 ###
 ```
 1. post-install 스크립트 실행 중
    → Docker, NCCL, Enroot, DCGM 설치에 시간 걸림
@@ -36,4 +36,22 @@ vscode $ pcluster list-clusters
 
 4. Placement Group 용량 부족
    → 해당 AZ에 GPU 인스턴스 재고 없음
+```
+
+### 확인 방법 ###
+```
+# 1. 노드 상태 확인
+sinfo -N -l
+
+# 2. 컴퓨트 노드 로그 (Head Node에서)
+less /var/log/parallelcluster/clustermgtd.log
+
+# 3. FSx 상태 확인
+aws fsx describe-file-systems --query "FileSystems[].[FileSystemId,Lifecycle]" --output table
+# AVAILABLE이어야 함, CREATING이면 아직 준비 안 됨
+
+# 4. 컴퓨트 노드에 SSH 가능하면
+ssh compute-node
+cat /var/log/cloud-init-output.log
+cat /var/log/parallelcluster/bootstrap.log
 ```
