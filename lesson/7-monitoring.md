@@ -163,6 +163,7 @@ curl -o grafana/dashboards/slurm.json \
 
 > [!TIP]
 > ```
+> 디렉토리 구조 : 
 > /home/ubuntu/monitoring/
 >   ├── docker-compose.yml
 >   ├── prometheus.yml
