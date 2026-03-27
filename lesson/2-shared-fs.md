@@ -1,4 +1,4 @@
-## FSX for Lustre 파일 시스템 생성 ##
+## FSX for Lustre/OpenZFS 파일 시스템 생성 ##
 
 ### 1. 스토리지 레이아웃 ###
 ```
