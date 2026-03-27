@@ -68,7 +68,8 @@ drwxrwxr-x 23 root           syslog           4096 Mar 27 03:58 ..
 -rw-r--r--  1 pcluster-admin pcluster-admin      0 Mar 27 03:56 slurm_suspend.log
 
 $ cat /var/log/parallelcluster/bootstrap_error_msg
-Cluster has been set to PROTECTED mode due to failures detected in static node provisioning. Please check /var/log/chef-client.log in the head node, or check the chef-client.log in CloudWatch logs. Please refer to https://docs.aws.amazon.com/parallelcluster/latest/ug/troubleshooting-v3.html for more details.
+Cluster has been set to PROTECTED mode due to failures detected in static node provisioning.
+Please check /var/log/chef-client.log in the head node, or check the chef-client.log in CloudWatch logs. Please refer to https://docs.aws.amazon.com/parallelcluster/latest/ug/troubleshooting-v3.html for more details.
 
 
 
