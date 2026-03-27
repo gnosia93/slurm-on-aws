@@ -32,7 +32,7 @@
 * [D. Straggler Detection](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a5-staggler-detect.md)
 * [E. 좀비 프로세스 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a6-zombie-detect.md)
 * [F. GPU 클러스터 장애유형 및 학습 자동복구](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a7-resilliency.md)
-* [G. Lustre 기반 대규모 학습 데이터 로딩 최적화](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a8-lustre-data-loading.md)
+* [G. Lustre 대규모 학습 데이터 로딩 최적화](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a8-lustre-data-loading.md)
 * [H. 훈련작업 실패 디버깅(장애원인 파악)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a9-job-incident.md)
 * [Z. 트러블 슈팅](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/z-trouble-shooting.md)
   
