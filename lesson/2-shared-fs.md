@@ -131,6 +131,10 @@ echo  ${ZFS_ID}
 > 시큐리티 그룹 삭제:
 >  
 > aws ec2 delete-security-group --group-id ${SG_ID}
+>
+> 파일 시스템 삭제: 
+> aws fsx delete-file-system --file-system-id ${ZFS_ID}
+
 
 ## Additional Explanation ##
 
