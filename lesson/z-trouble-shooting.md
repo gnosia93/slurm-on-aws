@@ -30,6 +30,7 @@ vscode $ pcluster list-clusters
 ```
 nvcc fatal: Unsupported gpu architecture 'compute_70'
 ```
+compute_70 아키텍처를 지원하지 않는 CUDA 버전 문제로 판명됨
 
 ### 해결 방법 ###
 postinstall 스크립트인 nccl.sh 을 수정한다. 
