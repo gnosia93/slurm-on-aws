@@ -39,11 +39,18 @@ vscode $ pcluster list-clusters
 ```
 
 ### 확인 방법 ###
+* 노드 상태 확인
 ```
-# 1. 노드 상태 확인
 sinfo -N -l
 ```
+[결과]
+```
+NODELIST     NODES PARTITION       STATE CPUS    S:C:T MEMORY TMP_DISK WEIGHT AVAIL_FE REASON              
+gpu-st-ml-1      1      gpu*       down~ 48     48:1:1 498073        0      1 static,g inactive partition  
+gpu-st-ml-2      1      gpu*       down~ 48     48:1:1 498073        0      1 static,g inactive partition  
+```
 
+* 부트스트랩 로그 확인
 ```
 cat /var/log/parallelcluster/bootstrap_error_msg 
 ```
