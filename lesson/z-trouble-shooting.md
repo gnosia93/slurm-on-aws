@@ -20,6 +20,8 @@ vscode $ pcluster list-clusters
   ]
 }
 ```
+* Compute 노드 생성후 initialize 단계에서 pending 상태로 유지되다가, terminate 되고 다시 새로운 인스턴스가 만들어 지는 과정을 수차례 반복함. 
+* 최종적으로는 Fail 상태로 종료됨.
 
 ### 확인 방법 ###
 * cloudwath logs 에서 error 로 조회한다.
