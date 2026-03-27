@@ -40,7 +40,7 @@ mkdir -p ~/monitoring
 cd ~/monitoring
 ```
 
-[프로메테우스]
+#### [프로메테우스] ####
 ```
 cat <<EOF > prometheus.yml
 global:
@@ -86,7 +86,7 @@ scrape_configs:
 EOF
 ```
 
-[LOKI]
+#### [LOKI] ####
 ```
 cat <<EOF > loki-config.yaml
 auth_enabled: false
