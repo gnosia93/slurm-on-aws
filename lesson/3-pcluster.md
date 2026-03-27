@@ -173,17 +173,17 @@ Scheduling:
                 - v1.18.0               # AWS OFI NCCL version
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot.sh'
             - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
-#SharedStorage:
-#  - Name: HomeDirs
-#    MountDir: /home
-#    StorageType: FsxOpenZfs
-#    FsxOpenZfsSettings:
-#      VolumeId: ${FSXO_ID}
-#  - MountDir: /fsx
-#    Name: fsx
-#    StorageType: FsxLustre
-#    FsxLustreSettings:
-#      FileSystemId: ${FSX_ID}
+SharedStorage:
+  - Name: HomeDirs
+    MountDir: /home
+    StorageType: FsxOpenZfs
+    FsxOpenZfsSettings:
+      VolumeId: ${FSXO_ID}
+  - MountDir: /fsx
+    Name: fsx
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      FileSystemId: ${LUSTRE_ID}
 Monitoring:
   DetailedMonitoring: false
   Logs:
