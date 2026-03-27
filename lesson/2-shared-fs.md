@@ -40,12 +40,23 @@ export SUBNET_ID=$(aws ec2 describe-subnets \
     --query "Subnets[*].{ID:SubnetId}" --output text)
 echo $SUBNET_IDS
 ```
+LUSTRE 용 시큐리티 그룹을 생성한다.
+```
+LUSTRE_SG_ID=$(aws ec2 create-security-group --group-name fsx-lustre-sg \
+  --description "FSx Lustre Access" \
+  --vpc-id ${VPC_ID} --query "GroupId" --output text)
+echo "LUSTRE_SG_ID: ${LUSTRE_SG_ID}"
+
+aws ec2 authorize-security-group-ingress \
+  --group-id ${LUSTRE_SG_ID} --protocol tcp --port 988 --cidr ${VPC_CIDR}
+```
 
 Lustre 파일 시스템을 생성한다.
 ```
 LUSTRE_ID=$(aws fsx create-file-system --file-system-type LUSTRE \
   --storage-capacity 1200 \
   --subnet-ids ${SUBNET_ID} \
+  --security-group-ids ${LUSTRE_SG_ID} \
   --lustre-configuration DeploymentType=PERSISTENT_2,PerUnitStorageThroughput=125,DataCompressionType=LZ4 \
   --tags Key=Name,Value=${CLUSTER_NAME} \
   --query "FileSystem.FileSystemId" \
