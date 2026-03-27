@@ -181,7 +181,7 @@ SharedStorage:
     MountDir: /home
     StorageType: FsxOpenZfs
     FsxOpenZfsSettings:
-      VolumeId: ${FSXO_ID}
+      VolumeId: ${ZFS_VOL_ID}
   - MountDir: /fsx
     Name: fsx
     StorageType: FsxLustre
