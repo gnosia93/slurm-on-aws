@@ -51,7 +51,7 @@ nvidia-smi --query-gpu=compute_cap --format=csv
 # 8.9
 ```
 
-## Permission denied (publickey,gssapi-keyex,gssapi-with-mic) ##
+## 2. Permission denied (publickey,gssapi-keyex,gssapi-with-mic) ##
 ```
 cluster.yaml의 KeyName과 실제 키 파일이 맞는지 확인:
 
