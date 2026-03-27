@@ -455,7 +455,7 @@ PKG_REVISION := 1
 ```
 
 #### 7. fabric manager 확인 ####
-nvlink 또는 nvswitch 로 연결된 서버에서 활성화 되어 있어야 한다.
+Fabric Manager는 라우팅/토폴로지를 관리하는 데몬으로 nvswitch 로 연결된 서버에서 활성화 되어 있어야 한다.
 ```
 sudo systemctl status nvidia-fabricmanager
 ```
