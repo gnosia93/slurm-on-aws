@@ -32,11 +32,10 @@ export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_
 export SLURM_HEAD_NODE=$(pcluster describe-cluster --cluster-name ${CLUSTER_NAME} --query "headNode.privateIpAddress")
 export PUBLIC_HOSTNAME=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/public-hostname)
 
-echo "region: ${AWS_REGION}"
-echo "vpc: ${VPC_ID}"
-echo "slurm head: ${SLURM_HEAD_NODE}"
-echo "public hostname: ${PUBLIC_HOSTNAME}"
-
+echo "REGION: ${AWS_REGION}"
+echo "VPC: ${VPC_ID}"
+echo "SLURM HEAD: ${SLURM_HEAD_NODE}"
+echo "PUBLIC HOSTNAME: ${PUBLIC_HOSTNAME}"
 
 mkdir -p ~/monitoring
 cd ~/monitoring
