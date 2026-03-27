@@ -191,10 +191,10 @@ Monitoring:
   DetailedMonitoring: false
   Logs:
     CloudWatch:
-      Enabled: true # good for debug
+      Enabled: true
   Dashboards:
     CloudWatch:
-      Enabled: true # provide basic dashboards
+      Enabled: true
 Tags:
   - Key: 'Grafana'
     Value: 'true'
