@@ -214,9 +214,9 @@ MLP (표준, 4h):
 ```
 
 #### 4. 병렬화(Parallelism) 설정 ####
-g7e.4xlarge 16대 기준 (총 VRAM = 16 × 96GB = 1,536GB)
+g7e.12xlarge 16대 기준 (32 GPU, 총 VRAM = 32 × 96GB = 3,072 GB)
 ```
-TP=2, PP=8, DP=1:
+TP=2, PP=4, DP=4:
   GPU당 = 1,040GB / (2×8) = 65GB
   + Activation (checkpointing 시) ≈ 10GB
   = ~75GB → 96GB 안에 OK ✓
