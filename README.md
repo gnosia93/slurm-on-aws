@@ -5,7 +5,7 @@
 
 * [C2. 스토리지 및 네트워크 구성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/2-shared-fs.md)
 
-* [C3. 모니터링 설정하기 (prometheus/loki/grafana)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
+* [C3. 모니터링 설정하기 (prometheus/loki/grafana)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-monitoring.md)
 
 * [C4. Parallel Cluster 설치](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-pcluster.md) 
 
