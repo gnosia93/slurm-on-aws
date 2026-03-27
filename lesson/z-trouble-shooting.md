@@ -20,3 +20,20 @@ vscode $ pcluster list-clusters
   ]
 }
 ```
+
+### 후보 원인 ###
+```
+1. post-install 스크립트 실행 중
+   → Docker, NCCL, Enroot, DCGM 설치에 시간 걸림
+   → 특히 NCCL 소스 빌드는 수십 분 걸릴 수 있음
+
+2. GPU 드라이버 설치/로드 중
+   → Deep Learning AMI가 아닌 경우
+
+3. FSx 마운트 대기
+   → Lustre/OpenZFS가 아직 CREATING 상태
+   → 마운트 실패하면 노드가 올라오지 않음
+
+4. Placement Group 용량 부족
+   → 해당 AZ에 GPU 인스턴스 재고 없음
+```
