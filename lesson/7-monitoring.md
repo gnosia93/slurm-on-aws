@@ -180,10 +180,12 @@ docker compose down으로 컨테이너를 삭제해도 데이터는 유지된다
 
 
 ### 모니터링 스택 설치 ###
-restart always 모드로 도커 컴포즈를 실행한다. EC2가 재부팅되더라도 모니터링 에이전트들은 재실행된다. 
+restart always 모드로 도커 컴포즈를 실행되며, EC2가 재부팅되더라도 모니터링 에이전트들은 자동으로 재실행된다. 
 ```
 docker compose up -d
-
+```
+[결과]
+```
 echo "============================================"
 echo "Monitoring stack installed"
 echo "============================================"
@@ -204,7 +206,7 @@ CONTAINER ID   IMAGE                     COMMAND                  CREATED       
 91f67606c727   grafana/loki:3.3.2        "/usr/bin/loki -conf…"   11 seconds ago   Up 10 seconds   0.0.0.0:3100->3100/tcp, :::3100->3100/tcp   loki
 ```
 
-### 그라파나 설정 ###
+## 그라파나 설정 ##
 * step 1 - http://<EC2_IP>:3000 접속 (admin/admin) 한다.
 * step 2 - 그라파나 대시보드 화면에서 Data Sources 를 추가한다. docker compose 로 동일한 Docker 네트워크에서 실행중이기 때문에 loki, prometheus 로 호스트명을 사용해야 한다.
   ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-ds-1.png)
