@@ -27,3 +27,18 @@ vscode $ pcluster list-clusters
 
 * 에러 메시지를 확인한다.
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cloudwath-logs-error-2.png)
+```
+nvcc fatal: Unsupported gpu architecture 'compute_70'
+```
+
+### nccl.sh 수정 ###
+postinstall 스크립트인 nccl.sh 을 수정한다. 
+```
+# 변경 전 (compute_70 포함)
+NVCC_GENCODE="-gencode=arch=compute_70,code=sm_70 -gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120"
+
+# 변경 후 (compute_70 제거)
+NVCC_GENCODE="-gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_89,code=sm_89 -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120"
+```
+
+
