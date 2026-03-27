@@ -1,5 +1,5 @@
 
->> 모니터링 아키텍처 그림이 필요하다... 
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-monitoring-arch.png)
 
 * Head Node: SLURM Exporter + Node Exporter
 * Compute Node: DCGM / DCGM Exporter + Node Exporter + Alloy(Log)
