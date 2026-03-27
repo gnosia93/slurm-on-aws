@@ -175,6 +175,7 @@ EOF
 > [!TIP]
 > docker-compose.yml 최하단의 volumes: 섹션은 Docker named volume을 선언하는 부분으로, 각 볼륨은 호스트의 /var/lib/docker/volumes/<이름>/_data/에 실제 저장되고, 
 docker compose down으로 컨테이너를 삭제해도 데이터는 유지된다. 
+>
 > 볼륨까지 삭제하려면 docker compose down -v를 써야 한다. prometheus-data 볼륨의 경우 호스트 경로는 /var/lib/docker/volumes/prometheus-data/_data/ 이며 컨테이너 내부에서는 /prometheus 에 저장된다. 
 
 
