@@ -153,6 +153,7 @@ providers:
       path: /var/lib/grafana/dashboards
 EOF
 
+mkdir -p grafana/dashboards
 curl -o grafana/dashboards/node-exporter.json \
   "https://grafana.com/api/dashboards/1860/revisions/latest/download"
 curl -o grafana/dashboards/dcgm.json \
