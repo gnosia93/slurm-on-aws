@@ -1,3 +1,11 @@
+## 노드 ##
+
+### 노드 상태값 ###
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-node-status.png)
+
+
+
+
 ## 컴퓨트 노드 줄이기 ##
 #### 1. 변경전 ####
 ```
