@@ -29,7 +29,7 @@ python pretrain_gpt.py \
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
-## 훈련하기 ##
+## 테스트 ##
 
 ### 데이터 전처리 ###
 ```
