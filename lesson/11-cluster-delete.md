@@ -1,13 +1,11 @@
-## 노드 ##
+## 컴퓨트 노드 ##
 
-### 노드 상태값 ###
+### 1. 노드 상태값 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-node-status.png)
 
 
-
-
-## 컴퓨트 노드 줄이기 ##
-#### 1. 변경전 ####
+### 2. 노드 줄이기 ###
+#### 변경전 ####
 ```
 sinfo -N
 ```
@@ -24,7 +22,7 @@ gpu-st-ml-7      1      gpu* idle
 gpu-st-ml-8      1      gpu* idle  
 ```
 
-#### 2. 노드 수 변경 ####
+#### 노드 수 변경 ####
 ```
 pcluster update-compute-fleet --cluster-name slurm-on-aws --status STOP_REQUESTED --region ap-northeast-2
 pcluster describe-compute-fleet --cluster-name slurm-on-aws --region ap-northeast-2
@@ -46,7 +44,7 @@ pcluster describe-compute-fleet --cluster-name slurm-on-aws --region ap-northeas
 }
 ```
 
-#### 3. 변경 후 ####
+#### 변경 후 ####
 ```
 sinfo -N
 ```
