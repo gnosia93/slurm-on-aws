@@ -44,8 +44,8 @@ NVCC_GENCODE="-gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_89,code=
 ```
 * CUDA GPU Compute Capability - https://developer.nvidia.com/cuda/gpus
 * GPU에서 직접 확인:
-  ```
-  nvidia-smi --query-gpu=compute_cap --format=csv
-  # 8.9
-  ```
+```
+nvidia-smi --query-gpu=compute_cap --format=csv
+# 8.9
+```
 
