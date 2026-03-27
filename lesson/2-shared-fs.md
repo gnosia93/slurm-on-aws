@@ -75,7 +75,18 @@ SG_ID=$(aws ec2 create-security-group --group-name fsx-openzfs-sg \
 echo "sg-id: ${SG_ID}"
 
 aws ec2 authorize-security-group-ingress \
+  --group-id ${SG_ID} --protocol tcp --port 111 --cidr ${VPC_CIDR}
+aws ec2 authorize-security-group-ingress \
   --group-id ${SG_ID} --protocol tcp --port 2049 --cidr ${VPC_CIDR}
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SG_ID} --protocol tcp --port 20001-20003 --cidr ${VPC_CIDR}
+
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SG_ID} --protocol udp --port 111 --cidr ${VPC_CIDR}
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SG_ID} --protocol udp --port 2049 --cidr ${VPC_CIDR}
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SG_ID} --protocol udp --port 20001-20003 --cidr ${VPC_CIDR}
 ```
 OpenZFS 파일 시스템을 생성한다. 
 ```
