@@ -150,7 +150,7 @@ EOF
 ```
 * mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
 * SP는 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
-
+* --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
 ```
 sbatch gpt-70b.sh
 ```
