@@ -28,7 +28,7 @@ python pretrain_gpt.py \
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
-## LLaMA-3 70B on 64 GPUs ##
+## 70B GPT 모델 훈련(64 GPUs) ##
 
 헤드 노드에 파이썬 패키지 매니저인 uv 와 meagron-core 를 설치한다. 
 ```
