@@ -157,7 +157,8 @@ srun torchrun --nproc_per_node=8 \
     --vocab-size 32000 \
     --tokenizer-type NullTokenizer \
     --no-gradient-accumulation-fusion \
-    --use-mcore-models
+    --use-mcore-models \
+    --transformer-impl local
 
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
