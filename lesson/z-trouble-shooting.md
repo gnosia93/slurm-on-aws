@@ -51,22 +51,8 @@ nvidia-smi --query-gpu=compute_cap --format=csv
 # 8.9
 ```
 
-## 2. Permission denied (publickey,gssapi-keyex,gssapi-with-mic) ##
+## 2. torch.OutOfMemoryError: CUDA out of memory ##
+slurm Job 로그  
 ```
-cluster.yaml의 KeyName과 실제 키 파일이 맞는지 확인:
-
-grep KeyName cluster.yaml
-ls -la ~/slurm-key.pem
-SSM으로 우회 접속:
-
-HEAD_ID=$(pcluster describe-cluster -n ${CLUSTER_NAME} \
-  --query "headNode.instanceId" --output text)
-aws ssm start-session --target ${HEAD_ID}
-SSM으로 들어가서 키 문제를 디버깅하세요:
-
-
-# SSM 접속 후
-sudo su - ubuntu
-cat ~/.ssh/authorized_keys
-# 여기에 등록된 키와 로컬 키가 맞는지 확인
+[rank6]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.00 GiB. GPU 6 has a total capacity of 94.97 GiB of which 1.21 GiB is free. Including non-PyTorch memory, this process has 93.75 GiB memory in use. Of the allocated memory 91.23 GiB is allocated by PyTorch, and 1.40 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
 ```
