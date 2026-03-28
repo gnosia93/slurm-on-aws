@@ -31,7 +31,7 @@ python pretrain_gpt.py \
 ## 70B GPT 모델 훈련(64 GPUs) ##
 
 ### 1. 사전준비 ###
-헤드 노드에 파이썬 패키지 매니저인 uv 와 meagron-core 라이브러리를 설치한다. 
+헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리를 설치한다. 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
