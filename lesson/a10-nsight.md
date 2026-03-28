@@ -1,17 +1,7 @@
 Nsight Systems는 NVIDIA의 시스템 레벨 프로파일러로 GPU 학습에서 "어디서 시간을 쓰고 있는지"를 타임라인을 보여준다.
 
-### 항목 ###
-```
-시간 →→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→→
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/nsight.png)
 
-GPU:  [Forward 커널][  대기  ][Backward 커널][  대기  ]
-NCCL: [          ][AllReduce][            ][AllReduce]
-CPU:  [데이터로딩 ][         ][데이터로딩   ][        ]
-
-→ GPU 대기 시간 = 통신 병목
-→ CPU 데이터로딩이 GPU보다 느리면 = 데이터 병목
-→ 커널이 작고 많으면 = launch overhead 병목
-```
 ### 설치 ###
 ```
 # 이미 CUDA Toolkit에 포함되어 있음
