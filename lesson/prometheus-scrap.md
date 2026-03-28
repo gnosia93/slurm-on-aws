@@ -1,5 +1,8 @@
 ## 프로메테우스 ##
 
+모니터링 대상 호스트에 각종 exporter 가 먼저 설치되어져 있어야 한다. (해당 포트에 대한 INBOUND 방화벽 오픈 필요)
+
+
 ### 1. 스크랩 설정 ### 
 ```
 global:
@@ -47,6 +50,7 @@ scrape_configs:
 ```
 
 ### 2. 등록 Target 확인 ###
+Status -> Targets 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-target.png)
 
 ### 3. 메트릭 조회 ###
