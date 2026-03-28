@@ -134,7 +134,7 @@ srun torchrun --nproc_per_node=8 \
   --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
   pretrain_gpt.py \
     --tensor-model-parallel-size 4 \
-    --sequence-parallel \ 
+    --sequence-parallel \
     --pipeline-model-parallel-size 4 \
     --num-layers 80 \
     --hidden-size 8192 \
