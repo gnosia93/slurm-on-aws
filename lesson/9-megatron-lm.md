@@ -256,8 +256,7 @@ sh gpu-large-st-ml-large-1 "nvidia-smi dmon -s pcut -d 10"
 >   - LLM 학습은 큰 배치가 안정적 (loss 수렴이 부드러움)
 >   - GPT-3: 3.2M tokens per batch
 >   - LLaMA: 4M tokens per batch
->   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
-
+>   - 512 × 4096(seq_length) = ~2M tokens → LLaMA 의 1/2 수준
 
 ## 4. 메모리 계산 ##
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/70b-train-arch.png)
