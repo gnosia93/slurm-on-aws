@@ -17,20 +17,19 @@ apt install nsight-systems
 # 1. 프로파일링 실행
 nsys profile -o my_profile python train.py
 
+
 # 2. 결과 파일 생성
 # my_profile.nsys-rep (GUI용)
 # my_profile.sqlite (분석용)
-```
 
-### 주요 옵션 ###
-```
+
+# 3. 주요 옵션 
 nsys profile \
   -o output_name \                    # 출력 파일명
-  --trace=cuda,nvtx,nccl,osrt \      # 추적 대상
+  --trace=cuda,nvtx,nccl,osrt \       # 추적 대상
   --sample=none \                     # CPU 샘플링 끔 (오버헤드 줄임)
   --capture-range=cudaProfilerApi \   # 특정 구간만 캡처
   python train.py
-
 
 추적 대상 (--trace):
   cuda  → GPU 커널 실행, 메모리 복사 (cudaMemcpy)
