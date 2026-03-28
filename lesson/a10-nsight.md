@@ -65,6 +65,7 @@ nsys profile \
 ```
 
 ### 결과 분석: CLI ###
+```
 # 통계 요약
 nsys stats my_profile.nsys-rep
 
@@ -76,6 +77,7 @@ nsys stats --report nccl my_profile.nsys-rep
 
 # 전체 리포트 CSV로 추출
 nsys stats --report cuda_gpu_kern_sum --format csv my_profile.nsys-rep > kernels.csv
+```
 
 ### 결과 분석: GUI ###
 ```
