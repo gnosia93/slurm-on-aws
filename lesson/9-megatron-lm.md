@@ -71,10 +71,12 @@ cat cluster-large-resolved.yaml
 ```
 pcluster update-compute-fleet -n ${CLUSTER_NAME} --status STOP_REQUESTED
 pcluster describe-compute-fleet -n ${CLUSTER_NAME}
+```
 
+"status" 값이 "STOPPED" 된것을 확인한 후 클러스터를 업데이트 한다. 
+```
 pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved.yaml
 ```
-클러스터 변경이 완료될때 까지 기다린다.
 
 
 ### 2. Megatron 설치 ###
