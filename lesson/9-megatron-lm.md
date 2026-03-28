@@ -109,7 +109,7 @@ git clone https://github.com/NVIDIA/Megatron-LM.git
 > deactivate && rm -rf ~/.venv
                                                                                                                                                                      
 ### 3. 훈련 작업 실행 ### 
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/70b-train-arch.png)
 * TP=4, PP=4, DP=2 => 4 × 4 × 2 = 32 GPUs
 * CP는 긴 시퀀스(32K+)에서 사용.
 ```
