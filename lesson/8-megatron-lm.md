@@ -45,7 +45,7 @@ cd Megatron-LM
 ```
 
 ### 2. GPU 파티션 추가 ###
-g7e.48xlarge * 8 EA 로 구성된 슬럼 파티션을 생성한다.
+g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 슬럼 파티션을 생성한다.
 ```
 
 ```
