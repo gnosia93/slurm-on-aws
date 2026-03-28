@@ -28,10 +28,8 @@ python pretrain_gpt.py \
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
-## 테스트 ##
-
-헤드노드에서.. salloc 호출..
-
+## LLaMA-3 70B on 64 GPUs ##
+* 헤드 노드에 uv 를 설치한 후 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
@@ -39,6 +37,7 @@ source ~/.bashrc
 uv pip install megatron-core
 ```
 
+* 헤드노드에서 srun 으로 실행
 ```
 docker run --ipc=host --shm-size=512m --gpus 2 -it nvcr.io/nvidia/pytorch:24.02-py3
 
@@ -49,7 +48,20 @@ pip install --no-build-isolation .[dev]
 ```
 
 
-
+```
+# TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
+torchrun --nproc_per_node=8 pretrain_gpt.py \
+    --tensor-model-parallel-size 4 \
+    --pipeline-model-parallel-size 4 \
+    --context-parallel-size 2 \
+    --num-layers 80 \
+    --hidden-size 8192 \
+    --num-attention-heads 64 \
+    --seq-length 8192 \
+    --micro-batch-size 1 \
+    --global-batch-size 512 \
+    --bf16
+```
 
 
 
