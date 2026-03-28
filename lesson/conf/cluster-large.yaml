@@ -1,0 +1,104 @@
+Imds:
+  ImdsSupport: v2.0
+Image:
+  Os: ubuntu2204
+HeadNode:
+  InstanceType: m7i.8xlarge
+  Ssh:
+    KeyName: ${KEY_NAME}
+  Networking:
+    SubnetId: ${PUBLIC_SUBNET_ID}
+    AdditionalSecurityGroups:
+      - ${SECURITY_GROUP}
+  LocalStorage:
+    RootVolume:
+      Size: 500
+      DeleteOnTermination: true                 # that's your root and /home volume for users
+  Iam:
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      - Policy: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      - Policy: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      - Policy: arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess
+  CustomActions:
+    OnNodeConfigured:
+      Sequence:
+        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
+          Args:
+            - 1.18.2-1                         # NVIDIA_CONTAINER_TOOLKIT_VERSION version
+        - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/slurm-exporter.sh'
+#      - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/alloy.sh'
+#        Args:
+#          - ${LOKI_URL}
+  Imds:
+    Secured: false
+Scheduling:
+  Scheduler: slurm
+  SlurmSettings:
+    ScaledownIdletime: 300               # Idle 상태의 노드의 경우 5분후 삭제
+    QueueUpdateStrategy: DRAIN           # 클러스터 업데이트시 DRAIN은 실행 중인 작업이 끝날 때까지 대기후 업데이트, TERMINATE은 실행 중인 작업을 즉시 종료하고 바로 업데이트
+    CustomSlurmSettings:
+      - JobCompType: jobcomp/filetxt
+      - JobCompLoc: /home/slurm/slurm-job-completions.txt
+      - JobAcctGatherType: jobacct_gather/linux
+  SlurmQueues:
+    - Name: gpu-large
+      CapacityType: ONDEMAND
+      Networking:
+        SubnetIds:
+          - ${PRIVATE_SUBNET_ID}
+        PlacementGroup:
+          Enabled: true                  
+        AdditionalSecurityGroups:
+          - ${SECURITY_GROUP}
+      ComputeSettings:
+        LocalStorage:
+          EphemeralVolume:
+            MountDir: /scratch           # each instance has a local scratch on NVMe
+          RootVolume:
+            Size: 200
+      JobExclusiveAllocation: true       
+      ComputeResources:
+        - Name: ml-large
+          InstanceType: g7e.48xlarge
+          MinCount: 0
+          MaxCount: 8
+          Efa:
+            Enabled: true
+      CustomActions:
+        OnNodeConfigured:
+          Sequence:
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'
+              Args:
+                - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'
+              Args:
+                - v2.29.2-1             # NCCL version
+                - v1.18.0               # AWS OFI NCCL version
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/enroot.sh'
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/dcgm.sh'
+#          - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/alloy.sh'
+#            Args:
+#              - ${LOKI_URL}
+SharedStorage:
+  - Name: HomeDirs
+    MountDir: /home
+    StorageType: FsxOpenZfs
+    FsxOpenZfsSettings:
+      VolumeId: ${ZFS_VOL_ID}
+  - MountDir: /fsx
+    Name: fsx
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      FileSystemId: ${LUSTRE_ID}
+Monitoring:
+  DetailedMonitoring: false
+  Logs:
+    CloudWatch:
+      Enabled: true
+  Dashboards:
+    CloudWatch:
+      Enabled: true
+Tags:
+  - Key: 'Grafana'
+    Value: 'true'
