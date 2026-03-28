@@ -185,7 +185,7 @@ EOF
 * mock-data 옵션을 사용하여 데이터 전처리 과정은 생략한다.
 
 ```
-sudo scontrol update partition=gpu-large State=UP
+sudo /opt/slurm/bin/scontrol update partition=gpu-large State=UP
 
 sbatch gpt-70b.sh
 ```
