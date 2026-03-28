@@ -133,6 +133,7 @@ export MASTER_PORT=29500
 # Triton 캐시를 로컬 디스크로 (NFS 충돌 방지)
 export TRITON_CACHE_DIR=/tmp/.triton
 export TORCHINDUCTOR_CACHE_DIR=/tmp/.inductor
+export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 source /home/ubuntu/.venv/bin/activate
 cd /home/ubuntu/Megatron-LM
