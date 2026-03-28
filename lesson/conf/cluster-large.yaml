@@ -61,7 +61,7 @@ Scheduling:
       ComputeResources:
         - Name: ml-large
           InstanceType: g7e.48xlarge
-          MinCount: 0
+          MinCount: 8
           MaxCount: 8
           Efa:
             Enabled: true
