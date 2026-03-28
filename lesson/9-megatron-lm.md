@@ -28,7 +28,7 @@ python pretrain_gpt.py \
 ### Framework / API 비교 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
-## 70B GPT 모델 훈련(64 GPUs) ##
+## 70B GPT 모델 훈련(32 GPUs) ##
 
 ### 1. 클러스터 생성 ###
 기존 클러스터를 삭제하고 g7e.48xlarge (8 GPUs) * 8 EA 노드로 구성된 megatron-cluster 클러스터를 생성한다.
