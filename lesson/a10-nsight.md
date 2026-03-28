@@ -40,20 +40,6 @@ nsys profile \
   cublas → 행렬 연산 (GEMM)
 ```
 
-### Megatron-LM 프로파일링 ###
-```
-nsys profile \
-  -o megatron_profile \
-  --trace=cuda,nvtx,nccl,osrt \
-  --sample=none \
-  python pretrain_gpt.py \
-    --tensor-model-parallel-size 4 \
-    --pipeline-model-parallel-size 4 \
-    --train-iters 10 \
-    ...
---train-iters 10으로 짧게 돌려서 프로파일만 뜹니다.
-```
-
 ### 결과 분석: CLI ###
 ```
 # 통계 요약
@@ -145,7 +131,7 @@ NCCL Time:           전체 대비 통신 시간 비율
                      30% 이상이면 통신 병목
 ```
 
-### slurm ###
+### Megatron-LM 프로파일링 ###
 ```
 #!/bin/bash
 #SBATCH --job-name=nsys-profile
