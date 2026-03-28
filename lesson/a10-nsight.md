@@ -59,26 +59,7 @@ nsys-ui my_profile.nsys-rep
 ```
 
 ### 병목 진단 패턴 ###
-```
-패턴 1: GPU가 놀고 있음 (통신 병목)
-  GPU:  [커널][      빈 공간      ][커널]
-  NCCL: [    ][  AllReduce 오래   ][    ]
-  → NCCL 튜닝 또는 통신-연산 오버랩 필요
-
-패턴 2: 커널이 작고 많음 (launch overhead)
-  GPU:  [k][k][k][k][k][k][k][k][k]
-  → 커널 사이 빈 틈이 많음
-  → CUDA Graph 또는 operator fusion 필요
-
-패턴 3: 데이터 로딩 병목
-  CPU:  [DataLoader 오래걸림                    ]
-  GPU:  [커널][          대기                   ]
-  → num_workers 증가 또는 데이터 전처리 최적화
-
-패턴 4: 메모리 복사 병목
-  GPU:  [커널][cudaMemcpy H2D][커널]
-  → pinned memory 사용 또는 prefetch
-```
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/nsight-2.png)
 
 ### NVTX 마커 (코드에 삽입) ###
 ```
