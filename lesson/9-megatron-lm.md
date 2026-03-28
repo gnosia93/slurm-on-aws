@@ -81,7 +81,11 @@ sinfo -N
 ```
 [결과]
 ```
-
+NODELIST                 NODES  PARTITION STATE 
+gpu-large-st-ml-large-1      1 gpu-large* idle  
+gpu-large-st-ml-large-2      1 gpu-large* idle  
+gpu-large-st-ml-large-3      1 gpu-large* idle  
+gpu-large-st-ml-large-4      1 gpu-large* idle  
 ```
 
 ### 2. Megatron-LM 설치 ###
