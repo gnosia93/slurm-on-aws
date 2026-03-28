@@ -84,7 +84,7 @@ pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-resolved.yaml
 ### 3. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 ```
-cat <<EOF > gpt-70b.sh
+cat <<'EOF' > gpt-70b.sh
 #!/bin/bash
 #SBATCH --job-name=gpt-70b
 #SBATCH --nodes=8
@@ -116,7 +116,8 @@ srun torchrun --nproc_per_node=8 \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
     --save-interval 1000 \
-    --mock-data \ 
+    --mock-data
+ 
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
