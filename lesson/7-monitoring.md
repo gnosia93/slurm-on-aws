@@ -274,6 +274,6 @@ docker compose up -d
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-dashboard.png)
 
 
-## 모니터링 설정 메뉴얼 ##
+## 참고 - 프로메테우스 / 그라파나 설정 ##
 * [DCGM 메트릭](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
 * [프로메테우스/그라파나 메뉴얼](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/prometheus-grafana.md)
