@@ -169,6 +169,20 @@ sbatch gpt-70b.sh
 >   - LLaMA: 4M tokens per batch
 >   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
 
+
+## 4. 메모리 계산 ##
+* 70B 모델 메모리 요구량 (BF16):
+  * 파라미터:     70B × 2 bytes = 140GB
+  * 옵티마이저:   70B × 12 bytes = 840GB (Adam: 파라미터 원본 + 모멘텀 + 분산)
+  * 그래디언트:   70B × 4 bytes = 280GB
+  * 총:          ~1260 GB
+
+GPU 32대 × 96GB = 3,072GB 총 메모리
+
+
+
+
+
 ## 참고 - Megatron-LM 훈련 데이터셋 ##
 
 Megatron-LM은 자체 데이터 포맷을 쓰기 때문에 전처리가 필요하다.
