@@ -243,6 +243,7 @@ sh gpu-large-st-ml-large-1 "nvidia-smi dmon -s pcut -d 10"
     7    372     58      -  12481   2407    100     58      0      0      0      0  15137  11682 
     0    364     52      -  12481   2415    100     58      0      0      0      0  11368  20400 
 ```
+* nvidia-smi -q -d CLOCK | grep -A 5 "Max Clocks"
 
 > [!NOTE]
 > * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
