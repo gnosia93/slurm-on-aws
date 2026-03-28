@@ -24,5 +24,5 @@
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-target.png)
 
 ### 메트릭 조회 ###
-Graph 메뉴 선택후 -> 메트릭 입력 -> Query 
+Graph 메뉴 선택후 -> 메트릭 입력 -> Execute 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-graph-query.png)
