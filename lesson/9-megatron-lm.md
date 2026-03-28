@@ -199,6 +199,22 @@ tail -f gpt-70b_1.log
 ```
 ...
 
+> finished creating GPT datasets ...
+[after dataloaders are built] datetime: 2026-03-28 14:13:05.581210 
+done with setup ...
+training ...
+INFO:megatron.core.timers:(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (1020.90, 1022.97)
+    train/valid/test-data-iterators-setup ..........: (190.27, 292.00)
+Overwriting rerun_state_machine.current_iteration from -1 to 0...
+[before the start of training step] datetime: 2026-03-28 14:13:05.589428 
+/home/ubuntu/Megatron-LM/megatron/core/tensor_parallel/layers.py:718: UserWarning: When using async grad allreduce it is recommended to set the environment variable CUDA_DEVICE_MAX_CONNECTIONS to 1 for maximum speedup
+  warnings.warn(
+/home/ubuntu/.venv/lib/python3.10/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+WARNING:megatron.core.rerun_state_machine:Result validation enabled
+/home/ubuntu/.venv/lib/python3.10/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
 Number of parameters in transformer block in billions:  64.43
 Number of active parameters in transformer block in billions:  64.43
 Number of parameters in embedding layers in billions: 0.26
@@ -226,13 +242,6 @@ Theoretical memory footprints: weight and optimizer=35695.42 MB, activation=8655
 [Rank 13] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
 [Rank 19] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
 [Rank 9] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00[Rank 8] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
-
-[Rank 7] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00[Rank 6] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
-
-[Rank 18] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00[Rank 16] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
-
- [2026-03-28 14:26:02.528844] iteration        1/    1000 | consumed samples:          512 | elapsed time per iteration (ms): 776938.3 | learning rate: 2.000000E-07 | global batch size:   512 | lm loss: 1.199893E+01 | loss scale: 1.0 | grad norm: 36.418 | number of skipped iterations:   0 | number of nan iterations:   0 |
-[Rank 27] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00[Rank 24] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
 ...
 ```
 
