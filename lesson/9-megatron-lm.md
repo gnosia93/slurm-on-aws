@@ -125,7 +125,7 @@ NodeName=gpu-large-dy-ml-large-1 CoresPerSocket=1
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
 
-uv pip install megatron-core
+uv pip install --system megatron-core
 ```
 학습 스크립트 다운로드 한다.
 ```
