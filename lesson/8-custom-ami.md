@@ -73,10 +73,10 @@ ParallelCluster AMI에 이미 포함된 것:
 CustomActions:
     OnNodeConfigured:
           Sequence:
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'       <--- 제거
+            - Script: 'https://.../slurm-on-aws/refs/heads/main/setup/script/docker.sh'       <--- 제거
               Args:
                 - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
-            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'         <--- 제거
+            - Script: 'https://.../slurm-on-aws/refs/heads/main/setup/script/nccl.sh'         <--- 제거
               Args:
                 - v2.29.2-1             # NCCL version
                 - v1.18.0               # AWS OFI NCCL version
