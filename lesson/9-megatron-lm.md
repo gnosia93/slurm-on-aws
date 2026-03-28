@@ -174,6 +174,8 @@ EOF
 * --sequence-parallel 은 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
 * --sequence-parallel이 torch LayerNorm에서 지원 안됨. Apex/TE 설치 필요.
 * --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
+* --train-iters 1000 step 학습
+
 ```
 sbatch gpt-70b.sh
 squeue
