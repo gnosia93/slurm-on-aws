@@ -57,10 +57,12 @@ scrape_configs:
             values: ["${VPC_ID}"]
           - name: instance-state-name
             values: ["running"]
+          - name: tag:Name
+            values: ["Compute", "HeadNode"]          # GPU 노드, 헤드노드 필터링
     relabel_configs:
       - source_labels: [__meta_ec2_private_ip]
         target_label: __address__
-        replacement: "${1}:9100"
+        replacement: "$1:9100"
       - source_labels: [__meta_ec2_tag_Name]
         target_label: node
 
@@ -73,10 +75,12 @@ scrape_configs:
             values: ["${VPC_ID}"]
           - name: instance-state-name
             values: ["running"]
+          - name: tag:Name
+            values: ["Compute"]          # GPU 노드만 필터링
     relabel_configs:
       - source_labels: [__meta_ec2_private_ip]
         target_label: __address__
-        replacement: "${1}:9400"
+        replacement: "$1:9400"
       - source_labels: [__meta_ec2_tag_Name]
         target_label: node
 
