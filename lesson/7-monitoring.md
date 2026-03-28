@@ -258,6 +258,15 @@ docker compose up -d
  ✔ Container grafana                    Started                                                                                                  1.0s
 ```
 
+> [!TIP]
+> 프로메테우스 재시작: docker compose restart prometheus
+> 설정 파일이 볼륨 마운트되어 있으면 리로드만: docker compose kill -s HUP prometheus
+>
+> 완전히 새로 올리려면: 
+> docker compose down
+> docker compose up -d
+
+
 ## 그라파나 접속 ##
 
 브라우저로 `http://PUBLIC HOSTNAME:3000` 에 접속하고 admin/admin 으로 로그인 한다. 대시보드 메뉴로 이동하여 아래와 같은 3가지 유형의 대시보드를 확인한다.
