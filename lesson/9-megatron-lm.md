@@ -159,7 +159,12 @@ srun torchrun --nproc_per_node=8 \
     --no-gradient-accumulation-fusion \
     --use-mcore-models \
     --transformer-impl local \
-    --no-persist-layer-norm
+    --no-persist-layer-norm \
+    --lr 1e-4 \
+    --min-lr 1e-5 \
+    --lr-warmup-iters 500 \
+    --lr-decay-iters 100000
+
 
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
