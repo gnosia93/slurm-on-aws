@@ -35,12 +35,13 @@ python pretrain_gpt.py \
 ```
 pcluster delete-cluster -n ${CLUSTER_NAME}
 
-export CLUSTER_NAME=slurm-on-aws
+export PREV_CLUSTER_NAME=${CLUSTER_NAME}
+export CLUSTER_NAME=megatron-cluster
 export AZ="2"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
+export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${PREV_CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
 export PUBLIC_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=SOA-pub-subnet-${AZ}" \
   --query "Subnets[0].SubnetId" --output text)
 export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=SOA-priv-subnet-${AZ}" \
