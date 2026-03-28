@@ -3,7 +3,7 @@ Imds:
 Image:
   Os: ubuntu2204
 HeadNode:
-  InstanceType: m7i.2xlarge
+  InstanceType: m7i.8xlarge
   Ssh:
     KeyName: ${KEY_NAME}
   Networking:
