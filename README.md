@@ -7,7 +7,7 @@
 
 * [C3. Parallel Cluster 설치](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-pcluster.md) 
 
-* [C4. nccl-test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-nccl-test.md) 
+* [C4. nccl-test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/4-nccl-test.md) 
     
 * [C5. 클러스터 진단](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-system-diag.md)   
      
