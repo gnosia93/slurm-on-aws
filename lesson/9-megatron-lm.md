@@ -130,6 +130,7 @@ srun torchrun --nproc_per_node=8 \
   --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
   pretrain_gpt.py \
     --tensor-model-parallel-size 4 \
+    --sequence-parallel \ 
     --pipeline-model-parallel-size 4 \
     --num-layers 80 \
     --hidden-size 8192 \
@@ -146,8 +147,8 @@ srun torchrun --nproc_per_node=8 \
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
-* mock-data 옵션을 사용하여 데이터 전처리 과정은 생략한다.
-
+* mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
+* SP는 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
 ```
 sudo /opt/slurm/bin/scontrol update partition=gpu-large State=UP
 watch -n 10 sinfo -N
