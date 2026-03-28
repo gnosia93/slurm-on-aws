@@ -9,32 +9,23 @@ Packer는 HashiCorp에서 만든 AMI 자동 빌드 도구로 CUDA 버전, 특정
 ```
 memlock unlimited:
   프로세스가 RAM에 고정(lock)할 수 있는 메모리 크기 제한
-  기본값: 64KB
-  설정값: unlimited
-
+  기본값: 64KB / 설정값: unlimited
   RDMA(GPUDirect RDMA)에서 NIC이 메모리에 직접 DMA 하려면 해당 메모리가 물리 RAM에 고정되어 있어야 함
   → 스왑으로 내려가면 DMA 주소가 무효화 → 크래시
   → unlimited로 설정해야 NCCL이 필요한 만큼 메모리 고정 가능
 
 vm.max_map_count:
   프로세스가 만들 수 있는 메모리 매핑(mmap) 최대 수
-  기본값: 65536
-  설정값: 262144
-
+  기본값: 65536 / 설정값: 262144
   PyTorch/NCCL이 GPU 메모리, 공유 메모리 등을 mmap으로 매핑하는데 기본값이면 부족해서 에러 발생 가능
 
 nofile:
   프로세스가 열 수 있는 파일 디스크립터 최대 수
-  기본값: 1024
-  설정값: 1048576
-
+  기본값: 1024 / 설정값: 1048576
   분산 학습에서 소켓 연결, 데이터 파일, 로그 파일 등 동시에 여는 파일이 많아서 기본값이면 "Too many open files" 에러
 
 GPU Persistence Mode:
   GPU 드라이버를 항상 로드된 상태로 유지
-  기본: GPU idle → 드라이버 언로드 → 다음 CUDA 호출 시 재로드 (수 초 지연)
-  설정: nvidia-smi -pm 1 → 드라이버 항상 로드 → CUDA 호출 즉시 응답
-
   잡이 끝나고 다음 잡 시작할 때 드라이버 로드 지연이 없어야 하니까 GPU 클러스터에서는 무조건 켜놓음
 ```
 
