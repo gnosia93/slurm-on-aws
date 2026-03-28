@@ -216,4 +216,6 @@ export MASTER_PORT=6000
 srun bash pretrain.sh
 ```
 
+## 레퍼런스 ##
+* https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/index.html#quick-start
 
