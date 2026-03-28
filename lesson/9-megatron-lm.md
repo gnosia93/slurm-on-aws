@@ -61,11 +61,11 @@ echo "LOKI_URL: ${LOKI_URL}"
 echo "KEY_NAME: ${KEY_NAME}"
 ```
 ```
-curl -o cluster.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster.yaml
-envsubst < cluster.yaml > cluster-resolved.yaml
-cat cluster-resolved.yaml
+curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster-large.yaml
+envsubst < cluster-large.yaml > cluster-large-resolved.yaml
+cat cluster-large-resolved.yaml
 
-pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-resolved.yaml
+pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved.yaml
 ```
 클러스터 변경이 완료될때 까지 기다린다.
 
