@@ -181,6 +181,13 @@ W0328 12:22:55.177000 52968 torch/distributed/run.py:851] Setting OMP_NUM_THREAD
 W0328 12:22:55.177000 52968 torch/distributed/run.py:851] *****************************************
 ```
 
+#### GPU 모니터링 ####
+```
+srun --nodes=4 nvidia-smi --query-gpu=index,utilization.gpu,memory.used,temperature.gpu --format=csv
+```
+
+
+
 > [!NOTE]
 > * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
 >   * → 1 step에 실제 처리: 1 × 2 = 2
