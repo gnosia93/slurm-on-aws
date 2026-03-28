@@ -66,7 +66,7 @@ ParallelCluster AMI에 이미 포함된 것:
 ```
 
 ### 3. Parallel Cluster Yaml 변경 ###
-cluster.yaml 설정파일에서 OnNodeConfigured 으로 정의된 각종 소프트웨어 스택을 제거한다. 
+이미 AMI 에 통합되었으므로 cluster.yaml 설정파일에서 OnNodeConfigured 으로 정의된 각종 소프트웨어 스택을 제거한다. 
 
 [cluster.yaml 예시]
 ```
