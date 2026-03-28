@@ -6,6 +6,10 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
+data "aws_vpc" "this" {
+  id = var.vpc_id
+}
+
 # ------------------------------------------------
 # VPC 및 네트워크 구성
 # ------------------------------------------------
@@ -162,6 +166,20 @@ resource "aws_security_group" "instance_sg" {
     to_port     = 9091
     protocol    = "tcp"
     cidr_blocks = local.allowed_ip_cidrs
+  }
+  # dcgm-exporter
+  ingress {
+    from_port   = 9400
+    to_port     = 9400
+    protocol    = "tcp"
+    cidr_blocks = [data.aws_vpc.this.cidr_block]
+  }
+  # node-exporter
+  ingress {
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = [data.aws_vpc.this.cidr_block]
   }
 
   egress {
