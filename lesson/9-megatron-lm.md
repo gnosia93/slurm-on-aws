@@ -147,7 +147,9 @@ srun torchrun --nproc_per_node=8 \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
     --save-interval 100 \
-    --mock-data
+    --mock-data \
+    --vocab-size 32000 \
+    --tokenizer-type NullTokenizer
  
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
