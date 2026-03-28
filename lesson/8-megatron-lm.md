@@ -91,7 +91,8 @@ srun torchrun --nproc_per_node=8 \
 * global-batch-size = 512
   * → gradient accumulation = 512 / 2 = 256번
   * → 256번 forward/backward 후 1번 파라미터 업데이트
-* global-batch-size가 큰 이유:
+* global-batch-size 설정:
+  - 512는 예시 값이고, 실제로는 모델 크기와 GPU 메모리에 맞춰 조정
   - LLM 학습은 큰 배치가 안정적 (loss 수렴이 부드러움)
   - GPT-3: 3.2M tokens per batch
   - LLaMA: 4M tokens per batch
