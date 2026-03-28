@@ -138,9 +138,15 @@ PyTorch, CUDA가 시스템 레벨에 설치되어 있는데, --system-site-packa
 > 가상환경(.venv) 삭제 방법:
 > 
 > deactivate && rm -rf ~/.venv
+
                                                                                                     
+### 3. pcluster ###
+vscode 콘솔에서 pcluster 의 노드를 update 한다.
+```
+pcluster update-compute-fleet -n ${CLUSTER_NAME} --status START_REQUESTED
+```
                                                                                                     
-### 3. 훈련 작업 실행 ### 
+### 4. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 ```
 cat <<'EOF' > gpt-70b.sh
