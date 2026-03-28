@@ -155,13 +155,6 @@ srun torchrun --nproc_per_node=8 \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
     --save-interval 100 \
-    --mock-data \
-    --vocab-size 32000 \
-    --tokenizer-type NullTokenizer \
-    --no-gradient-accumulation-fusion \
-    --use-mcore-models \
-    --transformer-impl local \
-    --no-persist-layer-norm \
     --lr 1e-4 \
     --min-lr 1e-5 \
     --lr-warmup-iters 500 \
@@ -171,8 +164,15 @@ srun torchrun --nproc_per_node=8 \
     --eval-iters 10 \
     --recompute-granularity full \
     --recompute-method uniform \
-    --recompute-num-layers 1
-
+    --recompute-num-layers 1 \
+    --mock-data \
+    --vocab-size 32000 \
+    --tokenizer-type NullTokenizer \
+    --no-gradient-accumulation-fusion \
+    --use-mcore-models \
+    --transformer-impl local \
+    --no-persist-layer-norm
+  
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
