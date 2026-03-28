@@ -46,9 +46,8 @@ curl -o gpu-ami.pkr.hcl https://raw.githubusercontent.com/gnosia93/slurm-on-aws/
 
 packer init gpu-ami.pkr.hcl
 packer build \
-  -var 'nccl_version=v2.30.0-1' \
-  -var 'enroot_version=3.6.0' \
-  gpu-ami.pkr.hcl
+  -var 'region=ap-northeast-2' \
+gpu-ami.pkr.hcl
 ```
 
 #### 참고 - 소프트웨어 레이아웃 ###
