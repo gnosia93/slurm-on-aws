@@ -99,6 +99,8 @@ uv venv .venv --system-site-packages
 source .venv/bin/activate
 
 uv pip install megatron-core
+uv pip install pybind11
+
 git clone https://github.com/NVIDIA/Megatron-LM.git
 ```
 * --system-site-packages 옵션을 사용하면 시스템에 설치된 PyTorch를 venv 안에서도 사용할 수 있다.
