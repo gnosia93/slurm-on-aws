@@ -134,6 +134,7 @@ uv pip install megatron-core
 > 가상환경(.venv) 삭제 방법:
 > 
 > deactivate
+> 
 > rm -rf ~/.venv
                                                                                                     
 학습 스크립트 다운로드 한다.
