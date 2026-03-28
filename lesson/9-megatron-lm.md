@@ -33,7 +33,7 @@ python pretrain_gpt.py \
 ### 1. GPU 파티션 추가 ###
 기존 슬럼 클러스터에 g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 gpu-large 파티션을 생성한다.
 ```
-export CLUSTER_NAME=slurm-on-aws
+export CLUSTER_NAME=mega-lm-cluster
 export AZ="2"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
@@ -65,20 +65,11 @@ echo "KEY_NAME: ${KEY_NAME}"
 curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster-large.yaml
 envsubst < cluster-large.yaml > cluster-large-resolved.yaml
 cat cluster-large-resolved.yaml
+
+pcluster create-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved --rollback-on-failure false
 ```
 
-기존 gpu 파티션을 삭제하고 gpu-large 파티션을 추가한다. 이를 위해서는 기존 컴퓨트 플릿 중지가 필요하다 
-```
-pcluster update-compute-fleet -n ${CLUSTER_NAME} --status STOP_REQUESTED
-pcluster describe-compute-fleet -n ${CLUSTER_NAME}
-```
-
-"status" 값이 "STOPPED" 된것을 확인한 후 클러스터를 업데이트 한다. 
-```
-pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved.yaml
-watch -n 3 pcluster describe-cluster -n ${CLUSTER_NAME} --query "clusterStatus"
-```
-UPDATE_COMPLTE 이 될때 까지 대기 후 완료되면, 헤드 노드로 로인하여 파티션 정보를 조회한다. 
+헤드 노드로 로그인하여 파티션 정보를 조회한다. 
 ```
 pcluster ssh -n ${CLUSTER_NAME} -i ~/${KEY_NAME}.pem
 
@@ -86,18 +77,10 @@ sinfo -N
 ```
 [결과]
 ```
-NODELIST                 NODES  PARTITION STATE 
-gpu-large-dy-ml-large-1      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-2      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-3      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-4      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-5      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-6      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-7      1 gpu-large* idle~ 
-gpu-large-dy-ml-large-8      1 gpu-large* idle~ 
+
 ```
 
-### 2. Megatron 설치 ###
+### 2. Megatron-LM 설치 ###
 헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리 및 학습 스크립트를 설치한다. 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -110,14 +93,13 @@ source .venv/bin/activate
 uv pip install megatron-core
 git clone https://github.com/NVIDIA/Megatron-LM.git
 ```
-PyTorch, CUDA가 시스템 레벨에 설치되어 있는데, --system-site-packages 옵션을 이용하면 시스템에 설치된 PyTorch를 venv 안에서도 사용할 수 있다.
+* --system-site-packages 옵션을 사용하면 시스템에 설치된 PyTorch를 venv 안에서도 사용할 수 있다.
 
 > [!TIP]
 > 가상환경(.venv) 삭제 방법:
 > 
 > deactivate && rm -rf ~/.venv
-
-                                                                                                                                                                                                        
+                                                                                                                                                                     
 ### 3. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 ```
