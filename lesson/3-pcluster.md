@@ -83,11 +83,12 @@ aws ec2 describe-instance-types \
 
 ### 키페어 생성 ###
 ```
-KEY_NAME="slurm-key-$(date +%Y%m%d%H%M)"
+export KEY_NAME="slurm-key-$(date +%Y%m%d%H%M)"
 aws ec2 create-key-pair --key-name ${KEY_NAME} --region ${AWS_DEFAULT_REGION} --key-type ed25519 \
   --query 'KeyMaterial' --output text > ${KEY_NAME}.pem
+
 chmod 400 ${KEY_NAME}.pem
-echo "Key: ${KEY_NAME}"
+echo "KEY_NAME: ${KEY_NAME}"
 ```
 
 
