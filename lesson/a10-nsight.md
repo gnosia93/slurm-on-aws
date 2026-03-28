@@ -40,7 +40,7 @@ nsys profile \
   cublas → 행렬 연산 (GEMM)
 ```
 
-### 결과 분석: CLI ###
+### 결과 분석 ###
 ```
 # 통계 요약
 nsys stats my_profile.nsys-rep
@@ -53,30 +53,9 @@ nsys stats --report nccl my_profile.nsys-rep
 
 # 전체 리포트 CSV로 추출
 nsys stats --report cuda_gpu_kern_sum --format csv my_profile.nsys-rep > kernels.csv
-```
 
-### 결과 분석: GUI ###
-```
-# 로컬에서 GUI로 열기 (파일을 다운로드 후)
+# 결과 분석: GUI #
 nsys-ui my_profile.nsys-rep
-GUI 타임라인에서 보이는 것:
-
-┌─────────────────────────────────────────────────────────┐
-│ Row 1: CPU Thread                                       │
-│ [DataLoader][  idle  ][DataLoader][  idle  ]             │
-│                                                         │
-│ Row 2: CUDA API                                         │
-│ [cudaLaunch][cudaMemcpy][cudaLaunch][cudaSync]          │
-│                                                         │
-│ Row 3: GPU Kernels                                      │
-│ [GEMM][GEMM][softmax][GEMM][LayerNorm]                  │
-│                                                         │
-│ Row 4: NCCL                                             │
-│ [      ][AllReduce][      ][AllReduce]                   │
-│                                                         │
-│ Row 5: NVTX Markers                                     │
-│ [  Forward  ][  Backward  ][  Optimizer  ]              │
-└─────────────────────────────────────────────────────────┘
 ```
 
 ### 병목 진단 패턴 ###
