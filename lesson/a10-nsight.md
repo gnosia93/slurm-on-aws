@@ -76,6 +76,8 @@ torch.cuda.nvtx.range_pop()
 Megatron-LM은 이미 NVTX 마커가 내장되어 있어서 별도 삽입 없이 Forward/Backward/Optimizer 구간이 보인다.
 
 ### 핵심 메트릭 ###
+* 각 수치는 "절대 기준"이 아니라 "참고 가이드라인" 이다.
+
 ```
 GPU Utilization:     GPU 커널이 실행 중인 시간 비율
                      70% 이하면 병목 있음
