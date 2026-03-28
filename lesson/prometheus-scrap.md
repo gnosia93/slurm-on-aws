@@ -1,6 +1,30 @@
 ## 프로메테우스 ##
 
-### 1. 모니터링 Target 등록 ### 
+### 1. 스크랩 설정 ### 
+```
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node-exporter'
+    ec2_sd_configs:
+      - region: ${AWS_REGION}
+        port: 9100
+        filters:
+          - name: vpc-id
+            values: ["${VPC_ID}"]
+          - name: instance-state-name
+            values: ["running"]
+          - name: tag:Name
+            values: ["Compute", "HeadNode"]          # GPU 노드, 헤드노드 필터링
+    relabel_configs:
+      - source_labels: [__meta_ec2_private_ip]
+        target_label: __address__
+        replacement: "\$1:9100"
+      - source_labels: [__meta_ec2_tag_Name]
+        target_label: node
+```
+
 #### 규칙 1: 스크래핑 주소 설정 ####
 ```
 - source_labels: [__meta_ec2_private_ip]    # EC2 private IP 가져와서
