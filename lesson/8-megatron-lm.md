@@ -31,23 +31,9 @@ python pretrain_gpt.py \
 
 ## 테스트 ##
 
-### 데이터 전처리 ###
 ```
-# Megatron-LM 클론
-git clone https://github.com/NVIDIA/Megatron-LM.git
-cd Megatron-LM
+uv pip install megatron-core
 
-# 학습 데이터를 Megatron 포맷으로 변환 (jsonl → .bin + .idx)
-python tools/preprocess_data.py \
-  --input training_data.jsonl \
-  --output-prefix my-gpt \
-  --tokenizer-type GPT2BPETokenizer \
-  --vocab-file gpt2-vocab.json \
-  --merge-file gpt2-merges.txt \
-  --workers 32 \
-  --append-eod
-
-# 결과: my-gpt_text_document.bin, my-gpt_text_document.idx
 ```
 
 ### train command 쉘 ###
