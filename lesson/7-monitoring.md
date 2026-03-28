@@ -259,12 +259,12 @@ docker compose up -d
 ```
 
 > [!TIP]
-> 프로메테우스 재시작: docker compose restart prometheus
-> 설정 파일이 볼륨 마운트되어 있으면 리로드만: docker compose kill -s HUP prometheus
+> 프로메테우스 재시작: docker compose restart prometheus 
+> 설정 파일이 볼륨 마운트되어 있으면 리로드만: docker compose kill -s HUP prometheus 
 >
 > 완전히 새로 올리려면: 
-> docker compose down
-> docker compose up -d
+> docker compose down 
+> docker compose up -d 
 
 
 ## 그라파나 접속 ##
