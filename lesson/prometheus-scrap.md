@@ -19,3 +19,5 @@
 # → node = "Compute"
 # → PromQL에서 {node="Compute"} 로 필터 가능
 ```
+
+### 등록된 Target 확인 ###
