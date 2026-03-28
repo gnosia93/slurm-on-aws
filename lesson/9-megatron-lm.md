@@ -130,6 +130,8 @@ uv venv .venv --system-site-packages
 source .venv/bin/activate
 uv pip install megatron-core
 ```
+PyTorch, CUDA가 시스템 레벨에 설치되어 있는데, --system-site-packages 옵션을 이용하면 시스템에 설치된 PyTorch를 venv 안에서도 사용할 수 있다.
+
 > [!TIP]
 > 가상환경(.venv) 삭제 방법:
 > 
