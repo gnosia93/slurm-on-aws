@@ -57,7 +57,7 @@ aws ec2 authorize-security-group-ingress \
 
 Lustre 파일 시스템을 생성한다.
 ```
-LUSTRE_ID=$(aws fsx create-file-system --file-system-type LUSTRE \
+export LUSTRE_ID=$(aws fsx create-file-system --file-system-type LUSTRE \
   --storage-capacity 1200 \
   --subnet-ids ${SUBNET_ID} \
   --security-group-ids ${LUSTRE_SG_ID} \
@@ -105,7 +105,7 @@ aws ec2 authorize-security-group-ingress \
 ```
 OpenZFS 파일 시스템을 생성한다. 
 ```
-ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
+export ZFS_ID=$(aws fsx create-file-system --file-system-type OPENZFS \
   --storage-capacity 64 --storage-type SSD \
   --subnet-ids ${SUBNET_ID} \
   --security-group-ids ${SG_ID} \
