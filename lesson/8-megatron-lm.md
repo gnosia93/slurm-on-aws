@@ -45,9 +45,12 @@ cd Megatron-LM
 ```
 
 ### 2. GPU 파티션 추가 ###
-g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 슬럼 파티션을 생성한다.
+기존 슬럼 클러스터에 g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 gpu-large 파티션을 생성한다.
 ```
+export CLUSTER_NAME=slurm-on-aws
 
+curl -o cluster.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster.yaml
+pcluster update-cluster -n ${CLUSTER_NAME} -c cluster.yaml
 ```
 
 ### 3. 훈련 작업 실행 ### 
