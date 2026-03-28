@@ -21,3 +21,4 @@
 ```
 
 ### 등록된 Target 확인 ###
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-target.png)
