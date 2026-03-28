@@ -128,6 +128,10 @@ cat <<'EOF' > gpt-70b.sh
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_NODELIST | head -n1)
 export MASTER_PORT=29500
 
+# Triton 캐시를 로컬 디스크로 (NFS 충돌 방지)
+export TRITON_CACHE_DIR=/tmp/.triton
+export TORCHINDUCTOR_CACHE_DIR=/tmp/.inductor
+
 source /home/ubuntu/.venv/bin/activate
 cd /home/ubuntu/Megatron-LM
 srun torchrun --nproc_per_node=8 \
