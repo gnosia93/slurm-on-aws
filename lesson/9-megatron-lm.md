@@ -78,7 +78,11 @@ pcluster describe-compute-fleet -n ${CLUSTER_NAME}
 pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved.yaml
 watch -n 3 pcluster describe-cluster -n ${CLUSTER_NAME} --query "clusterStatus"
 ```
+UPDATE_COMPLTE 이 될때 까지 대기한다.
 
+```
+
+```
 
 ### 2. Megatron 설치 ###
 헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리를 설치한다. 
