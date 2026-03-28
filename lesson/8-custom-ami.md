@@ -36,9 +36,8 @@ sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo dnf install -y packer
 ```
-vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 
-### 2. AMI 빌드 ###
+### 2. 커스텀 AMI 빌드 ###
 ```
 curl -o gpu-ami.pkr.hcl https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/gpu-ami.pkr.hcl
 
