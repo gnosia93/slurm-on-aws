@@ -116,13 +116,13 @@ srun torchrun --nproc_per_node=8 \
   '
 ```
 
+[결과]
 ```
 /fsx/nsys/rank_0.nsys-rep   ← GPU 0 (PP Stage 0)
 /fsx/nsys/rank_1.nsys-rep   ← GPU 1
 ...
 /fsx/nsys/rank_31.nsys-rep  ← GPU 31 (PP Stage 3)
 32개 파일 다 볼 필요는 없고, 보통 이렇게 골라서 봅니다:
-
 
 rank_0:  PP 첫 스테이지 (Forward 시작점)
 rank_7:  같은 노드 마지막 GPU (TP 통신 패턴)
