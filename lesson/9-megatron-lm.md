@@ -149,11 +149,7 @@ EOF
 ```
 * mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
 * SP는 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
-```
-sudo /opt/slurm/bin/scontrol update partition=gpu-large State=UP
-watch -n 10 sinfo -N
-```
-노드가 idle 상태로 변경될때 까지 대기후, sbatch 를 실행한다. 
+
 ```
 sbatch gpt-70b.sh
 ```
