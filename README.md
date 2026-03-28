@@ -17,7 +17,7 @@
 
 * > [C8. Custom AMI 만들기 (packer)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/6-custom-ami.md)
   
-* [C9. Megatron-LM: 70B GPT 모델 훈련](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-megatron-lm.md)
+* [C9. Megatron-LM: 70B GPT 모델 훈련](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-megatron-lm.md)
 
 * [C10. GPU 학습 및 클러스터 최적화](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/10-cluster-optimization.md)
     
