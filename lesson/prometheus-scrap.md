@@ -20,5 +20,5 @@
 # → PromQL에서 {node="Compute"} 로 필터 가능
 ```
 
-### 등록된 Target 확인 ###
+### 스크래핑 Target 확인 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-target.png)
