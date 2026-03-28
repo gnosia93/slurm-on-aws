@@ -163,7 +163,8 @@ srun torchrun --nproc_per_node=8 \
     --lr 1e-4 \
     --min-lr 1e-5 \
     --lr-warmup-iters 500 \
-    --lr-decay-iters 100000
+    --lr-decay-iters 100000 \
+    --train-iters 1000
 
 
 #    --data-path /fsx/data/my-dataset_text_document \
