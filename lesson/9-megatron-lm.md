@@ -180,11 +180,12 @@ srun torchrun --nproc_per_node=8 \
 #   --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
-* --mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
-* --sequence-parallel 은 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
-* --sequence-parallel이 torch LayerNorm에서 지원 안됨. Apex/TE 설치 필요.
-* --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
-* --train-iters 1000 step 학습
+* pretrain_gpt.py 옵션: 
+  * --mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
+  * --sequence-parallel 은 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
+  * --sequence-parallel이 torch LayerNorm에서 지원 안됨. Apex/TE 설치 필요.
+  * --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
+  * --train-iters 1000 step 학습
 * torchrun 옵션: 
   * --log-dir: 랭크별 로그 저장 디렉토리
   * --tee 3: stdout+stderr를 콘솔과 파일 둘 다 출력
