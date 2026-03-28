@@ -125,12 +125,14 @@ NodeName=gpu-large-dy-ml-large-1 CoresPerSocket=1
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
 
-uv pip install --system megatron-core
+cd ~
+uv venv .venv
+source .venv/bin/activate
+uv pip install megatron-core
 ```
 학습 스크립트 다운로드 한다.
 ```
 git clone https://github.com/NVIDIA/Megatron-LM.git
-cd Megatron-LM
 ```
 
 ### 3. 훈련 작업 실행 ### 
@@ -150,6 +152,7 @@ cat <<'EOF' > gpt-70b.sh
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_NODELIST | head -n1)
 export MASTER_PORT=29500
 
+source /home/ubuntu/.venv/bin/activate
 cd /home/ubuntu/Megatron-LM
 srun torchrun --nproc_per_node=8 \
   --nnodes=$SLURM_NNODES \
