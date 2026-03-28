@@ -51,9 +51,26 @@ g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 슬럼 파티션을 생성한다.
 ```
 
 ### 3. 훈련 작업 실행 ### 
+* TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 ```
-# TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
-torchrun --nproc_per_node=8 pretrain_gpt.py \
+#!/bin/bash
+#SBATCH --job-name=gpt-70b
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=1
+#SBATCH --gpus-per-node=8
+#SBATCH --partition=gpu-large
+#SBATCH --exclusive
+#SBATCH --time=72:00:00
+#SBATCH --output=%x_%j.log
+
+export MASTER_ADDR=$(scontrol show hostnames $SLURM_NODELIST | head -n1)
+export MASTER_PORT=29500
+
+srun torchrun --nproc_per_node=8 \
+  --nnodes=$SLURM_NNODES \
+  --rdzv_backend=c10d \
+  --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
+  pretrain_gpt.py \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 4 \
     --context-parallel-size 2 \
@@ -64,8 +81,25 @@ torchrun --nproc_per_node=8 pretrain_gpt.py \
     --micro-batch-size 1 \
     --global-batch-size 512 \
     --bf16
+    --data-path /fsx/data/my-dataset_text_document \
+    --save /fsx/checkpoints/gpt-70b \
+    --load /fsx/checkpoints/gpt-70b \
+    --save-interval 1000
 ```
+* micro-batch-size = 1 (GPU당 배치)
+* DP = 2 (데이터 병렬 수)
+* → 1 step에 실제 처리: 1 × 2 = 2
 
+* global-batch-size = 512
+  * → gradient accumulation = 512 / 2 = 256번
+  * → 256번 forward/backward 후 1번 파라미터 업데이트
+
+* global-batch-size가 큰 이유:
+  - LLM 학습은 큰 배치가 안정적 (loss 수렴이 부드러움)
+  - GPT-3: 3.2M tokens per batch
+  - LLaMA: 4M tokens per batch
+  - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
+    
 ## 레퍼런스 ##
 * https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/index.html#quick-start
 
