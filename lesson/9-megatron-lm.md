@@ -138,6 +138,7 @@ srun torchrun --nproc_per_node=8 \
   --nnodes=$SLURM_NNODES \
   --rdzv_backend=c10d \
   --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
+  --tee 0 \
   pretrain_gpt.py \
     --tensor-model-parallel-size 4 \
     --sequence-parallel \
