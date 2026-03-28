@@ -35,7 +35,7 @@ python pretrain_gpt.py \
 ```
 pcluster delete-cluster -n ${CLUSTER_NAME}
 
-export PREV_CLUSTER_NAME=${CLUSTER_NAME}
+export PREV_CLUSTER_NAME=slurm-on-aws
 export CLUSTER_NAME=megatron-cluster
 export AZ="2"
 export GPU_NODE_COUNT=4
