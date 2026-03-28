@@ -1,6 +1,6 @@
 ## 프로메테우스 ##
 
-### 1. 모니터링 타겟 등록 ### 
+### 1. 모니터링 Target 등록 ### 
 #### 규칙 1: 스크래핑 주소 설정 ####
 ```
 - source_labels: [__meta_ec2_private_ip]    # EC2 private IP 가져와서
@@ -22,7 +22,7 @@
 # → PromQL에서 {node="Compute"} 로 필터 가능
 ```
 
-### 2. 스크래핑 Target 확인 ###
+### 2. 등록 Target 확인 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-target.png)
 
 ### 3. 메트릭 조회 ###
