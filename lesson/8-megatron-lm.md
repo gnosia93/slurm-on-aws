@@ -29,7 +29,8 @@ python pretrain_gpt.py \
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/framework-compare.png)
 
 ## LLaMA-3 70B on 64 GPUs ##
-* 헤드 노드에 uv 를 설치한 후 
+
+헤드 노드에 파이썬 패키지 매니저인 uv 와 meagron-core 를 설치한다. 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
@@ -47,7 +48,7 @@ pip install -U "setuptools<80.0.0,>=77.0.0" packaging
 pip install --no-build-isolation .[dev]
 ```
 
-
+* 훈련 작업 실행 
 ```
 # TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 torchrun --nproc_per_node=8 pretrain_gpt.py \
