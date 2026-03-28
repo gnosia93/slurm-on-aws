@@ -68,3 +68,7 @@ Grafana Explore
    → Data source: Prometheus 선택
    → 쿼리 입력
 ```
+
+```
+DCGM_FI_DEV_GPU_TEMP{instance="10.0.11.206:9400", gpu="0"}
+```
