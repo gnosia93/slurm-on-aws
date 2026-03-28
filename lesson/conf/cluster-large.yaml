@@ -61,8 +61,8 @@ Scheduling:
       ComputeResources:
         - Name: ml-large
           InstanceType: g7e.48xlarge
-          MinCount: 8
-          MaxCount: 8
+          MinCount: ${GPU_COUNT}
+          MaxCount: ${GPU_COUNT}
           Efa:
             Enabled: true
       CustomActions:
