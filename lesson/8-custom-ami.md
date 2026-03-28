@@ -48,6 +48,7 @@ packer build \
 gpu-ami.pkr.hcl
 ```
 
+### 3. parallel cluster yaml 변경 ###
 
 
 
