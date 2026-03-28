@@ -149,7 +149,9 @@ srun torchrun --nproc_per_node=8 \
     --save-interval 100 \
     --mock-data \
     --vocab-size 32000 \
-    --tokenizer-type NullTokenizer
+    --tokenizer-type NullTokenizer \
+    --no-gradient-accumulation-fusion
+
  
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
