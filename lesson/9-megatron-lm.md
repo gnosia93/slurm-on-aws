@@ -164,6 +164,26 @@ squeue
 JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
    1 gpu-large  gpt-70b   ubuntu  R       0:07      4 gpu-large-st-ml-large-[1-4]
 ```
+훈련 작업 로그를 조회한다.
+```
+tail -f gpt-70b_1.log
+```
+[결과]
+```
+W0328 12:22:55.173000 52842 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0328 12:22:55.173000 52842 torch/distributed/run.py:851] *****************************************
+W0328 12:22:55.176000 52641 torch/distributed/run.py:851] 
+W0328 12:22:55.176000 52641 torch/distributed/run.py:851] *****************************************
+W0328 12:22:55.176000 52641 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0328 12:22:55.176000 52641 torch/distributed/run.py:851] *****************************************
+W0328 12:22:55.177000 52968 torch/distributed/run.py:851] 
+W0328 12:22:55.177000 52968 torch/distributed/run.py:851] *****************************************
+W0328 12:22:55.177000 52968 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0328 12:22:55.177000 52968 torch/distributed/run.py:851] *****************************************
+```
+
+
+
 ```
 > [!NOTE]
 > * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
