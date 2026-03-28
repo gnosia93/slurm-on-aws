@@ -146,9 +146,9 @@ srun torchrun --nproc_per_node=8 \
     --pipeline-model-parallel-size 4 \
     --num-layers 80 \
     --hidden-size 8192 \
-    --max-position-embeddings 8192 \
+    --max-position-embeddings 4096 \
     --num-attention-heads 64 \
-    --seq-length 8192 \
+    --seq-length 4096 \
     --micro-batch-size 1 \
     --global-batch-size 512 \
     --bf16 \
