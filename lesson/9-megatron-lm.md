@@ -270,7 +270,7 @@ sh gpu-large-st-ml-large-1 "nvidia-smi dmon -s pcut -d 10"
 * TP=4, PP=4 로 분할하면: 1260GB / (4×4) = 78.75GB~
 
 
-## 참고 - Megatron-LM 훈련 데이터셋 ##
+## 참고 - Megatron-LM 훈련 데이터셋 만들기 ##
 
 Megatron-LM은 자체 데이터 포맷을 쓰기 때문에 전처리가 필요하다.
 
