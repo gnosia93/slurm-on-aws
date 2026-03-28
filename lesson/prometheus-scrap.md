@@ -60,4 +60,11 @@ Graph 메뉴 선택후 -> 메트릭 입력 -> Execute
 
 ## 그라파나 ##
 
-
+### 쿼리 테스트 ###
+```
+Grafana Explore
+   http://<slurm-monitor-ip>:3000
+   → 왼쪽 메뉴 → Explore (나침반 아이콘)
+   → Data source: Prometheus 선택
+   → 쿼리 입력
+```
