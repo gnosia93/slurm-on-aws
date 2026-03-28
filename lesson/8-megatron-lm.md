@@ -84,6 +84,7 @@ pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-resolved.yaml
 ### 3. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 ```
+cat <<EOF > gpt-70b.sh
 #!/bin/bash
 #SBATCH --job-name=gpt-70b
 #SBATCH --nodes=8
@@ -111,23 +112,28 @@ srun torchrun --nproc_per_node=8 \
     --seq-length 8192 \
     --micro-batch-size 1 \
     --global-batch-size 512 \
-    --bf16
+    --bf16 \
     --data-path /fsx/data/my-dataset_text_document \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
     --save-interval 1000
+EOF
 ```
-* micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
-  * → 1 step에 실제 처리: 1 × 2 = 2
-* global-batch-size = 512
-  * → gradient accumulation = 512 / 2 = 256번
-  * → 256번 forward/backward 후 1번 파라미터 업데이트
-* global-batch-size 설정:
-  - 512는 예시 값이고, 실제로는 모델 크기와 GPU 메모리에 맞춰 조정
-  - LLM 학습은 큰 배치가 안정적 (loss 수렴이 부드러움)
-  - GPT-3: 3.2M tokens per batch
-  - LLaMA: 4M tokens per batch
-  - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
+```
+sbatch gpt-70b.sh
+```
+> [!INFO]
+> * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
+>   * → 1 step에 실제 처리: 1 × 2 = 2
+> * global-batch-size = 512
+>   * → gradient accumulation = 512 / 2 = 256번
+>   * → 256번 forward/backward 후 1번 파라미터 업데이트
+> * global-batch-size 설정:
+>   - 512는 예시 값이고, 실제로는 모델 크기와 GPU 메모리에 맞춰 조정
+>   - LLM 학습은 큰 배치가 안정적 (loss 수렴이 부드러움)
+>   - GPT-3: 3.2M tokens per batch
+>   - LLaMA: 4M tokens per batch
+>   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
     
 ## 레퍼런스 ##
 * https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/index.html#quick-start
