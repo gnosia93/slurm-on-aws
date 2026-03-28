@@ -150,9 +150,9 @@ srun torchrun --nproc_per_node=8 \
     --mock-data \
     --vocab-size 32000 \
     --tokenizer-type NullTokenizer \
-    --no-gradient-accumulation-fusion
+    --no-gradient-accumulation-fusion \
+    --use-mcore-models
 
- 
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
