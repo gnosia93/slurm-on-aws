@@ -78,8 +78,7 @@ pcluster describe-compute-fleet -n ${CLUSTER_NAME}
 pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved.yaml
 watch -n 3 pcluster describe-cluster -n ${CLUSTER_NAME} --query "clusterStatus"
 ```
-UPDATE_COMPLTE 이 될때 까지 대기한다.
-
+UPDATE_COMPLTE 이 될때 까지 대기 후 완료되면, 헤드 노드로 로인하여 파티션 정보를 조회한다. 
 ```
 pcluster ssh -n ${CLUSTER_NAME} -i ~/${KEY_NAME}.pem
 
@@ -97,7 +96,7 @@ gpu-large-dy-ml-large-6      1 gpu-large* idle~
 gpu-large-dy-ml-large-7      1 gpu-large* idle~ 
 gpu-large-dy-ml-large-8      1 gpu-large* idle~ 
 ```
-gpu-large-dy-ml-large-1 의 상세 정보를 조회한다. 
+gpu-large-dy-ml-large-1 노드의 상세 정보를 조회한다. 
 ```
 scontrol show node gpu-large-dy-ml-large-1
 ```
