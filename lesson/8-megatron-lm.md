@@ -32,9 +32,14 @@ python pretrain_gpt.py \
 ## 테스트 ##
 
 ```
-uv pip install megatron-core
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
 
+uv pip install megatron-core
 ```
+
+
+---
 
 ### train command 쉘 ###
 ```
