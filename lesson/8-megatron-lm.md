@@ -138,7 +138,7 @@ sbatch gpt-70b.sh
 >   - LLaMA: 4M tokens per batch
 >   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
 
-## 참고 - Megatron 용 훈련데이터셋 ##
+## 참고 - Megatron-LM 훈련 데이터셋 ##
 
 Megatron-LM은 자체 데이터 포맷을 쓰기 때문에 전처리가 필요하다.
 
