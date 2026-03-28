@@ -20,7 +20,10 @@ sudo dnf install -y packer
 curl -o gpu-ami.pkr.hcl https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/gpu-ami.pkr.hcl
 
 packer init gpu-ami.pkr.hcl
-packer build gpu-ami.pkr.hcl
+packer build \
+  -var 'nccl_version=v2.30.0-1' \
+  -var 'enroot_version=3.6.0' \
+  gpu-ami.pkr.hcl
 ```
 
 
