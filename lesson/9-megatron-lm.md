@@ -72,6 +72,8 @@ echo "PUBLIC_SUBNET_ID: ${PUBLIC_SUBNET_ID}"
 echo "PRIVATE_SUBNET_ID: ${PRIVATE_SUBNET_ID}"
 echo "SECURITY_GROUP: ${SECURITY_GROUP}"
 echo "LOKI_URL: ${LOKI_URL}"
+echo "KEY_NAME: ${KEY_NAME}"
+
 
 curl -o cluster.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster.yaml
 envsubst < cluster.yaml > cluster-resolved.yaml
