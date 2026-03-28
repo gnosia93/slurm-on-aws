@@ -137,6 +137,41 @@ sbatch gpt-70b.sh
 >   - GPT-3: 3.2M tokens per batch
 >   - LLaMA: 4M tokens per batch
 >   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
+
+## 참고 - Megatron 용 훈련데이터셋 ##
+
+Megatron-LM은 자체 데이터 포맷을 쓰기 때문에 전처리가 필요하다.
+
+### 1. 데이터셋 다운로드 ###
+```
+# Wikipedia (가장 흔한 사전학습 데이터)
+pip install datasets
+python -c "
+from datasets import load_dataset
+ds = load_dataset('wikipedia', '20220301.en', split='train')
+ds.to_json('/fsx/data/wiki.json', lines=True)
+"
+
+# 또는 The Pile (대규모 사전학습 데이터셋)
+# https://huggingface.co/datasets/EleutherAI/pile
+```
+
+### 2. Megatron 포맷으로 변환 ###
+Megatron-LM은 .bin + .idx 포맷을 사용하므로, 변환이 필요하다 
+```
+cd Megatron-LM
+
+python tools/preprocess_data.py \
+  --input /fsx/data/wiki.json \
+  --output-prefix /fsx/data/my-dataset \
+  --tokenizer-type GPTSentencePieceTokenizer \
+  --tokenizer-model /path/to/tokenizer.model \
+  --workers 32 \
+  --append-eod
+```
+* 결과:
+  * /fsx/data/my-dataset_text_document.bin  (토큰 데이터)
+  * /fsx/data/my-dataset_text_document.idx  (인덱스)
     
 ## 레퍼런스 ##
 * https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/index.html#quick-start
