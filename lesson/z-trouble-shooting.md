@@ -56,3 +56,20 @@ slurm Job 로그
 ```
 [rank6]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.00 GiB. GPU 6 has a total capacity of 94.97 GiB of which 1.21 GiB is free. Including non-PyTorch memory, this process has 93.75 GiB memory in use. Of the allocated memory 91.23 GiB is allocated by PyTorch, and 1.40 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
 ```
+### 해결 방법 ###
+* 모델 파라미터 + 옵티마이저 + 그래디언트: ~79GB/GPU
+* + Activation 메모리 (forward 중간 결과): ~15~20GB
+* = 총 ~95GB → 96GB 초과
+* SP(Sequence Parallel)가 있으면 activation 메모리를 줄여주는데, SP를 빼서 activation이 커짐.
+* 그래서 Gradient Checkpointing으로 activation 메모리를 줄인다.
+```
+Gradient Checkpointing:
+  forward 중간 결과를 저장하지 않고 backward 시 재계산
+  → activation 메모리 대폭 감소
+  → 속도 약 20~30% 느려짐
+
+스크립트에 추가:
+  --recompute-granularity full \
+  --recompute-method uniform \
+  --recompute-num-layers 1 \
+```
