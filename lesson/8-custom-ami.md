@@ -29,16 +29,14 @@ GPU Persistence Mode:
   잡이 끝나고 다음 잡 시작할 때 드라이버 로드 지연이 없어야 하니까 GPU 클러스터에서는 무조건 켜놓음
 ```
 
-
-
-vscode 웹 콘솔에서 아래 명령어를 실행한다. 
-
 ### 1. packer 설치 ###
+vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 ```
 sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo dnf install -y packer
 ```
+vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 
 ### 2. AMI 빌드 ###
 ```
@@ -50,7 +48,10 @@ packer build \
 gpu-ami.pkr.hcl
 ```
 
-#### 참고 - 설치 정보 ###
+
+
+
+#### 참고 - packer 소프트웨어 스택 ###
 ```
 ParallelCluster AMI에 이미 포함된 것:
   - NVIDIA Driver ✓
