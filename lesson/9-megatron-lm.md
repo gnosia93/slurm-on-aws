@@ -197,7 +197,7 @@ W0328 12:22:55.177000 52968 torch/distributed/run.py:851] **********************
 >   - GPT-3: 3.2M tokens per batch
 >   - LLaMA: 4M tokens per batch
 >   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
-
+```
 
 ## 4. 메모리 계산 ##
 * 70B 모델 메모리 요구량 (BF16):
