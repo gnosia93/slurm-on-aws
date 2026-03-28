@@ -64,6 +64,11 @@ echo "KEY_NAME: ${KEY_NAME}"
 curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster-large.yaml
 envsubst < cluster-large.yaml > cluster-large-resolved.yaml
 cat cluster-large-resolved.yaml
+```
+
+기존 gpu 파티션을 삭제하고 gpu-large 파티션을 추가한다. 이를 위해서는 기존 컴퓨트 플릿 중지가 필요하다 
+```
+pcluster update-compute-fleet -n ${CLUSTER_NAME} --status STOP_REQUESTED
 
 pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved.yaml
 ```
