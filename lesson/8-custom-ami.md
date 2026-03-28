@@ -29,6 +29,8 @@ GPU Persistence Mode:
   잡이 끝나고 다음 잡 시작할 때 드라이버 로드 지연이 없어야 하니까 GPU 클러스터에서는 무조건 켜놓음
 ```
 
+
+
 vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 
 ### 1. packer 설치 ###
@@ -47,6 +49,23 @@ packer build \
   -var 'nccl_version=v2.30.0-1' \
   -var 'enroot_version=3.6.0' \
   gpu-ami.pkr.hcl
+```
+
+#### 참고 - 소프트웨어 레이아웃 ###
+```
+ParallelCluster AMI에 이미 포함된 것:
+  - NVIDIA Driver ✓
+  - CUDA Toolkit ✓
+  - EFA Driver ✓
+  - NCCL (시스템 패키지 버전)
+
+커스텀으로 설치하는 것:
+  - NCCL (소스 빌드 → /opt/nccl) → 시스템 NCCL과 경로가 다름
+  - Docker + NVIDIA Container Toolkit
+  - Enroot + Pyxis
+  - DCGM
+  - Node Exporter
+  - Alloy
 ```
 
 
