@@ -171,9 +171,12 @@ srun torchrun --nproc_per_node=8 \
     --no-gradient-accumulation-fusion \
     --use-mcore-models \
     --transformer-impl local \
-    --no-persist-layer-norm
-  
-#    --data-path /fsx/data/my-dataset_text_document \
+    --no-persist-layer-norm \
+    --log-interval 1
+
+
+#   --log-interval 1     매 step마다 출력 (기본값 보통 100)  
+#   --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
 * --mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
