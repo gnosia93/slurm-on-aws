@@ -50,7 +50,7 @@ packer build \
 gpu-ami.pkr.hcl
 ```
 
-#### 참고 - 소프트웨어 레이아웃 ###
+#### 참고 - 설치 정보 ###
 ```
 ParallelCluster AMI에 이미 포함된 것:
   - NVIDIA Driver ✓
