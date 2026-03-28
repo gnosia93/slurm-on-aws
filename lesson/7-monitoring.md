@@ -273,6 +273,7 @@ docker compose up -d
 브라우저로 `http://PUBLIC HOSTNAME:3000` 에 접속하고 admin/admin 으로 로그인 한다. 대시보드 메뉴로 이동하여 아래와 같은 3가지 유형의 대시보드를 확인한다.
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-dashboard.png)
 
-## 메트릭 ##
 
+## 모니터링 설정 메뉴얼 ##
 * [DCGM 메트릭](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
+* [프로메테우스/그라파나 메뉴얼](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/prometheus-grafana.md)
