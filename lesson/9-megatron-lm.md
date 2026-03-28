@@ -105,7 +105,7 @@ git clone https://github.com/NVIDIA/Megatron-LM.git
 > deactivate && rm -rf ~/.venv
                                                                                                                                                                      
 ### 3. 훈련 작업 실행 ### 
-* TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
+* TP=4, PP=4, DP=2 => 4 × 4 × 2 = 32 GPUs
 ```
 cat <<'EOF' > gpt-70b.sh
 #!/bin/bash
@@ -130,7 +130,6 @@ srun torchrun --nproc_per_node=8 \
   pretrain_gpt.py \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 4 \
-    --context-parallel-size 2 \
     --num-layers 80 \
     --hidden-size 8192 \
     --num-attention-heads 64 \
