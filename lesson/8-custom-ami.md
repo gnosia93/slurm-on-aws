@@ -4,8 +4,7 @@ Packer는 HashiCorp에서 만든 AMI 자동 빌드 도구로 CUDA 버전, 특정
 * 인스턴스를 스냅샷 떠서 AMI로 저장
 * 임시 인스턴스 및 리소스 삭제
 
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/ami-container-layers.png)
-
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/packer-arch.png)
 vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 
 ### 1. packer 설치 ###
