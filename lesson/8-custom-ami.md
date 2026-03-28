@@ -67,10 +67,21 @@ ParallelCluster AMI에 이미 포함된 것:
 
 ### 3. Parallel Cluster Yaml 변경 ###
 cluster.yaml 설정파일에서 OnNodeConfigured 으로 정의된 각종 소프트웨어 스택을 제거한다. 
+
+[cluster.yaml 예시]
 ```
 CustomActions:
     OnNodeConfigured:
+          Sequence:
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/docker.sh'       <--- 제거
+              Args:
+                - 1.18.2-1              # NVIDIA_CONTAINER_TOOLKIT_VERSION version
+            - Script: 'https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/setup/script/nccl.sh'         <--- 제거
+              Args:
+                - v2.29.2-1             # NCCL version
+                - v1.18.0               # AWS OFI NCCL version
 ```
+
 
 ## 레퍼런스 ##
 * https://catalog.workshops.aws/ml-on-aws-parallelcluster/en-US/08-amis
