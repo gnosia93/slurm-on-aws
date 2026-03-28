@@ -31,11 +31,13 @@ python pretrain_gpt.py \
 ## 70B GPT 모델 훈련(32 GPUs) ##
 
 ### 1. 클러스터 생성 ###
-기존 클러스터를 삭제하고 g7e.48xlarge (8 GPUs) * 8 EA 노드로 구성된 megatron-cluster 클러스터를 생성한다.
+기존 클러스터를 삭제한다.
 ```
 export PREV_CLUSTER_NAME=slurm-on-aws
 pcluster delete-cluster -n ${PREV_CLUSTER_NAME}
-
+```
+g7e.48xlarge (8 GPUs) * 4 EA 노드로 구성된 megatron-cluster 클러스터를 생성한다.
+```
 export CLUSTER_NAME=megatron-cluster
 export AZ="2"
 export GPU_NODE_COUNT=4
