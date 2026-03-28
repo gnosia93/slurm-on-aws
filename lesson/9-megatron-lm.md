@@ -182,9 +182,6 @@ W0328 12:22:55.177000 52968 torch/distributed/run.py:851] Setting OMP_NUM_THREAD
 W0328 12:22:55.177000 52968 torch/distributed/run.py:851] *****************************************
 ```
 
-
-
-```
 > [!NOTE]
 > * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
 >   * → 1 step에 실제 처리: 1 × 2 = 2
@@ -197,7 +194,7 @@ W0328 12:22:55.177000 52968 torch/distributed/run.py:851] **********************
 >   - GPT-3: 3.2M tokens per batch
 >   - LLaMA: 4M tokens per batch
 >   - 512 × 8192(seq_length) = ~4M tokens → LLaMA와 비슷한 규모
-```
+
 
 ## 4. 메모리 계산 ##
 * 70B 모델 메모리 요구량 (BF16):
