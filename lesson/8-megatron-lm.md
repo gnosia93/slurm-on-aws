@@ -48,10 +48,38 @@ cd Megatron-LM
 기존 슬럼 클러스터에 g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 gpu-large 파티션을 생성한다.
 ```
 export CLUSTER_NAME=slurm-on-aws
+export AZ="2"
+
+export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
+export PUBLIC_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=SOA-pub-subnet-${AZ}" \
+  --query "Subnets[0].SubnetId" --output text)
+export PRIVATE_SUBNET_ID=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=SOA-priv-subnet-${AZ}" \
+  --query "Subnets[0].SubnetId" --output text)
+export SECURITY_GROUP=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=ec2-host-sg" \
+  --query "SecurityGroups[0].GroupId" --output text)
+export LOKI_URL="http://$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=slurm-monitor" "Name=instance-state-name,Values=running" \
+  --query "Reservations[].Instances[].PrivateIpAddress" --output text):3100"
+
+echo " "
+echo "CLUSTER_NAME: ${CLUSTER_NAME}"
+echo "AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}"
+echo "AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID}"
+echo "VPC_ID: ${VPC_ID}"
+echo "PUBLIC_SUBNET_ID: ${PUBLIC_SUBNET_ID}"
+echo "PRIVATE_SUBNET_ID: ${PRIVATE_SUBNET_ID}"
+echo "SECURITY_GROUP: ${SECURITY_GROUP}"
+echo "LOKI_URL: ${LOKI_URL}"
 
 curl -o cluster.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster.yaml
-pcluster update-cluster -n ${CLUSTER_NAME} -c cluster.yaml
+envsubst < cluster.yaml > cluster-resolved.yaml
+cat cluster-resolved.yaml
+
+pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-resolved.yaml
 ```
+클러스터 변경이 완료될때 까지 기다린다.
 
 ### 3. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
