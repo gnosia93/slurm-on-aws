@@ -30,21 +30,7 @@ python pretrain_gpt.py \
 
 ## 70B GPT 모델 훈련(64 GPUs) ##
 
-### 1. 사전준비 ###
-헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리를 설치한다. 
-```
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source ~/.bashrc
-
-uv pip install megatron-core
-```
-학습 스크립트 다운로드 한다.
-```
-git clone https://github.com/NVIDIA/Megatron-LM.git
-cd Megatron-LM
-```
-
-### 2. GPU 파티션 추가 ###
+### 1. GPU 파티션 추가 ###
 기존 슬럼 클러스터에 g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 gpu-large 파티션을 생성한다.
 ```
 export CLUSTER_NAME=slurm-on-aws
@@ -82,6 +68,21 @@ cat cluster-resolved.yaml
 pcluster update-cluster -n ${CLUSTER_NAME} -c cluster-resolved.yaml
 ```
 클러스터 변경이 완료될때 까지 기다린다.
+
+
+### 2. Megatron 설치 ###
+헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리를 설치한다. 
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
+
+uv pip install megatron-core
+```
+학습 스크립트 다운로드 한다.
+```
+git clone https://github.com/NVIDIA/Megatron-LM.git
+cd Megatron-LM
+```
 
 ### 3. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
