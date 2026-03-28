@@ -5,6 +5,25 @@ Packer는 HashiCorp에서 만든 AMI 자동 빌드 도구로 CUDA 버전, 특정
 * 임시 인스턴스 및 리소스 삭제
 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/packer-arch.png)
+
+```
+vm.max_map_count:
+  프로세스가 만들 수 있는 메모리 매핑(mmap) 최대 수
+  기본값: 65536
+  설정값: 262144
+
+  PyTorch/NCCL이 GPU 메모리, 공유 메모리 등을 mmap으로 매핑하는데
+  기본값이면 부족해서 에러 발생 가능
+
+nofile:
+  프로세스가 열 수 있는 파일 디스크립터 최대 수
+  기본값: 1024
+  설정값: 1048576
+
+  분산 학습에서 소켓 연결, 데이터 파일, 로그 파일 등
+  동시에 여는 파일이 많아서 기본값이면 "Too many open files" 에러
+
+```
 vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 
 ### 1. packer 설치 ###
