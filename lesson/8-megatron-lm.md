@@ -30,11 +30,22 @@ python pretrain_gpt.py \
 
 ## 테스트 ##
 
+헤드노드에서.. salloc 호출..
+
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
 
 uv pip install megatron-core
+```
+
+```
+docker run --ipc=host --shm-size=512m --gpus 2 -it nvcr.io/nvidia/pytorch:24.02-py3
+
+git clone https://github.com/NVIDIA/Megatron-LM.git
+cd Megatron-LM
+pip install -U "setuptools<80.0.0,>=77.0.0" packaging
+pip install --no-build-isolation .[dev]
 ```
 
 
