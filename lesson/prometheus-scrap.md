@@ -22,3 +22,7 @@
 
 ### 스크래핑 Target 확인 ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-target.png)
+
+### 메트릭 조회 ###
+Graph 메뉴 선택후 -> 메트릭 입력 -> Query 
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/prometheus-graph-query.png)
