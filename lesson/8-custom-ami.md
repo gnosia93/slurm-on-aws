@@ -66,7 +66,7 @@ ParallelCluster AMI에 이미 포함된 것:
 ```
 
 ### 3. Parallel Cluster Yaml 변경 ###
-AMI 빌드과정에서 통합된 소프트웨어 스택은 cluster.yaml 의 OnNodeConfigured 센션에서 제거한다. 
+AMI 빌드과정에서 통합된 소프트웨어 스택은 cluster.yaml 의 OnNodeConfigured 센션에서 제거한다. AMI 프리빌트 이미지를 사용하는 경우 slurm 클러스터의 프러비저닝이 좀더 빨라진다.
 
 [cluster.yaml 예시]
 ```
