@@ -197,16 +197,43 @@ tail -f gpt-70b_1.log
 ```
 [결과]
 ```
-W0328 12:22:55.173000 52842 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0328 12:22:55.173000 52842 torch/distributed/run.py:851] *****************************************
-W0328 12:22:55.176000 52641 torch/distributed/run.py:851] 
-W0328 12:22:55.176000 52641 torch/distributed/run.py:851] *****************************************
-W0328 12:22:55.176000 52641 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0328 12:22:55.176000 52641 torch/distributed/run.py:851] *****************************************
-W0328 12:22:55.177000 52968 torch/distributed/run.py:851] 
-W0328 12:22:55.177000 52968 torch/distributed/run.py:851] *****************************************
-W0328 12:22:55.177000 52968 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0328 12:22:55.177000 52968 torch/distributed/run.py:851] *****************************************
+...
+
+Number of parameters in transformer block in billions:  64.43
+Number of active parameters in transformer block in billions:  64.43
+Number of parameters in embedding layers in billions: 0.26
+Total number of parameters in billions: 64.69
+Total number of active parameters in billions: 64.69
+Number of parameters in most loaded shard in billions: 2.0794
+Number of parameters in other shards in billions: 2.0133
+compute_activation_memory_without_sp
+Activation memory footprint per transformer layer (precise, without SP): 1024.0 MB
+Number of in-flight microbatches: 8
+Theoretical memory footprints: weight and optimizer=35695.42 MB, activation=86554.12 MB, total=122249.54 MB
+
+[Rank 2] (after 1 iterations) memory (MB) | allocated: 38921.15 | max allocated: 47104.31 | reserved: 48934.00 | max reserved: 48934.00
+[Rank 5] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
+[Rank 4] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
+[Rank 10] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
+[Rank 11] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
+[Rank 12] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+[Rank 3] (after 1 iterations) memory (MB) | allocated: 38921.15 | max allocated: 47104.31 | reserved: 48934.00 | max reserved: 48934.00
+[Rank 14] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+[Rank 15] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+[Rank 17] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+[Rank 0] (after 1 iterations) memory (MB) | allocated: 38921.15 | max allocated: 47104.31 | reserved: 48934.00 | max reserved: 48934.00
+[Rank 1] (after 1 iterations) memory (MB) | allocated: 38921.15 | max allocated: 47104.31 | reserved: 48934.00 | max reserved: 48934.00
+[Rank 13] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+[Rank 19] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+[Rank 9] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00[Rank 8] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
+
+[Rank 7] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00[Rank 6] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44816.00 | max reserved: 44816.00
+
+[Rank 18] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00[Rank 16] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+
+ [2026-03-28 14:26:02.528844] iteration        1/    1000 | consumed samples:          512 | elapsed time per iteration (ms): 776938.3 | learning rate: 2.000000E-07 | global batch size:   512 | lm loss: 1.199893E+01 | loss scale: 1.0 | grad norm: 36.418 | number of skipped iterations:   0 | number of nan iterations:   0 |
+[Rank 27] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00[Rank 24] (after 1 iterations) memory (MB) | allocated: 36891.15 | max allocated: 44566.31 | reserved: 44752.00 | max reserved: 44752.00
+...
 ```
 
 #### GPU 모니터링 ####
