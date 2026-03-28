@@ -38,6 +38,7 @@ pcluster delete-cluster -n ${CLUSTER_NAME}
 export PREV_CLUSTER_NAME=${CLUSTER_NAME}
 export CLUSTER_NAME=megatron-cluster
 export AZ="2"
+export GPU_NODE_COUNT=4
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
