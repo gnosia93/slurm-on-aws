@@ -15,7 +15,7 @@
 
 * [C7. 모니터링 설정하기 (prometheus/loki/grafana)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/7-monitoring.md)
 
-* > [C8. Custom AMI 만들기 (packer)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-custom-ami.md)
+* [C8. Custom AMI 만들기 (packer)](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/8-custom-ami.md)
   
 * [C9. Megatron-LM: 70B GPT 모델 훈련](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/9-megatron-lm.md)
 
