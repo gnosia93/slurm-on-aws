@@ -158,7 +158,8 @@ srun torchrun --nproc_per_node=8 \
     --tokenizer-type NullTokenizer \
     --no-gradient-accumulation-fusion \
     --use-mcore-models \
-    --transformer-impl local
+    --transformer-impl local \
+    --no-persist-layer-norm
 
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
