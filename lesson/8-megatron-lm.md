@@ -151,10 +151,9 @@ from datasets import load_dataset
 ds = load_dataset('wikipedia', '20220301.en', split='train')
 ds.to_json('/fsx/data/wiki.json', lines=True)
 "
-
-# 또는 The Pile (대규모 사전학습 데이터셋)
-# https://huggingface.co/datasets/EleutherAI/pile
 ```
+또는 [The Pile (대규모 사전학습 데이터셋)](https://huggingface.co/datasets/EleutherAI/pile) 를 사용한다. GPT-NeoX, Pythia 등 오픈소스 LLM 학습에 사용된 대표적인 사전학습 데이터셋으로, 22개 소스로 구성되어 있으며 825GB 영문 텍스트 데이터이다. 
+
 
 ### 2. Megatron 포맷으로 변환 ###
 Megatron-LM은 .bin + .idx 포맷을 사용하므로, 변환이 필요하다 
