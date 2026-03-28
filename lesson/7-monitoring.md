@@ -62,7 +62,7 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__meta_ec2_private_ip]
         target_label: __address__
-        replacement: "$1:9100"
+        replacement: "\$1:9100"
       - source_labels: [__meta_ec2_tag_Name]
         target_label: node
 
@@ -80,7 +80,7 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__meta_ec2_private_ip]
         target_label: __address__
-        replacement: "$1:9400"
+        replacement: "\$1:9400"
       - source_labels: [__meta_ec2_tag_Name]
         target_label: node
 
