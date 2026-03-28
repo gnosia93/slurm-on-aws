@@ -101,3 +101,19 @@ Prometheus UI에서 테스트할 때는 변수가 없으니 직접 값을 넣어
 
 DCGM_FI_DEV_GPU_TEMP{instance=~".*", gpu=~".*"}
 ```
+
+```
+대시보드 설정에서 확인:
+
+1. 대시보드 상단 → 톱니바퀴(Settings) → Variables
+2. instance 변수 클릭
+Query 부분이 이렇게 되어 있어야 합니다:
+
+Type: Query
+Data source: Prometheus
+Query: label_values(DCGM_FI_DEV_GPU_TEMP, instance)
+gpu 변수:
+
+Query: label_values(DCGM_FI_DEV_GPU_TEMP, gpu)
+설정 후 하단에 Preview에서 10.0.11.206:9400이나 0이 보이면 정상입니다. 안 보이면 Data source가 Prometheus로 제대로 연결되어 있는지 확인하세요
+```
