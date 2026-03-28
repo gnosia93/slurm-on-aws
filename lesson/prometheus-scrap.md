@@ -61,13 +61,9 @@ Graph 메뉴 선택후 -> 메트릭 입력 -> Execute
 ## 그라파나 ##
 
 ### 쿼리 테스트 ###
-```
-Grafana Explore
-   http://<slurm-monitor-ip>:3000
-   → 왼쪽 메뉴 → Explore (나침반 아이콘)
-   → Data source: Prometheus 선택
-   → 쿼리 입력
-```
+
+좌측 Explore 메뉴 선택 -> Prometheus 선택 -> 쿼리작성
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-explorer.png)
 
 ```
 DCGM_FI_DEV_GPU_TEMP{instance="10.0.11.206:9400", gpu="0"}
