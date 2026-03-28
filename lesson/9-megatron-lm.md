@@ -141,7 +141,6 @@ srun torchrun --nproc_per_node=8 \
   --tee 0 \
   pretrain_gpt.py \
     --tensor-model-parallel-size 4 \
-    --sequence-parallel \
     --pipeline-model-parallel-size 4 \
     --num-layers 80 \
     --hidden-size 8192 \
@@ -165,8 +164,9 @@ srun torchrun --nproc_per_node=8 \
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
-* mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
-* SP는 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
+* --mock-data 옵션을 사용하여 데이터 전처리 과정은 생략.
+* --sequence-parallel 은 TP와 함께 사용되어 LayerNorm/Dropout의 activation 메모리를 감소 시킴.
+* --sequence-parallel이 torch LayerNorm에서 지원 안됨. Apex/TE 설치 필요.
 * --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
 ```
 sbatch gpt-70b.sh
