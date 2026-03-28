@@ -35,7 +35,7 @@ python pretrain_gpt.py \
 ```
 pcluster delete-cluster -n ${CLUSTER_NAME}
 
-export CLUSTER_NAME=megatron-cluster
+export CLUSTER_NAME=slurm-on-aws
 export AZ="2"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
