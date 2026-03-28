@@ -188,10 +188,7 @@ EOF
 * torchrun 옵션: 
   * --log-dir: 랭크별 로그 저장 디렉토리
   * --tee 3: stdout+stderr를 콘솔과 파일 둘 다 출력
-    * 0: 없음
-    * 1: stdout만
-    * 2: stderr만
-    * 3: 둘 다
+    * 0: 없음 / 1: stdout만 / 2: stderr만 / 3: 둘 다
 ```
 sbatch gpt-70b.sh
 squeue
