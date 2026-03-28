@@ -66,10 +66,10 @@ echo "KEY_NAME: ${KEY_NAME}"
 설정파일을 다운로드 받아 클러스터를 생성한다.
 ```
 curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster-large.yaml
-envsubst < cluster-large.yaml > cluster-large-resolved.yaml
-cat cluster-large-resolved.yaml
+envsubst < cluster-large.yaml > megatron-cluster.yaml
+cat megatron-cluster.yaml
 
-pcluster create-cluster -n ${CLUSTER_NAME} -c cluster-large-resolved --rollback-on-failure false
+pcluster create-cluster -n ${CLUSTER_NAME} -c megatron-cluster --rollback-on-failure false
 ```
 
 헤드 노드로 로그인하여 파티션 정보를 조회한다. 
