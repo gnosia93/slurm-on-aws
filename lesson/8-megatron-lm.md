@@ -113,11 +113,11 @@ srun torchrun --nproc_per_node=8 \
     --micro-batch-size 1 \
     --global-batch-size 512 \
     --bf16 \
-    --data-path /fsx/data/my-dataset_text_document \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
     --save-interval 1000 \
-    --mock-data 
+    --mock-data \ 
+#    --data-path /fsx/data/my-dataset_text_document \
 EOF
 ```
 * mock-data 옵션을 사용하여 데이터 전처리 과정은 생략한다.
