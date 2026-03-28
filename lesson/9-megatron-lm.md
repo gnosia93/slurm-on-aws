@@ -130,9 +130,8 @@ uv venv .venv
 source .venv/bin/activate
 uv pip install megatron-core
 ```
-Resolved 32 packages in 80ms
-█████████████░░░░░░░ [21/32] typing-extensions==4.15.0                                                                                                       
-
+Resolved 32 packages in 80ms   
+█████████████░░░░░░░ [21/32] typing-extensions==4.15.0                                                                                                         
 학습 스크립트 다운로드 한다.
 ```
 git clone https://github.com/NVIDIA/Megatron-LM.git
