@@ -48,10 +48,6 @@ packer build \
 gpu-ami.pkr.hcl
 ```
 
-### 3. parallel cluster yaml 변경 ###
-
-
-
 #### 참고 - packer 소프트웨어 스택 ###
 ```
 ParallelCluster AMI에 이미 포함된 것:
@@ -69,6 +65,7 @@ ParallelCluster AMI에 이미 포함된 것:
   - Alloy
 ```
 
+### 3. parallel cluster yaml 변경 ###
 
 ## 레퍼런스 ##
 * https://catalog.workshops.aws/ml-on-aws-parallelcluster/en-US/08-amis
