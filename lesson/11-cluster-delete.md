@@ -26,7 +26,7 @@ SlurmQueues:
         InstanceType: g7e.12xlarge
         MinCount: 0
         MaxCount: 2
-
+...
   - Name: gpu-h200                     # 신규 파티션
     CapacityType: ONDEMAND
     ComputeResources:
