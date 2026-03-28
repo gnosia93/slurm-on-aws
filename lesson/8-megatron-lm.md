@@ -122,7 +122,7 @@ EOF
 ```
 sbatch gpt-70b.sh
 ```
-> [!INFO]
+> [!NOTE]
 > * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
 >   * → 1 step에 실제 처리: 1 × 2 = 2
 > * global-batch-size = 512
