@@ -30,25 +30,27 @@ python pretrain_gpt.py \
 
 ## 70B GPT 모델 훈련(64 GPUs) ##
 
-헤드 노드에 파이썬 패키지 매니저인 uv 와 meagron-core 를 설치한다. 
+### 1. 사전준비 ###
+헤드 노드에 파이썬 패키지 매니저인 uv 와 meagron-core 라이브러리를 설치한다. 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
 
 uv pip install megatron-core
 ```
-
-* 헤드노드에서 srun 으로 실행
+학습 스크립트 다운로드 한다.
 ```
-docker run --ipc=host --shm-size=512m --gpus 2 -it nvcr.io/nvidia/pytorch:24.02-py3
-
 git clone https://github.com/NVIDIA/Megatron-LM.git
 cd Megatron-LM
-pip install -U "setuptools<80.0.0,>=77.0.0" packaging
-pip install --no-build-isolation .[dev]
 ```
 
-* 훈련 작업 실행 
+### 2. GPU 파티션 추가 ###
+g7e.48xlarge * 8 EA 로 구성된 슬럼 파티션을 생성한다.
+```
+
+```
+
+### 3. 훈련 작업 실행 ### 
 ```
 # TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 torchrun --nproc_per_node=8 pretrain_gpt.py \
@@ -63,9 +65,6 @@ torchrun --nproc_per_node=8 pretrain_gpt.py \
     --global-batch-size 512 \
     --bf16
 ```
-
-
-
 
 ## 레퍼런스 ##
 * https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/index.html#quick-start
