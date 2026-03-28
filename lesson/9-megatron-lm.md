@@ -184,7 +184,7 @@ W0328 12:22:55.177000 52968 torch/distributed/run.py:851] **********************
 
 #### GPU 모니터링 ####
 ```
-srun --nodes=4 nvidia-smi --query-gpu=index,utilization.gpu,memory.used,temperature.gpu --format=csv
+srun --nodes=4 nvidia-smi --query-gpu=index,utilization.gpu,memory.used,temperature.gpu,clocks.current.sm,clocks.current.memory,power.draw --format=csv
 ```
 
 
