@@ -166,8 +166,10 @@ srun torchrun --nproc_per_node=8 \
     --lr-decay-iters 100000 \
     --train-iters 1000 \
     --eval-interval 500 \
-    --eval-iters 10
-
+    --eval-iters 10 \
+    --recompute-granularity full \
+    --recompute-method uniform \
+    --recompute-num-layers 1
 
 #    --data-path /fsx/data/my-dataset_text_document \
 EOF
