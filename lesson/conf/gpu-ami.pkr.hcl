@@ -21,6 +21,38 @@ variable "instance_type" {
   default = "g7e.xlarge"
 }
 
+variable "volume_size" {
+  default = 200
+}
+
+variable "nccl_version" {
+  default = "v2.29.2-1"
+}
+
+variable "aws_ofi_nccl_version" {
+  default = "v1.18.0"
+}
+
+variable "nvcc_gencode" {
+  default = "-gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_89,code=sm_89 -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120"
+}
+
+variable "enroot_version" {
+  default = "3.5.0"
+}
+
+variable "pyxis_version" {
+  default = "0.20.0"
+}
+
+variable "dcgm_version" {
+  default = "3.3.7"
+}
+
+variable "node_exporter_version" {
+  default = "1.8.2"
+}
+
 # ParallelCluster 공식 AMI를 base로 사용
 source "amazon-ebs" "gpu-ami" {
   region        = var.region
@@ -41,7 +73,7 @@ source "amazon-ebs" "gpu-ami" {
 
   launch_block_device_mappings {
     device_name           = "/dev/sda1"
-    volume_size           = 200
+    volume_size           = var.volume_size
     volume_type           = "gp3"
     delete_on_termination = true
   }
@@ -65,9 +97,9 @@ build {
   # 2. NCCL 빌드
   provisioner "shell" {
     inline = [
-      "sudo git clone --single-branch --branch v2.29.2-1 https://github.com/NVIDIA/nccl.git /opt/nccl",
+      "sudo git clone --single-branch --branch ${var.nccl_version} https://github.com/NVIDIA/nccl.git /opt/nccl",
       "cd /opt/nccl",
-      "sudo make -j $(nproc) src.build NVCC_GENCODE='-gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_89,code=sm_89 -gencode=arch=compute_90,code=sm_90 -gencode=arch=compute_120,code=sm_120'",
+      "sudo make -j $(nproc) src.build NVCC_GENCODE='${var.nvcc_gencode}'",
       "echo '/opt/nccl/build/lib' | sudo tee /etc/ld.so.conf.d/nccl.conf",
       "sudo ldconfig"
     ]
@@ -76,7 +108,7 @@ build {
   # 3. AWS OFI NCCL Plugin
   provisioner "shell" {
     inline = [
-      "sudo git clone --single-branch --branch v1.18.0 https://github.com/aws/aws-ofi-nccl.git /opt/aws-ofi-nccl",
+      "sudo git clone --single-branch --branch ${var.aws_ofi_nccl_version} https://github.com/aws/aws-ofi-nccl.git /opt/aws-ofi-nccl",
       "cd /opt/aws-ofi-nccl",
       "sudo ./autogen.sh",
       "sudo ./configure --with-libfabric=/opt/amazon/efa --with-nccl=/opt/nccl/build --with-cuda=/usr/local/cuda",
@@ -90,7 +122,6 @@ build {
     inline = [
       "sudo apt-get install -y docker.io",
       "sudo systemctl enable docker",
-      "distribution=$(. /etc/os-release;echo $ID$VERSION_ID)",
       "curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg",
       "curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list",
       "sudo apt-get update -y",
@@ -104,14 +135,12 @@ build {
   provisioner "shell" {
     inline = [
       "sudo apt-get install -y jq squashfs-tools parallel",
-      "ARCH=$(dpkg --print-architecture)",
-      "curl -fSsL -O https://github.com/NVIDIA/enroot/releases/download/v3.5.0/enroot_3.5.0-1_${ARCH}.deb",
-      "curl -fSsL -O https://github.com/NVIDIA/enroot/releases/download/v3.5.0/enroot+caps_3.5.0-1_${ARCH}.deb",
-      "sudo dpkg -i enroot_3.5.0-1_${ARCH}.deb enroot+caps_3.5.0-1_${ARCH}.deb || sudo apt-get install -f -y",
+      "curl -fSsL -O https://github.com/NVIDIA/enroot/releases/download/v${var.enroot_version}/enroot_${var.enroot_version}-1_amd64.deb",
+      "curl -fSsL -O https://github.com/NVIDIA/enroot/releases/download/v${var.enroot_version}/enroot+caps_${var.enroot_version}-1_amd64.deb",
+      "sudo dpkg -i enroot_${var.enroot_version}-1_amd64.deb enroot+caps_${var.enroot_version}-1_amd64.deb || sudo apt-get install -f -y",
       "rm -f enroot*.deb",
-      "PYXIS_VERSION=0.20.0",
-      "curl -fSsL -O https://github.com/NVIDIA/pyxis/releases/download/v${PYXIS_VERSION}/nvslurm-plugin-pyxis_${PYXIS_VERSION}-1_${ARCH}.deb",
-      "sudo dpkg -i nvslurm-plugin-pyxis_${PYXIS_VERSION}-1_${ARCH}.deb || sudo apt-get install -f -y",
+      "curl -fSsL -O https://github.com/NVIDIA/pyxis/releases/download/v${var.pyxis_version}/nvslurm-plugin-pyxis_${var.pyxis_version}-1_amd64.deb",
+      "sudo dpkg -i nvslurm-plugin-pyxis_${var.pyxis_version}-1_amd64.deb || sudo apt-get install -f -y",
       "rm -f nvslurm*.deb"
     ]
   }
@@ -119,8 +148,7 @@ build {
   # 6. DCGM
   provisioner "shell" {
     inline = [
-      "DCGM_VERSION=3.3.7",
-      "sudo apt-get install -y datacenter-gpu-manager=${DCGM_VERSION} || true",
+      "sudo apt-get install -y datacenter-gpu-manager=${var.dcgm_version} || true",
       "sudo systemctl enable nvidia-dcgm"
     ]
   }
@@ -128,8 +156,7 @@ build {
   # 7. Node Exporter
   provisioner "shell" {
     inline = [
-      "NODE_EXPORTER_VERSION=1.8.2",
-      "curl -fSsL -O https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VERSION}/node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz",
+      "curl -fSsL -O https://github.com/prometheus/node_exporter/releases/download/v${var.node_exporter_version}/node_exporter-${var.node_exporter_version}.linux-amd64.tar.gz",
       "tar xzf node_exporter-*.tar.gz",
       "sudo mv node_exporter-*/node_exporter /usr/local/bin/",
       "rm -rf node_exporter-*",
