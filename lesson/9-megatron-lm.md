@@ -60,6 +60,7 @@ echo "SECURITY_GROUP: ${SECURITY_GROUP}"
 echo "LOKI_URL: ${LOKI_URL}"
 echo "KEY_NAME: ${KEY_NAME}"
 ```
+새로운 클러스터 설정파일을 다운로드 받는다.
 ```
 curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster-large.yaml
 envsubst < cluster-large.yaml > cluster-large-resolved.yaml
