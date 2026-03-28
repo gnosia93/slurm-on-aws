@@ -154,7 +154,7 @@ srun torchrun --nproc_per_node=8 \
     --bf16 \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
-    --save-interval 100 \
+    --save-interval 10 \
     --lr 1e-4 \
     --min-lr 1e-5 \
     --lr-warmup-iters 500 \
