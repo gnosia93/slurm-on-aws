@@ -150,6 +150,7 @@ cat <<'EOF' > gpt-70b.sh
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_NODELIST | head -n1)
 export MASTER_PORT=29500
 
+cd /home/ubuntu/Megatron-LM
 srun torchrun --nproc_per_node=8 \
   --nnodes=$SLURM_NNODES \
   --rdzv_backend=c10d \
