@@ -8,7 +8,14 @@ Packer는 HashiCorp에서 만든 AMI 자동 빌드 도구로 CUDA 버전, 특정
 
 vscode 웹 콘솔에서 아래 명령어를 실행한다. 
 
-### 1. AMI 빌드 ###
+### 1. packer 설치 ###
+```
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo dnf install -y packer
+```
+
+### 2. AMI 빌드 ###
 ```
 curl -o gpu-ami.pkr.hcl https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/gpu-ami.pkr.hcl
 
