@@ -157,7 +157,7 @@ EOF
 * --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
 ```
 sbatch gpt-70b.sh
-queue
+squeue
 ```
 [결과]
 ```
