@@ -31,9 +31,9 @@ python pretrain_gpt.py \
 ## 70B GPT 모델 훈련(64 GPUs) ##
 
 ### 1. GPU 파티션 추가 ###
-기존 슬럼 클러스터에 g7e.48xlarge (8 GPUs) * 8 EA 로 구성된 gpu-large 파티션을 생성한다.
+g7e.48xlarge (8 GPUs) * 8 EA 노드로 구성된 megatron-cluster 클러스터를 생성한다.
 ```
-export CLUSTER_NAME=mega-lm-cluster
+export CLUSTER_NAME=megatron-cluster
 export AZ="2"
 
 export AWS_DEFAULT_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
@@ -60,7 +60,7 @@ echo "SECURITY_GROUP: ${SECURITY_GROUP}"
 echo "LOKI_URL: ${LOKI_URL}"
 echo "KEY_NAME: ${KEY_NAME}"
 ```
-새로운 클러스터 설정파일을 다운로드 받는다.
+설정파일을 다운로드 받아 클러스터를 생성한다.
 ```
 curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-aws/refs/heads/main/lesson/conf/cluster-large.yaml
 envsubst < cluster-large.yaml > cluster-large-resolved.yaml
