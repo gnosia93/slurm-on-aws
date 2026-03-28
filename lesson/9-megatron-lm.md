@@ -69,7 +69,7 @@ curl -o cluster-large.yaml https://raw.githubusercontent.com/gnosia93/slurm-on-a
 envsubst < cluster-large.yaml > megatron-cluster.yaml
 cat megatron-cluster.yaml
 
-pcluster create-cluster -n ${CLUSTER_NAME} -c megatron-cluster --rollback-on-failure false
+pcluster create-cluster -n ${CLUSTER_NAME} -c megatron-cluster.yaml --rollback-on-failure false
 ```
 
 헤드 노드로 로그인하여 파티션 정보를 조회한다. 
