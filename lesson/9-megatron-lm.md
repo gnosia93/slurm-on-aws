@@ -120,7 +120,7 @@ NodeName=gpu-large-dy-ml-large-1 CoresPerSocket=1
 ```
 
 ### 2. Megatron 설치 ###
-헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리를 설치한다. 
+헤드 노드에 파이썬 패키지 매니저인 uv 와 megatron-core 라이브러리 및 학습 스크립트를 설치한다. 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
@@ -128,22 +128,18 @@ source ~/.bashrc
 cd ~
 uv venv .venv --system-site-packages
 source .venv/bin/activate
+
 uv pip install megatron-core
+git clone https://github.com/NVIDIA/Megatron-LM.git
 ```
 PyTorch, CUDA가 시스템 레벨에 설치되어 있는데, --system-site-packages 옵션을 이용하면 시스템에 설치된 PyTorch를 venv 안에서도 사용할 수 있다.
 
 > [!TIP]
 > 가상환경(.venv) 삭제 방법:
 > 
-> deactivate
-> 
-> rm -rf ~/.venv
+> deactivate && rm -rf ~/.venv
                                                                                                     
-학습 스크립트 다운로드 한다.
-```
-git clone https://github.com/NVIDIA/Megatron-LM.git
-```
-
+                                                                                                    
 ### 3. 훈련 작업 실행 ### 
 * TP=4, PP=4, CP=2, DP=2 => 4 × 4 × 2 × 2 = 64 GPUs
 ```
