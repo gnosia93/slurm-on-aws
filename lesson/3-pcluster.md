@@ -19,7 +19,7 @@ pcluster version
 
 볼륨 정보 부터 조회한다. 
 ```
-ZFS_VOL_ID=$(aws fsx describe-volumes --filters Name=file-system-id,Values=${ZFS_ID} \
+export ZFS_VOL_ID=$(aws fsx describe-volumes --filters Name=file-system-id,Values=${ZFS_ID} \
   --query "Volumes[].[VolumeId]" --output text)
 
 echo "lustre-id : ${LUSTRE_ID}"
