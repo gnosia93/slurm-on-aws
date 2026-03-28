@@ -146,7 +146,7 @@ srun torchrun --nproc_per_node=8 \
     --bf16 \
     --save /fsx/checkpoints/gpt-70b \
     --load /fsx/checkpoints/gpt-70b \
-    --save-interval 1000 \
+    --save-interval 100 \
     --mock-data
  
 #    --data-path /fsx/data/my-dataset_text_document \
