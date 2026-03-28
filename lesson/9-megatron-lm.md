@@ -81,7 +81,43 @@ watch -n 3 pcluster describe-cluster -n ${CLUSTER_NAME} --query "clusterStatus"
 UPDATE_COMPLTE 이 될때 까지 대기한다.
 
 ```
+pcluster ssh -n ${CLUSTER_NAME} -i ~/${KEY_NAME}.pem
 
+sinfo -N
+```
+[결과]
+```
+NODELIST                 NODES  PARTITION STATE 
+gpu-large-dy-ml-large-1      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-2      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-3      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-4      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-5      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-6      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-7      1 gpu-large* idle~ 
+gpu-large-dy-ml-large-8      1 gpu-large* idle~ 
+```
+gpu-large-dy-ml-large-1 의 상세 정보를 조회한다. 
+```
+scontrol show node gpu-large-dy-ml-large-1
+```
+[결과]
+```
+NodeName=gpu-large-dy-ml-large-1 CoresPerSocket=1 
+   CPUAlloc=0 CPUEfctv=192 CPUTot=192 CPULoad=0.00
+   AvailableFeatures=dynamic,g7e.48xlarge,ml-large,efa,gpu
+   ActiveFeatures=dynamic,g7e.48xlarge,ml-large,efa,gpu
+   Gres=gpu:rtxproserver6000:8
+   NodeAddr=gpu-large-dy-ml-large-1 NodeHostName=gpu-large-dy-ml-large-1 
+   RealMemory=1992294 AllocMem=0 FreeMem=N/A Sockets=192 Boards=1
+   State=IDLE+CLOUD+POWERED_DOWN ThreadsPerCore=1 TmpDisk=0 Weight=1000 Owner=N/A MCS_label=N/A
+   Partitions=gpu-large 
+   BootTime=None SlurmdStartTime=None
+   LastBusyTime=Unknown ResumeAfterTime=None
+   CfgTRES=cpu=192,mem=1992294M,billing=192
+   AllocTRES=
+   CurrentWatts=0 AveWatts=0
+   Reason=stopping cluster [root@2026-03-28T08:18:20]
 ```
 
 ### 2. Megatron 설치 ###
