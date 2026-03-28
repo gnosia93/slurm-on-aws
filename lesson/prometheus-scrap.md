@@ -65,6 +65,39 @@ Graph 메뉴 선택후 -> 메트릭 입력 -> Execute
 좌측 Explore 메뉴 선택 -> Prometheus 선택 -> 쿼리작성
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/grafana-explorer.png)
 
+
+### 표현식 설명 ###
 ```
 DCGM_FI_DEV_GPU_TEMP{instance="10.0.11.206:9400", gpu="0"}
+```
+```
+DCGM_FI_DEV_GPU_TEMP{instance=~"${instance}", gpu=~"${gpu}"}
+DCGM_FI_DEV_GPU_TEMP   → 메트릭 이름 (GPU 온도)
+
+instance=~"${instance}" → instance 라벨을 Grafana 변수로 필터
+                          =~ 는 정규식 매칭
+                          ${instance}는 Grafana 대시보드 상단 드롭다운 값
+
+gpu=~"${gpu}"           → gpu 라벨을 Grafana 변수로 필터
+                          드롭다운에서 "0", "1" 등 선택
+Grafana 변수가 동작하는 흐름:
+
+1. 대시보드 상단에 드롭다운 생성됨
+   [instance ▼] [gpu ▼]
+
+2. 사용자가 선택:
+   instance = "10.0.11.206:9400"
+   gpu = "0"
+
+3. 쿼리가 치환됨:
+   DCGM_FI_DEV_GPU_TEMP{instance=~"10.0.11.206:9400", gpu=~"0"}
+
+4. 해당 GPU의 온도 그래프 표시
+=~는 정규식이라 .*로 전체 선택도 가능:
+
+${instance} = ".*"  → 모든 인스턴스
+${gpu} = ".*"       → 모든 GPU
+Prometheus UI에서 테스트할 때는 변수가 없으니 직접 값을 넣어야 합니다:
+
+DCGM_FI_DEV_GPU_TEMP{instance=~".*", gpu=~".*"}
 ```
