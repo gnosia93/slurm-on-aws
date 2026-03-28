@@ -157,6 +157,13 @@ EOF
 * --use-distributed-optimizer 옵션 ON/OFF 해서 테스트 필요
 ```
 sbatch gpt-70b.sh
+queue
+```
+[결과]
+```
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+   1 gpu-large  gpt-70b   ubuntu  R       0:07      4 gpu-large-st-ml-large-[1-4]
+```
 ```
 > [!NOTE]
 > * micro-batch-size = 1 (GPU당 배치) / DP = 2 (데이터 병렬 수)
