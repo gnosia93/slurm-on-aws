@@ -1,9 +1,6 @@
 ## pretrain ##
 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/pretrain/pipeline.png)
-* 토크나이저 선택
-  * → 한국어면 SentencePiece 기반 다국어 토크나이저
-  * → vocab size가 크면 한국어 효율 좋음 (128K+)
 
 ### 1. 데이터 수집 ###
 ```
