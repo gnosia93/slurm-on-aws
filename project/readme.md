@@ -1,4 +1,4 @@
-## Pretrain 파이프라인 ##
+## Pretrain ##
 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/project/images/overall-pipeline.png)
 
