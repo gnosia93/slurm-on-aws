@@ -1,3 +1,14 @@
+## LLM 훈련 파이프 라인 ##
+
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/proj/images/overall-pipeline.png)
+
+* 토크나이저 선택
+  * → 한국어면 SentencePiece 기반 다국어 토크나이저
+  * → vocab size가 크면 한국어 효율 좋음 (128K+)
+
+
+
+
 ### 1. 데이터 수집 ###
 ```
 웹 크롤링:
@@ -152,17 +163,7 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-#### 파이프 라인 요약 ####
 
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/proj/images/overall-pipeline.png)
-
-* 데이터 품질 > 데이터 양 
-* 중복 제거가 가장 임팩트 큼
-* 도메인 믹스 비율이 중요
-  * → 웹:위키:코드:논문 = 70:10:10:10 같은 비율 실험 필요
-* 토크나이저 선택
-  * → 한국어면 SentencePiece 기반 다국어 토크나이저
-  * → vocab size가 크면 한국어 효율 좋음 (128K+)
 
 
 ### 학습 프로시저 ###
