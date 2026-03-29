@@ -98,15 +98,7 @@ journalctl -u alloy -n 50 --no-pager
 ```
 ```
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108415075Z level=error msg="failed to evaluate config" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node=loki.source.file.job_logs err="decoding configuration: /etc/alloy/config.alloy:37:3: unrecognized attribute name \"labels\""
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108421892Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=loki.source.file.job_logs duration=53.516µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108461389Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=tracing duration=33.831µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108515104Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=remotecfg duration=47.723µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108530215Z level=info msg="applying non-TLS config to HTTP server" service=http
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108534775Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=http duration=12.234µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108542597Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=cluster duration=2.019µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108556983Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=livedebugging duration=8.496µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.10856524Z level=info msg="finished node evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f node_id=ui duration=2.522µs
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108570233Z level=info msg="finished complete graph evaluation" controller_path=/ controller_id="" trace_id=12bd10174598018c55256129c970394f duration=4.3512ms
+
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: Error: /etc/alloy/config.alloy:23:3: unrecognized attribute name "labels"
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 22 |     forward_to = [loki.write.default.receiver]
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 23 |     labels     = {
@@ -134,17 +126,16 @@ Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 39 | |     node = env("HOS
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 40 | |   }
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]:    | |_^^^
 Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 41 |   }
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: interrupt received
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108767815Z level=error msg="failed to evaluate config" controller_path=/ controller_id="" node=loki.source.file.job_logs err="decoding configuration: /etc/alloy/config.alloy:37:3: unrecognized attribute name \"labels\""
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.10878206Z level=error msg="failed to evaluate config" controller_path=/ controller_id="" node=loki.source.file.slurmd err="decoding configuration: /etc/alloy/config.alloy:23:3: unrecognized attribute name \"labels\""
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: ts=2026-03-29T02:00:11.108771658Z level=error msg="failed to evaluate config" controller_path=/ controller_id="" node=loki.source.file.syslog err="decoding configuration: /etc/alloy/config.alloy:9:3: unrecognized attribute name \"labels\""
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: Error: could not perform the initial load successfully
-Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 2026/03/29 02:00:11 collector server run finished with error: could not perform the initial load successfully
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Main process exited, code=exited, status=1/FAILURE
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Failed with result 'exit-code'.
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Scheduled restart job, restart counter is at 5.
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: Stopped Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines.
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Start request repeated too quickly.
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Failed with result 'exit-code'.
-Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: Failed to start Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines.
+```
+아래 구조로 수정한다.
+```
+// 수정
+loki.source.file "syslog" {
+    targets    = [{
+      __path__ = "/var/log/syslog",
+      job      = "syslog",
+      node     = env("HOSTNAME"),
+    }]
+    forward_to = [loki.write.default.receiver]
+}
 ```
