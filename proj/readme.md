@@ -154,43 +154,17 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-전체 파이프라인 요약
-Common Crawl / Wikipedia / 공개 데이터셋
-    │
-    ▼
-[수집] WARC 파싱, HuggingFace datasets
-    │
-    ▼
-[정제] HTML 제거, 언어 감지, 품질 필터, PII 제거
-    │
-    ▼
-[중복 제거] MinHash + LSH (가장 중요)
-    │
-    ▼
-[JSONL 변환] {"text": "..."} 형태
-    │
-    ▼
-[토크나이징] preprocess_data.py → .bin + .idx
-    │
-    ▼
-[학습] pretrain_gpt.py --data-path ...
+#### 파이프 라인 요약 ####
 
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/proj/images/overall-pipeline.png)
 
-#### 현실적 팁 ####
-```
-1. 데이터 품질 > 데이터 양
-   → 정제 안 된 1TB보다 잘 정제된 100GB가 나음
-
-2. 중복 제거가 가장 임팩트 큼
-   → Llama 팀도 중복 제거에 가장 많은 시간 투자
-
-3. 도메인 믹스 비율이 중요
-   → 웹:위키:코드:논문 = 70:10:10:10 같은 비율 실험 필요
-
-4. 토크나이저 선택
-   → 한국어면 SentencePiece 기반 다국어 토크나이저
-   → vocab size가 크면 한국어 효율 좋음 (128K+)
-```
+* 데이터 품질 > 데이터 양 
+* 중복 제거가 가장 임팩트 큼
+* 도메인 믹스 비율이 중요
+  * → 웹:위키:코드:논문 = 70:10:10:10 같은 비율 실험 필요
+* 토크나이저 선택
+  * → 한국어면 SentencePiece 기반 다국어 토크나이저
+  * → vocab size가 크면 한국어 효율 좋음 (128K+)
 
 ```
 # 1. 데이터 다운로드
