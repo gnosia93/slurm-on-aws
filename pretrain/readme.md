@@ -158,7 +158,7 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-### 토크나이저 ###
+#### 토크나이저 ####
 한국어를 지원하는 Llama 토크나이저를 사용한다.  
 HuggingFace에서 tokenizer.model 을 다운로드 한다. (HF_TOKEN 필요)
 ```
@@ -171,7 +171,7 @@ python tools/preprocess_data.py \
   --append-eod
 ```
 
-### sbatch 수정 ###
+### 5. sbatch 훈련 ###
 ```
 # gpt-70b.sh에서 mock-data 관련 줄 교체
 # 제거:
