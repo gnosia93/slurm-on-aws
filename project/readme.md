@@ -1,6 +1,6 @@
 ## Pretrain 파이프라인 ##
 
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/proj/images/overall-pipeline.png)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/project/images/overall-pipeline.png)
 
 * 토크나이저 선택
   * → 한국어면 SentencePiece 기반 다국어 토크나이저
