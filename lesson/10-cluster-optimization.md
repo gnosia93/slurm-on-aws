@@ -27,7 +27,7 @@
 * pclk 모니터링 → 스로틀링 식별
 
 ### 데이터 로딩 최적화 ###
-* 학습 데이터 sharding
+* 학습 데이터 sharding (/w WebTAR, Parque, TFRecord 등)
 * DataLoader num_workers / prefetch_factor 튜닝
 * 로컬 NVMe 캐시 활용
 * /dev/shm 크기 조정
