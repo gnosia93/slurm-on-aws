@@ -58,6 +58,30 @@ ds = load_dataset('wikipedia', '20220301.ko', split='train')
 
 ### 2. 데이터 정제 (Cleaning) ###
 ```
+1. 중복 제거 (Deduplication)
+   - 정확 중복: 해시 기반 (SHA-256)
+   - 유사 중복: MinHash + LSH (가장 중요)
+   → 중복 데이터는 학습 품질을 떨어뜨림
+
+2. 품질 필터링
+   - 언어 감지 (fasttext lid.176.bin)
+   - perplexity 기반 필터 (KenLM)
+   - 욕설/유해 콘텐츠 필터
+   - 광고/스팸 제거
+
+3. PII 제거
+   - 이메일, 전화번호, 주소 마스킹
+   - 이름, 주민번호 등 개인정보 제거
+
+4. 포맷 정규화
+   - 인코딩 통일 (UTF-8)
+   - 줄바꿈 통일
+   - 특수문자 정규화
+```
+
+
+
+```
 # 기본 정제 파이프라인
 def clean_text(text):
     # 1. HTML 태그 제거
@@ -80,40 +104,15 @@ def clean_text(text):
     return text
 ```
 
-#### 주요 정제 작업 ####
-```
-1. 중복 제거 (Deduplication)
-   - 정확 중복: 해시 기반 (SHA-256)
-   - 유사 중복: MinHash + LSH (가장 중요)
-   → 중복 데이터는 학습 품질을 떨어뜨림
-
-2. 품질 필터링
-   - 언어 감지 (fasttext lid.176.bin)
-   - perplexity 기반 필터 (KenLM)
-   - 욕설/유해 콘텐츠 필터
-   - 광고/스팸 제거
-
-3. PII 제거
-   - 이메일, 전화번호, 주소 마스킹
-   - 이름, 주민번호 등 개인정보 제거
-
-4. 포맷 정규화
-   - 인코딩 통일 (UTF-8)
-   - 줄바꿈 통일
-   - 특수문자 정규화
-```
-
 #### 중복 제거 도구 ####
-
 ```
 # MinHash 기반 중복 제거 (가장 많이 쓰임)
 pip install datasketch
 
 # 또는 deduplicate-text-datasets (Google 제공)
 pip install deduplicate-text-datasets
-```
 
-```
+
 # MinHash 중복 제거 예시
 from datasketch import MinHash, MinHashLSH
 
@@ -163,10 +162,7 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-
-
-
-### 학습 프로시저 ###
+### 학습 전체 flow 예시 ###
 ```
 # 1. 데이터 다운로드
 pip install datasets
