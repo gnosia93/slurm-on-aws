@@ -1,6 +1,6 @@
 # slurm-on-aws (pcluster)
 
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/ws-arch.png)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/ws-arch-1.png)
 
 ### ###
 ### ###
