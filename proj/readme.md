@@ -166,6 +166,8 @@ python tools/preprocess_data.py \
   * → 한국어면 SentencePiece 기반 다국어 토크나이저
   * → vocab size가 크면 한국어 효율 좋음 (128K+)
 
+
+### 학습 프로시저 ###
 ```
 # 1. 데이터 다운로드
 pip install datasets
@@ -207,8 +209,7 @@ python tools/preprocess_data.py \
   --workers 32 \
   --append-eod
 근데 NullTokenizer는 mock용이라 실제 학습에는 적합하지 않음.
-```
-```
+
 토크나이저 선택
 # 옵션 1: GPT-2 토크나이저 (영어 전용, 간단)
 python tools/preprocess_data.py \
@@ -232,9 +233,8 @@ python tools/preprocess_data.py \
   --tokenizer-model /fsx/models/llama/tokenizer.model \
   --workers 32 \
   --append-eod
-한국어 데이터도 쓸 거면 옵션 2(Llama 토크나이저)가 맞다.
-```
-```
+한국어 데이터도 쓸 거면 옵션 2(Llama 토크나이저) 사용
+
 학습 실행
 # gpt-70b.sh에서 mock-data 관련 줄 교체
 # 제거:
