@@ -99,8 +99,8 @@ with open('training_data.jsonl', 'w') as f:
 {"text": "세 번째 문서 내용..."}
 ```
 
-### 4. 토크나이징 + 바이너리 변환 ###
-훈련 데이터셋을 Megatron-LM 바이너리 포맷으로 변환한다. HuggingFace에서 Llama 토크나이저(다국어, 한국어 지원) 모델을 다운로드 한다. (HF_TOKEN 필요)
+### 4. 토크나이징 ###
+HuggingFace에서 Llama 토크나이저(다국어, 한국어 지원) 모델을 다운로드 한다 (HF_TOKEN 필요). 훈련 데이터셋을 Megatron-LM 바이너리 포맷으로 변환한다. 
 
 #### [토크나이저 다운로드] ###
 ```
