@@ -129,6 +129,7 @@ Mar 29 02:00:11 gpu-large-st-ml-large-1 alloy[86954]: 41 |   }
 ```
 아래 구조로 수정한다.
 ```
+$ sudo vi /etc/alloy/config.alloy
 // 수정
 loki.source.file "syslog" {
     targets    = [{
@@ -138,4 +139,6 @@ loki.source.file "syslog" {
     }]
     forward_to = [loki.write.default.receiver]
 }
+
+$ sudo systemctl restart alloy 
 ```
