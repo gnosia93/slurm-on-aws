@@ -158,7 +158,7 @@ resource "aws_security_group" "instance_sg" {
     from_port   = 3100
     to_port     = 3100
     protocol    = "tcp"
-    cidr_blocks = [local.allowed_ip_cidrs, data.aws_vpc.this.cidr_block]
+    cidr_blocks = concat(local.allowed_ip_cidrs, [data.aws_vpc.this.cidr_block])
   }
   # prometheus
   ingress {
