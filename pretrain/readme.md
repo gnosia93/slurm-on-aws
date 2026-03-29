@@ -158,24 +158,9 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-### 토크나이저 선택 ###
-#### GPT-2 토크나이저 (영어 전용, 간단) ####
-```
-python tools/preprocess_data.py \
-  --input /fsx/data/wiki_en.jsonl \
-  --output-prefix /fsx/data/wiki \
-  --tokenizer-type GPT2BPETokenizer \
-  --vocab-file gpt2-vocab.json \
-  --merge-file gpt2-merges.txt \
-  --workers 32 \
-  --append-eod
-```
-* GPT-2 vocab 파일 다운로드
-  * wget https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-vocab.json
-  * wget https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-merges.txt
-
-### Llama 토크나이저 (다국어, 한국어 포함) ###
-HuggingFace에서 tokenizer.model 다운로드 필요 (HF_TOKEN 필요)
+### 토크나이저 ###
+한국어를 지원하는 Llama 토크나이저를 사용한다.  
+HuggingFace에서 tokenizer.model 을 다운로드 한다. (HF_TOKEN 필요)
 ```
 python tools/preprocess_data.py \
   --input /fsx/data/wiki_all.jsonl \
@@ -185,7 +170,6 @@ python tools/preprocess_data.py \
   --workers 32 \
   --append-eod
 ```
-
 
 ### sbatch 수정 ###
 ```
