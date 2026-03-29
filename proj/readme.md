@@ -1,4 +1,4 @@
-## LLM 훈련 파이프 라인 ##
+## Pretrain 파이프라인 ##
 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/proj/images/overall-pipeline.png)
 
