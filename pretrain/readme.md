@@ -1,6 +1,6 @@
 ## Pretrain ##
 
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/project/images/overall-pipeline.png)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/pretrain/pipeline.png)
 
 * 토크나이저 선택
   * → 한국어면 SentencePiece 기반 다국어 토크나이저
@@ -162,51 +162,9 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-## 학습 예시 ##
+### 토크나이저 선택 ###
+#### GPT-2 토크나이저 (영어 전용, 간단) ####
 ```
-# 1. 데이터 다운로드
-pip install datasets
-
-python -c "
-from datasets import load_dataset
-import json
-
-# 영어 위키 (약 20GB)
-ds_en = load_dataset('wikipedia', '20220301.en', split='train')
-
-# 한국어 위키 (약 1.5GB)
-ds_ko = load_dataset('wikipedia', '20220301.ko', split='train')
-
-# JSONL로 저장
-with open('/fsx/data/wiki_en.jsonl', 'w') as f:
-    for row in ds_en:
-        f.write(json.dumps({'text': row['text']}, ensure_ascii=False) + '\n')
-
-with open('/fsx/data/wiki_ko.jsonl', 'w') as f:
-    for row in ds_ko:
-        f.write(json.dumps({'text': row['text']}, ensure_ascii=False) + '\n')
-"
-
-# 2. 합치기
-cat /fsx/data/wiki_en.jsonl /fsx/data/wiki_ko.jsonl > /fsx/data/wiki_all.jsonl
-
-# 3. 건수 확인
-wc -l /fsx/data/wiki_all.jsonl
-
-# 4. Megatron-LM 포맷 변환
-cd ~/Megatron-LM
-
-python tools/preprocess_data.py \
-  --input /fsx/data/wiki_all.jsonl \
-  --output-prefix /fsx/data/wiki \
-  --tokenizer-type NullTokenizer \
-  --vocab-size 32000 \
-  --workers 32 \
-  --append-eod
-근데 NullTokenizer는 mock용이라 실제 학습에는 적합하지 않음.
-
-토크나이저 선택
-# 옵션 1: GPT-2 토크나이저 (영어 전용, 간단)
 python tools/preprocess_data.py \
   --input /fsx/data/wiki_en.jsonl \
   --output-prefix /fsx/data/wiki \
@@ -215,12 +173,14 @@ python tools/preprocess_data.py \
   --merge-file gpt2-merges.txt \
   --workers 32 \
   --append-eod
+```
+* GPT-2 vocab 파일 다운로드
+  * wget https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-vocab.json
+  * wget https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-merges.txt
 
-# GPT-2 vocab 파일 다운로드
-wget https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-vocab.json
-wget https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-merges.txt
-# 옵션 2: Llama 토크나이저 (다국어, 한국어 포함)
-# HuggingFace에서 tokenizer.model 다운로드 필요 (HF_TOKEN 필요)
+### Llama 토크나이저 (다국어, 한국어 포함) ###
+HuggingFace에서 tokenizer.model 다운로드 필요 (HF_TOKEN 필요)
+```
 python tools/preprocess_data.py \
   --input /fsx/data/wiki_all.jsonl \
   --output-prefix /fsx/data/wiki \
@@ -228,28 +188,19 @@ python tools/preprocess_data.py \
   --tokenizer-model /fsx/models/llama/tokenizer.model \
   --workers 32 \
   --append-eod
-한국어 데이터도 쓸 거면 옵션 2(Llama 토크나이저) 사용
+```
 
-학습 실행
+
+### sbatch 수정 ###
+```
 # gpt-70b.sh에서 mock-data 관련 줄 교체
 # 제거:
-#   --mock-data \
-#   --vocab-size 32000 \
-#   --tokenizer-type NullTokenizer \
+    --mock-data \
+    --vocab-size 32000 \
+    --tokenizer-type NullTokenizer \
 
 # 추가:
     --data-path /fsx/data/wiki_text_document \
     --tokenizer-type GPTSentencePieceTokenizer \
     --tokenizer-model /fsx/models/llama/tokenizer.model \
-데이터 크기 참고
-
-영어 위키:     ~6M 문서, ~20GB 텍스트, ~4B 토큰
-한국어 위키:   ~600K 문서, ~1.5GB 텍스트, ~500M 토큰
-합계:          ~4.5B 토큰
-
-70B 모델 × 1000 steps × GBS 512 × seq 4096
-= 1000 × 512 × 4096 = ~2B 토큰 소비
-
-→ 4.5B 토큰이면 1000 step 돌리기에 충분
-먼저 Wikipedia 영어만으로 테스트하고, 잘 되면 한국어 추가.
 ```
