@@ -36,7 +36,7 @@
 * 백필 스케줄링 활성화 (GPU 유휴 시간 최소화)
 * Fair Share 설정 (팀 간 공정 분배)
 * Gang scheduling (멀티노드 잡 동시 할당)
-* NUMA affinity (노드 공유 시)
+* NUMA affinity
 
 ### 스토리지 최적화 ###
 * 체크포인트 저장 속도 (스트라이핑 -c -1 / 사이즈)
