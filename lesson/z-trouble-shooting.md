@@ -142,3 +142,15 @@ loki.source.file "syslog" {
 
 $ sudo systemctl restart alloy 
 ```
+
+### 4. slurm job 로그 지정 ###
+```
+#SBATCH --output=/var/log/slurm/job-%j.log    # stdout
+#SBATCH --error=/var/log/slurm/job-%j.err     # stderr
+```
+또는 slurm.conf에서 기본값을 설정:
+``
+# slurm.conf
+SlurmdLogFile=/var/log/slurmd.log
+SlurmctldLogFile=/var/log/slurmctld.log
+```
