@@ -1,5 +1,5 @@
 # slurm-on-aws (pcluster)
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/pcluster-arch.png)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/slurm-on-aws-arch.png)
 
 * [C1. VPC 생성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/1-vpc.md)
 
