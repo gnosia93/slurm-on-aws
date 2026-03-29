@@ -162,7 +162,7 @@ python tools/preprocess_data.py \
 # /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
 
-### 학습 전체 flow 예시 ###
+## 학습 예시 ##
 ```
 # 1. 데이터 다운로드
 pip install datasets
