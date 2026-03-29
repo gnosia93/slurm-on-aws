@@ -1,6 +1,5 @@
 ### 1. 데이터 수집 ###
-소스별 수집 방법:
-
+```
 웹 크롤링:
   Common Crawl (가장 큰 공개 웹 데이터, 페타바이트급)
   → https://commoncrawl.org
@@ -21,8 +20,11 @@
   AI Hub 데이터셋 (정부 제공)
   뉴스 크롤링 (저작권 주의)
   모두의 말뭉치 (국립국어원)
+```
 
-# HuggingFace에서 다운로드 예시
+
+#### HuggingFace 다운로드 예시 ####
+```
 pip install datasets
 
 python -c "
