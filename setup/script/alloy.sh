@@ -10,45 +10,33 @@ apt-get install -y alloy
 # 설정 파일
 cat > /etc/alloy/config.alloy << EOF
 // syslog 수집 (Xid, OOM 등)
-local.file_match "syslog" {
-  path_targets = [{"__path__" = "/var/log/syslog"}]
-}
-
 loki.source.file "syslog" {
-  targets    = local.file_match.syslog.targets
-  forward_to = [loki.write.default.receiver]
-  labels     = {
-    job  = "syslog",
-    node = env("HOSTNAME"),
-  }
+    targets    = [{
+      __path__ = "/var/log/syslog",
+      job      = "syslog",
+      node     = env("HOSTNAME"),
+    }]
+    forward_to = [loki.write.default.receiver]
 }
 
-// slurmd 로그 수집
-local.file_match "slurmd" {
-  path_targets = [{"__path__" = "/opt/slurm/log/slurmd.log"}]
-}
-
+// slurmd
 loki.source.file "slurmd" {
-  targets    = local.file_match.slurmd.targets
-  forward_to = [loki.write.default.receiver]
-  labels     = {
-    job  = "slurmd",
-    node = env("HOSTNAME"),
-  }
+    targets    = [{
+      __path__ = "/var/log/slurmd.log",
+      job      = "slurmd",
+      node     = env("HOSTNAME"),
+    }]
+    forward_to = [loki.write.default.receiver]
 }
 
-// 잡 로그 수집
-local.file_match "job_logs" {
-  path_targets = [{"__path__" = "/home/*/slurm-*.out"}]
-}
-
+// job_logs
 loki.source.file "job_logs" {
-  targets    = local.file_match.job_logs.targets
-  forward_to = [loki.write.default.receiver]
-  labels     = {
-    job  = "slurm-job",
-    node = env("HOSTNAME"),
-  }
+    targets    = [{
+      __path__ = "/var/log/slurm/job-*.log",
+      job      = "slurm-job",
+      node     = env("HOSTNAME"),
+    }]
+    forward_to = [loki.write.default.receiver]
 }
 
 // Loki로 전송
