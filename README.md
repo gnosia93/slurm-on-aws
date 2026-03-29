@@ -2,8 +2,8 @@
 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/ws-arch.png)
 
-## ##
-## ##
+### ###
+### ###
 
 * [C1. VPC 생성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/1-vpc.md)
 
