@@ -130,7 +130,7 @@ compactor:
 EOF
 ```
 
-#### [docker-compose] ####
+#### [grafana 대시보드 설정] ####
 그라파나 데이터 소스로 prometheus 와 loki 를 등록하고 대시보드를 설정한다. 
 ```
 mkdir -p grafana/provisioning/datasources
