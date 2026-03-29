@@ -101,6 +101,28 @@ with open('training_data.jsonl', 'w') as f:
 
 ### 4. 토크나이징 + 바이너리 변환 ###
 훈련 데이터셋을 Megatron-LM 바이너리 포맷으로 변환한다. HuggingFace에서 Llama 토크나이저(다국어, 한국어 지원) 모델을 다운로드 한다. (HF_TOKEN 필요)
+
+#### [토크나이저 다운로드] ###
+```
+export HF_TOKEN="hf_xxxxxxxxxxxxx"
+pip install huggingface_hub
+
+python -c "
+from huggingface_hub import hf_hub_download
+import os
+
+token = os.environ['HF_TOKEN']
+hf_hub_download(
+    repo_id='meta-llama/Llama-3.1-8B',
+    filename='tokenizer.model',
+    local_dir='/fsx/tokenizer',
+    token=token
+)
+print('Done: /fsx/tokenizer/tokenizer.model')
+"
+```
+
+#### [토크나이징] ####
 ```
 python tools/preprocess_data.py \
   --input /fsx/data/training_data.jsonl \
@@ -113,7 +135,6 @@ python tools/preprocess_data.py \
 * 결과:
   * /fsx/data/my-dataset_text_document.bin (토큰 바이너리)
   * /fsx/data/my-dataset_text_document.idx (인덱스)
-
 
 ### 5. sbatch 훈련 ###
 ```
