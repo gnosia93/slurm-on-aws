@@ -48,7 +48,7 @@
    - 특수문자 정규화 (전각→반각, 호환 문자 통일)
 ```
 
-#### 기본 정제 파이프라인 ####
+#### [기본 정제 파이프라인] ####
 ```
 def clean_text(text):
     # 1. HTML 태그 제거
@@ -71,7 +71,7 @@ def clean_text(text):
     return text
 ```
 
-#### 중복 제거 ####
+#### [중복 제거] ####
 ```
 # MinHash 기반 중복 제거 (가장 많이 쓰임)
 pip install datasketch
