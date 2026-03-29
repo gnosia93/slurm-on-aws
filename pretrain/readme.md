@@ -133,8 +133,8 @@ python tools/preprocess_data.py \
   * /fsx/data/my-dataset_text_document.idx (인덱스)
 
 ### 5. sbatch 훈련 ###
+gpt-70b.sh에서 mock-data 관련 줄 교체후 실행한다.
 ```
-# gpt-70b.sh에서 mock-data 관련 줄 교체
 # 제거:
     --mock-data \
     --vocab-size 32000 \
