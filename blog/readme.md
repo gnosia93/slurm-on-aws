@@ -6,3 +6,4 @@
 ### Grafana / LOKI ###
 * [6 easy ways to improve your log dashboards with Grafana and Grafana Loki](https://grafana.com/blog/6-easy-ways-to-improve-your-log-dashboards-with-grafana-and-grafana-loki/)
 * [Grafana Loki 대시보드 튜토리얼 | Loki 대시보드 설정 방법 (단계별) | LogQL 튜토리얼](https://www.youtube.com/watch?v=y24AZobVf24)
+* [Grafana fundamentals](https://grafana.com/tutorials/grafana-fundamentals/?utm_source=grafana_gettingstarted)
