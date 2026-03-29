@@ -46,8 +46,6 @@ ds = load_dataset('wikipedia', '20220301.ko', split='train')
 ```
 
 ### 2. 데이터 정제 (Cleaning) ###
-이게 가장 중요하고 시간이 많이 걸리는 단계이다.
-
 ```
 # 기본 정제 파이프라인
 def clean_text(text):
