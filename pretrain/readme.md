@@ -29,29 +29,6 @@
   모두의 말뭉치 (국립국어원)
 ```
 
-
-#### HuggingFace 다운로드 예시 ####
-```
-pip install datasets
-
-python -c "
-from datasets import load_dataset
-
-# Wikipedia
-ds = load_dataset('wikipedia', '20220301.en', split='train')
-ds.to_json('/fsx/data/wiki.jsonl', lines=True)
-
-# The Pile (일부)
-ds = load_dataset('EleutherAI/pile', split='train', streaming=True)
-
-# FineWeb
-ds = load_dataset('HuggingFaceFW/fineweb', split='train', streaming=True)
-
-# 한국어 위키
-ds = load_dataset('wikipedia', '20220301.ko', split='train')
-"
-```
-
 ### 2. 데이터 정제 (Cleaning) ###
 ```
 1. 중복 제거 (Deduplication)
@@ -74,9 +51,7 @@ ds = load_dataset('wikipedia', '20220301.ko', split='train')
    - 줄바꿈 통일
    - 특수문자 정규화
 ```
-
-
-
+#### 샘플 코드 ####
 ```
 # 기본 정제 파이프라인
 def clean_text(text):
@@ -100,31 +75,14 @@ def clean_text(text):
     return text
 ```
 
-#### 중복 제거 도구 ####
+#### 중복 제거 ####
 ```
 # MinHash 기반 중복 제거 (가장 많이 쓰임)
 pip install datasketch
 
 # 또는 deduplicate-text-datasets (Google 제공)
 pip install deduplicate-text-datasets
-
-
-# MinHash 중복 제거 예시
-from datasketch import MinHash, MinHashLSH
-
-lsh = MinHashLSH(threshold=0.8, num_perm=128)
-
-for doc_id, text in enumerate(documents):
-    m = MinHash(num_perm=128)
-    for word in text.split():
-        m.update(word.encode('utf-8'))
-    
-    # 유사 문서 있으면 제거
-    if not lsh.query(m):
-        lsh.insert(doc_id, m)
-        clean_docs.append(text)
 ```
-
         
 ### 3. JSONL 포맷으로 변환 ###
 ```
@@ -135,16 +93,15 @@ import json
 with open('training_data.jsonl', 'w') as f:
     for doc in clean_docs:
         f.write(json.dumps({"text": doc}, ensure_ascii=False) + '\n')
+
 {"text": "첫 번째 문서 내용..."}
 {"text": "두 번째 문서 내용..."}
 {"text": "세 번째 문서 내용..."}
 ```
 
 ### 4. 토크나이징 + 바이너리 변환 ###
+훈련 데이터셋을 Megatron-LM 바이너리 포맷으로 변환한다.
 ```
-# Megatron-LM 포맷으로 변환
-cd Megatron-LM
-
 python tools/preprocess_data.py \
   --input /fsx/data/training_data.jsonl \
   --output-prefix /fsx/data/my-dataset \
@@ -152,24 +109,13 @@ python tools/preprocess_data.py \
   --tokenizer-model /path/to/tokenizer.model \
   --workers 32 \
   --append-eod
-
-# 결과:
-# /fsx/data/my-dataset_text_document.bin (토큰 바이너리)
-# /fsx/data/my-dataset_text_document.idx (인덱스)
 ```
+* 결과:
+  * /fsx/data/my-dataset_text_document.bin (토큰 바이너리)
+  * /fsx/data/my-dataset_text_document.idx (인덱스)
 
 #### 토크나이저 ####
-한국어를 지원하는 Llama 토크나이저를 사용한다.  
-HuggingFace에서 tokenizer.model 을 다운로드 한다. (HF_TOKEN 필요)
-```
-python tools/preprocess_data.py \
-  --input /fsx/data/wiki_all.jsonl \
-  --output-prefix /fsx/data/wiki \
-  --tokenizer-type GPTSentencePieceTokenizer \
-  --tokenizer-model /fsx/models/llama/tokenizer.model \
-  --workers 32 \
-  --append-eod
-```
+한국어를 지원하는 Llama 토크나이저를 사용한다. HuggingFace에서 tokenizer.model 을 다운로드 한다. (HF_TOKEN 필요)
 
 ### 5. sbatch 훈련 ###
 ```
