@@ -73,3 +73,21 @@ Gradient Checkpointing:
   --recompute-method uniform \
   --recompute-num-layers 1 \
 ```
+
+## 3. alloy status - failed ##
+```
+$ systemctl status alloy
+× alloy.service - Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines
+     Loaded: loaded (/lib/systemd/system/alloy.service; enabled; vendor preset: enabled)
+     Active: failed (Result: exit-code) since Sun 2026-03-29 02:00:11 UTC; 3s ago
+       Docs: https://grafana.com/docs/alloy
+    Process: 86954 ExecStart=/usr/bin/alloy run $CUSTOM_ARGS --storage.path=/var/lib/alloy/data $CONFIG_FILE (code=exited>
+   Main PID: 86954 (code=exited, status=1/FAILURE)
+        CPU: 229ms
+
+Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Scheduled restart job, restart counter is at 5.
+Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: Stopped Vendor-agnostic OpenTelemetry Collector distribution with pro>
+Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Start request repeated too quickly.
+Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: alloy.service: Failed with result 'exit-code'.
+Mar 29 02:00:11 gpu-large-st-ml-large-1 systemd[1]: Failed to start Vendor-agnostic OpenTelemetry Collector distribution >
+```
