@@ -276,4 +276,4 @@ docker compose up -d
 
 ## 참고 - 프로메테우스 / 그라파나 설정 ##
 * [DCGM 메트릭](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a2-dcgm-metric.md)
-* [프로메테우스/그라파나 메뉴얼](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/prometheus-grafana.md)
+* [프로메테우스/그라파나 상세설정](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/prometheus-grafana.md)
