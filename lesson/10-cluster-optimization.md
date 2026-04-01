@@ -17,9 +17,21 @@
 | 체크포인트 저장 | N step마다 | CPU + 디스크 | VRAM → RAM → Lustre/S3 |
 | 평가 | N step마다 | GPU | validation loss 측정 (forward만) |
 
+### CPU 에게 부하를 주는 작업 ###
+* 1. 데이터 로딩 (매 micro-batch)
+   * → 가장 큰 CPU 부하
+   * → 디스크 I/O + 전처리 + PCIe 전송
+   * → num_workers 수만큼 CPU 코어 사용
 
+* 2. 체크포인트 저장 (N step마다)
+   * → 순간적으로 높은 부하
+   * → 수십 GB를 VRAM → RAM → 디스크 직렬화
+   * → 저장 중 학습 일시 정지
 
-
+* 3. NCCL 초기화 (1회)
+   * → 시작 시 토폴로지 탐색
+   * → 부트스트랩 TCP 연결
+   * → 1회라 영향 적음
 
 ## GPU 학습 및 클러스터 최적화 ##
 ### 학습코드 최적화 ###
