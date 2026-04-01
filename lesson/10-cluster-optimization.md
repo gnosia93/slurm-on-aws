@@ -52,7 +52,7 @@
   → IB든 EFA든 대역폭만 충분하면 OK
   → 레이턴시 차이 영향 적음
 ```
-![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/rdma-ibgda-efa.png)
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/rdma-ibgda-efa-2.png)
 * latency 는 기술 간의 상대적 차이를 설명하기 위한 정확한 수치가 아님.
 
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/moe-comm.png)
