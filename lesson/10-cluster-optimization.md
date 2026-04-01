@@ -40,7 +40,18 @@
 | EP | All-to-All | 수 KB~MB (토큰 단위) | 레이어당 2회 (매 micro-batch) | 레이턴시 | NVLink(EP≤8) / IB(EP>8) | MoE Expert 분할 | 작은 메시지 빈번, EFA에서 불리 |
 | CP | Ring Attention (P2P) | 수 MB (KV 블록) | Attention마다 | 대역폭 | EFA/IB | 긴 시퀀스(64K+) 분할 | 시퀀스 짧으면 의미 없음 |
 
+```
+레이턴시 민감 + 큰 메시지 (TP):
+  → NVLink (대역폭도 높고 레이턴시도 낮음)
 
+레이턴시 민감 + 작은 메시지 빈번 (EP):
+  → NVLink(노드 내) 또는 IB+IBGDA(노드 간)
+  → EFA는 CPU proxy 오버헤드로 불리
+
+대역폭 민감 + 큰 메시지 (DP, FSDP):
+  → IB든 EFA든 대역폭만 충분하면 OK
+  → 레이턴시 차이 영향 적음
+```
 
 
 
