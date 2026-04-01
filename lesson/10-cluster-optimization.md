@@ -54,6 +54,7 @@
 ```
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/rdma-ibgda-efa.png)
 * latency 는 기술 간의 상대적 차이를 설명하기 위한 정확한 수치가 아님.
+
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/moe-comm.png)
 
 ## GPU 학습 및 클러스터 최적화 ##
