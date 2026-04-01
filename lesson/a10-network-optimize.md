@@ -9,7 +9,7 @@ further on our RoCE network since we fully own its design.
 ### Network Topology ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-optimization-0.png)
 
-• Network topology. Our RoCE-based AI cluster comprises 24K GPUs5 connected by a three-layer Clos
+Our RoCE-based AI cluster comprises 24K GPUs5 connected by a three-layer Clos
 network (Lee et al., 2024). At the bottom layer, each rack hosts 16 GPUs split between two servers and
 connected by a single Minipack2 top-of-the-rack (ToR) switch. In the middle layer, 192 such racks are
 connected by Cluster Switches to form a pod of 3,072 GPUs with full bisection bandwidth, ensuring no
@@ -22,7 +22,7 @@ all optimized to be aware of network topology, aiming to minimize network commun
 ### Load Balancing ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-optimization.png)
 
-• Load balancing. LLM training produces fat network flows that are hard to load balance across all
+LLM training produces fat network flows that are hard to load balance across all
 available network paths using traditional methods such as Equal-Cost Multi-Path (ECMP) routing. To
 address this challenge, we employ two techniques. First, our collective library creates 16 network flows
 between two GPUs, instead of just one, thereby reducing the traffic per flow and providing more flows
@@ -32,7 +32,7 @@ across different network paths by hashing on additional fields in the RoCE heade
 ### Congestion Control ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/network-optimization-3.png)
 
-• Congestion control. We use deep-buffer switches in the spine (Gangidi et al., 2024) to accommodate
+We use deep-buffer switches in the spine (Gangidi et al., 2024) to accommodate
 transient congestion and buffering caused by collective communication patterns. This setup helps
 limit the impact of persistent congestion and network back pressure caused by slow servers, which is
 common in training. Finally, better load balancing through E-ECMP significantly reduces the chance
