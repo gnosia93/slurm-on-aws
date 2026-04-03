@@ -53,14 +53,15 @@ In distributed environments, GPUs must exchange gradients or model parameters, l
 ## 병렬화 기법별 통신 특성 비교 (네트워크 유형별 성능 및 병렬화 적합도) ##
 
 | 병렬화 | 통신 패턴 | 메시지 크기 | 빈도 | 민감도 | 네트워크 | 장점 | 단점 |
-|--------|-----------|-------------|------|--------|----------|------|------|
-| TP | All-Reduce | 수 MB~GB | 레이어당 2회 (매 micro-batch) | 레이턴시 | NVLink 필수 | 모델 가중치 분할 → 메모리 절감 | 통신 빈번, 노드 내로 제한 |
-| SP | Reduce-Scatter + All-Gather | TP와 동일 | TP와 동일 | 레이턴시 | NVLink (TP와 공유) | Activation 메모리 절감, 추가 통신 비용 0 | TP 없이 단독 사용 불가 |
+|--------|----------|-----------|------|--------|---------|------|------|
+| TP | All-Reduce (All-Gather + Reduce-Scatter) | 수 MB~GB | 레이어당 2회(fwd), 4회(fwd+bwd) | 레이턴시 | NVLink 필수 | 모델 가중치 분할 → 메모리 절감 | 통신 빈번, 노드 내로 제한 |
+| SP | TP에 포함 (Reduce-Scatter + All-Gather) | TP와 동일 | TP와 동일 | 레이턴시 | NVLink (TP와 공유) | Activation 메모리 절감, TP 통신에 포함 (추가 비용 없음) | TP 없이 단독 사용 불가 |
 | PP | Point-to-Point | 수 MB (activation) | 스테이지 간 (매 micro-batch) | 레이턴시 | EFA/IB | 레이어 분할 → 메모리 절감 | Pipeline bubble, 구현 복잡 |
-| DP | All-Reduce | 수 GB (gradient) | step당 1회 | 대역폭 | EFA/IB | 구현 간단, 스케일링 쉬움 | 모델 전체 복제 → 메모리 절감 없음 |
-| FSDP | All-Gather + Reduce-Scatter | 수 GB (파라미터/gradient) | 매 micro-batch | 대역폭 | EFA/IB | DP + 메모리 절감 (ZeRO-3) | 통신량 DP보다 많음 |
-| EP | All-to-All | 수 KB~MB (토큰 단위) | 레이어당 2회 (매 micro-batch) | 레이턴시 | NVLink(EP≤8) / IB(EP>8) | MoE Expert 분할 | 작은 메시지 빈번, EFA에서 불리 |
+| DP | All-Reduce | 수 GB (gradient) | step당 1회 | 대역폭 | EFA/IB | 구현 간단, 스케일링 쉬움 | 모델 전체 복제 → 대형 모델에 부적합 |
+| FSDP | All-Gather + Reduce-Scatter | 수 GB (파라미터/gradient) | 매 layer (fwd: AG, bwd: RS+AG) | 대역폭 | EFA/IB | DP + 메모리 절감 (ZeRO-3) | 통신량 DP보다 많음 |
+| EP | All-to-All | 수 KB~MB (토큰 단위) | 레이어당 2회 (매 micro-batch) | 레이턴시 | NVLink(EP≤8) / IB(EP>8) | MoE Expert 분할 | 작은 메시지 빈번, 레이턴시에 민감 |
 | CP | Ring Attention (P2P) | 수 MB (KV 블록) | Attention마다 | 대역폭 | EFA/IB | 긴 시퀀스(64K+) 분할 | 시퀀스 짧으면 의미 없음 |
+
 
 ```
 레이턴시 민감 + 큰 메시지 (TP):
