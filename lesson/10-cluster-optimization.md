@@ -52,6 +52,20 @@ In distributed environments, GPUs must exchange gradients or model parameters, l
 
 ## 병렬화 기법별 통신 특성 비교 (네트워크 유형별 성능 및 병렬화 적합도) ##
 
+| Parallelism | Communication Pattern | Message Size | Frequency | Sensitivity | Network | Pros | Cons |
+|-------------|----------------------|-------------|-----------|-------------|---------|------|------|
+| TP | All-Reduce (All-Gather + Reduce-Scatter) | MBs~GBs | 2x per layer (fwd), 4x (fwd+bwd) | Latency | NVLink required | Model weight sharding → memory savings | Frequent comm, limited to intra-node |
+| SP | Included in TP (Reduce-Scatter + All-Gather) | Same as TP | Same as TP | Latency | NVLink (shared with TP) | Activation memory savings, no additional comm cost | Cannot be used without TP |
+| PP | Point-to-Point | MBs (activations) | Per stage (every micro-batch) | Latency | EFA/IB | Layer partitioning → memory savings | Pipeline bubble, complex implementation |
+| DP | All-Reduce | GBs (gradients) | 1x per step | Bandwidth | EFA/IB | Simple implementation, easy to scale | Full model replica → not suitable for large models |
+| FSDP | All-Gather + Reduce-Scatter | GBs (params/gradients) | Per layer (fwd: AG, bwd: RS+AG) | Bandwidth | EFA/IB | DP + memory savings (ZeRO-3) | Higher comm volume than DP |
+| EP | All-to-All | KBs~MBs (per token) | 2x per layer (every micro-batch) | Latency | NVLink(EP≤8) / IB(EP>8) | MoE expert partitioning | Frequent small messages, latency sensitive |
+| CP | Ring Attention (P2P) | MBs (KV blocks) | Per attention | Bandwidth | EFA/IB | Long sequence (64K+) partitioning | No benefit for short sequences |
+
+
+
+
+
 | 병렬화 | 통신 패턴 | 메시지 크기 | 빈도 | 민감도 | 네트워크 | 장점 | 단점 |
 |--------|----------|-----------|------|--------|---------|------|------|
 | TP | All-Reduce (All-Gather + Reduce-Scatter) | 수 MB~GB | 레이어당 2회(fwd), 4회(fwd+bwd) | 레이턴시 | NVLink 필수 | 모델 가중치 분할 → 메모리 절감 | 통신 빈번, 노드 내로 제한 |
