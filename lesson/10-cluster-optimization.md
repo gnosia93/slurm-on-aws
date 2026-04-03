@@ -57,7 +57,13 @@
 
 ### FSDP ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/fsdp.png)
+
+### Context Parallel ###
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/context-parallel.png)
+
+### MoE (Mixture of Expert)
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/moe-comm.png)
+
 
 ## GPU 학습 및 클러스터 최적화 ##
 ### 학습코드 최적화 ###
