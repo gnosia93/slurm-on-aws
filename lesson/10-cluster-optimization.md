@@ -1,6 +1,25 @@
 ## GPU Starvation ##
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cause-of-gpu-starvation.png)
 
+### 1. Data Pipeline Bottlenecks ###
+* This is the most frequent cause, where the CPU or storage cannot supply data as fast as the GPU can process it. 
+Heavy Pre-processing: Complex tasks like image decoding, heavy data augmentation, or tokenization performed on the CPU can become a bottleneck.
+* I/O Latency: High-latency storage systems (slow HDDs or remote cloud storage) fail to maintain the required throughput for high-performance GPUs
+* Insufficient Data Workers: Using too few CPU threads for data loading prevents the data pipeline from staying ahead of the GPU. 
+
+### 2. Communication Overhead & Synchronization ###
+In distributed environments, GPUs must exchange gradients or model parameters, leading to "communication stalls". 
+* Network Bandwidth: If the interconnect is too slow, GPUs spend more time waiting for AllReduce operations to finish than actually computing.
+* The "Straggler" Effect: In synchronous training, the entire cluster must wait for the slowest GPU to finish its step. If one node has a hardware issue or a background process interfering, every other GPU stays idle.
+* Barrier Synchronization: Frequent sync points in algorithms like Pipeline Parallelism can create "bubbles" (idle periods) where GPUs wait for the next micro-batch to arrive from a previous stage. 
+
+### 3. Hardware and Configuration Limits ###
+* Small Batch Sizes: If the per-GPU batch size is too low, the GPU finishes the computation too quickly, making the constant overhead of starting new kernels and loading data more visible.
+* PCIe/NVLink Saturation: Limited bandwidth between the CPU and GPU (PCIe) or between GPUs (NVLink) can throttle the data flow, keeping the compute cores underutilized.
+* Memory Constraints: If a model nearly exhausts GPU memory, aggressive memory management or swapping data to host memory can cause significant execution delays. 
+<img width="1338" height="289" alt="image" src="https://github.com/user-attachments/assets/2b4b9b38-04f0-4086-9032-2962f2153d16" />
+
+
 ## 분산 학습 CPU/GPU 작업 분류 ##
 
 | 작업 | 실행 횟수 | 실행 위치 | 비고 |
