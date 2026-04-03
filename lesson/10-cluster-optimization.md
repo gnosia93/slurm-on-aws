@@ -1,3 +1,6 @@
+## GPU Starvation ##
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/cause-of-gpu-starvation.png)
+
 ## 분산 학습 CPU/GPU 작업 분류 ##
 
 | 작업 | 실행 횟수 | 실행 위치 | 비고 |
