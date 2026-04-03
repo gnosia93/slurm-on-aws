@@ -17,7 +17,7 @@ In distributed environments, GPUs must exchange gradients or model parameters, l
 * Small Batch Sizes: If the per-GPU batch size is too low, the GPU finishes the computation too quickly, making the constant overhead of starting new kernels and loading data more visible.
 * PCIe/NVLink Saturation: Limited bandwidth between the CPU and GPU (PCIe) or between GPUs (NVLink) can throttle the data flow, keeping the compute cores underutilized.
 * Memory Constraints: If a model nearly exhausts GPU memory, aggressive memory management or swapping data to host memory can cause significant execution delays. 
-<img width="1338" height="289" alt="image" src="https://github.com/user-attachments/assets/2b4b9b38-04f0-4086-9032-2962f2153d16" />
+
 
 
 ## 분산 학습 CPU/GPU 작업 분류 ##
