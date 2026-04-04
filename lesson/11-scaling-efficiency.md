@@ -29,4 +29,11 @@ GPU 수     이상적 속도    실제 속도     효율
 4096       4096x         2400x        ~59%
 ```
 
-
+### 이걸 개선하는 방법들 ###
+* Computation-Communication Overlap:	연산과 통신을 동시에 수행
+* Gradient Compression:	통신 데이터량 감소
+* Async All-Reduce:	동기화 대기 시간 감소
+* 최적 병렬화 전략 조합 (3D/4D Parallelism):	통신 패턴 최적화
+* Placement Group (AWS): 노드 간 네트워크 레이턴시 최소화
+* Topology-Aware Scheduling: GPU-NIC 근접 배치
+결론적으로 GPU를 무한히 늘린다고 무한히 빨라지지 않고, 어느 시점부터는 통신 오버헤드가 연산 이득을 잡아먹는다. 그래서 대규모 학습에서는 "GPU를 몇 개 쓸까"보다 "통신을 어떻게 줄일까"가 더 중요한 엔지니어링 과제이다.
