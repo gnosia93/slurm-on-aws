@@ -13,12 +13,12 @@ GPU 메모리 (예: H100 80GB)
 
 예시 (7B 모델, FP16):
 
-파라미터:     7B × 2 bytes = 14 GB
-Optimizer:   7B × 8 bytes = 56 GB (Adam: fp32 파라미터 + momentum + variance)
-Gradient:    7B × 2 bytes = 14 GB
+파라미터:      7B × 2 bytes = 14 GB
+Optimizer:   7B × 12 bytes = 84 GB (Adam: fp32 파라미터 + momentum + variance)
+Gradient:    7B × 4 bytes = 28 GB
 Activation:  배치/시퀀스 길이에 따라 가변
 ─────────────────────────────────
-합계:        84 GB + Activation → 단일 GPU로 불가능
+합계:        126 GB + Activation → 단일 GPU로 불가능
 ```
 
 ### 2. 방지 방법 ###
