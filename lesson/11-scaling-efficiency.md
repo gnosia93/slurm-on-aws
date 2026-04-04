@@ -40,6 +40,17 @@ GPU 이론 최대 FLOPS 대비 실제 모델 학습에 사용된 FLOPS 비율을
 MFU = (모델의 실제 FLOPS) / (GPU 이론 최대 FLOPS) × 100%
 ```
 
+### MFU가 100%가 안 되는 이유 ###
+* 단일 GPU 수준:
+  - 메모리 I/O 병목 (memory wall)
+  - CUDA 커널 런치 오버헤드
+  - Activation recomputation
+  - 비연산 작업 (데이터 로딩, 전처리)
+* 멀티 GPU 수준 (추가 손실):
+  - 통신 오버헤드
+  - 동기화 대기
+  - 파이프라인 버블
+
 ```
 예시:
   H100 FP16 이론 최대: 990 TFLOPS
