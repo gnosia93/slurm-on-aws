@@ -27,7 +27,7 @@
 
 * [C11. Scaling Efficiency / MFU](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-scaling-efficiency.md)
     
-* [C12. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-cluster-delete.md)
+* [C12. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/12-cluster-delete.md)
 
 
 ### _Appendix_ ##
