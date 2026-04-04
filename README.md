@@ -25,7 +25,7 @@
 
 * [C10. GPU 학습 및 클러스터 최적화](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/10-cluster-optimization.md)
 
-* [C11. Scaling Efficiency / MFU]()
+* [C11. Scaling Efficiency / MFU](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-scaling-efficiency.md)
     
 * [C12. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-cluster-delete.md)
 
