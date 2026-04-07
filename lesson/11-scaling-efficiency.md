@@ -65,6 +65,8 @@ MFU = (모델의 실제 FLOPS) / (GPU 이론 최대 FLOPS) × 100%
 | PaLM (Google) | TPU v4 | ~46-57% |
 | LLaMA (Meta) | A100 | ~36-43% |
 
+![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/mfu.png)
+
 
 MFU가 100%가 안 되는 이유가 바로 앞서 말한 통신 오버헤드, 동기화 대기, 파이프라인 버블, 메모리 I/O 병목 등으로, MFU를 높이는 것이 대규모 학습 최적화의 핵심 지표이다.
 ```
