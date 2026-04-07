@@ -60,11 +60,6 @@ MFU = (모델의 실제 FLOPS) / (GPU 이론 최대 FLOPS) × 100%
 
 ### 실제 대규모 학습의 MFU ###
 
-| Model | GPU | MFU |
-|-------|-----|-----|
-| PaLM (Google) | TPU v4 | ~46-57% |
-| LLaMA (Meta) | A100 | ~36-43% |
-
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/mfu.png)
 
 
