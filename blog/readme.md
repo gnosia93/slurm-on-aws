@@ -13,3 +13,6 @@
 * [Coding a Transformer from scratch on PyTorch, with full explanation, training and inference.](https://www.youtube.com/watch?v=ISNdQcPhsts)
     * https://github.com/hkproj/pytorch-transformer
 * [PyTorch in 1 Hour](https://www.youtube.com/watch?v=r1bquDz5GGA)
+
+### Data Center GPU ###
+* https://www.youtube.com/watch?v=WZnk690yZqc
