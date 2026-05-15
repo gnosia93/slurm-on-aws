@@ -160,35 +160,31 @@ if __name__ == "__main__":
     main()
 ```
 
-### 3.	Slurm 작업 제출용 셸 스크립트 (submit_inference.sh) ###
+### 3.	Slurm 작업 제출용 셸 스크립트 (submit_bulk.sh) ###
 ```
 #!/bin/bash
-#SBATCH --job-name=gemma_inference   # 작업 이름
-#SBATCH --nodes=1                    # 사용할 노드 수
-#SBATCH --ntasks-per-node=1          # 노드당 태스크 수
-#SBATCH --gres=gpu:4                 # 필요한 GPU 개수 (예: gpu:a100:1 또는 gpu:1)
-#SBATCH --cpus-per-task=16           # 데이터 처리를 위한 CPU 코어 수
-#SBATCH --mem=32G                    # 시스템 메모리 신청
-#SBATCH --time=00:30:00              # 최대 실행 시간 (hh:mm:ss) - 30분 제한
-#SBATCH --output=logs/infer_%j.out   # 표준 출력 로그 파일 (%j는 작업 ID)
-#SBATCH --error=logs/infer_%j.err    # 에러 로그 파일
+#SBATCH --job-name=cohere_bulk_infer
+#SBATCH --partition=gpu-g7e-24x      # 새로 만든 Blackwell 파티션
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --gres=gpu:4                 # Command R+ (104B) 로드를 위해 GPU 4장 모두 사용
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=350G                   # 시스템 메모리도 넉넉하게 할당
+#SBATCH --time=12:00:00              # 대량 처리를 위해 최대 12시간 허용
+#SBATCH --output=logs/bulk_%j.out
+#SBATCH --error=logs/bulk_%j.err
 
-# 1. 환경 오염 방지를 위해 가상환경 활성화 (Conda 등)
-# 클러스터 환경에 맞게 조정 필요
+# 가상환경 활성화 및 실행
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate ai_env
 
-# 2. Hugging Face 모델 캐시 디렉토리 지정 (필요시 공유 스토리지로 설정)
-export HF_HOME="/scratch/$USER/hf_cache"
-
-# 3. 인퍼런스 스크립트 실행
-python inference.py
+python bulk_inference.py
 ```
 
 ### 4.  Slurm에 작업 제출 및 모니터링 ###
 
 ```bash
-sbatch submit_inference.sh
+sbatch submit_bulk.sh
 squeue -u $USER
 ```
 생성된 작업 ID(123456) 에 로그를 출력한다.
