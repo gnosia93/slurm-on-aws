@@ -29,7 +29,7 @@ Scheduling:
           - subnet-xxxxxx # 인스턴스가 생성될 VPC 서브넷 ID
 ```
 
-yaml 파일을 수정했다면, **내 로컬 PC나 관리용 인프라 컴퓨터(pcluster CLI가 설치된 곳)**에서 아래 명령어를 실행하여 AWS 클러스터에 반영한다.
+yaml 파일을 수정한후 vscode 터미널(pcluster CLI가 설치된 곳)에서 아래 명령어를 실행하여 pcluster 에 반영한다.
 ```
 # 1. 수정된 설정 파일이 문법에 맞는지 검증
 pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configuration cluster-config.yaml --dryrun
