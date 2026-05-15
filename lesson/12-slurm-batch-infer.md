@@ -41,7 +41,7 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 > [!NOTE]
 > AWS ParallelCluster(pcluster)와 달리, 일반 Slurm 환경에서는 아래의 단계를 거쳐 수동으로 신규 파티션을 추가해야 합니다
 > #### 1. 노드(NodeName) 및 파티션(PartitionName) 정의 ####
-> * /etc/slurm/slurm.conf 예시
+> /etc/slurm/slurm.conf 예시
 > ```
 > # 노드 정의
 > NodeName=gpu-node[01-02] CPUs=96 RealMemory=380000 Gres=gpu:blackwell:4
