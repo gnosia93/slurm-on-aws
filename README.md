@@ -29,7 +29,8 @@
     
 * [C12. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/12-cluster-delete.md)
 
-
+* [C13. Cohere 104B Command R+ 인퍼런스]
+  
 ### _Appendix_ ##
 * [A. Slurm 의 이해](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/12-slurm-deepdive.md)
 * [B. GPU OOM 방지](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/a3-gpu-oom.md)
