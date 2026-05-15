@@ -60,7 +60,6 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 > Name=gpu Type=blackwell File=/dev/nvidia2
 > Name=gpu Type=blackwell File=/dev/nvidia3
 > ```
-> * type 필드 확인 필요 - l40s 가 아님.
 >   
 > #### 3. 설정 반영 및 활성화 (가장 중요) ####
 > 설정 파일을 저장한 후, Slurm 데몬이 이 정보를 새로 읽도록 동기화해야 한다. 헤드 노드 터미널에서 아래 명령어를 실행한다.
