@@ -40,45 +40,41 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 
 > [!NOTE]
 > #### 1-1. 노드(NodeName) 및 파티션(PartitionName) 정의 ####
-```
-# /etc/slurm/slurm.conf 예시
-# 노드 정의
-NodeName=gpu-node[01-02] CPUs=96 RealMemory=380000 Gres=gpu:blackwell:4
-
-# 파티션 정의
-PartitionName=gpu-g7e-24x Nodes=gpu-node[01-02] MaxTime=INFINITE State=UP Default=NO
-```
-* Default=NO: 사용자가 명시적으로 -p gpu-g7e-24x를 지정했을 때만 이 파티션이 사용된다. 만약 기본 파티션으로 바꾸고 싶다면 Default=YES로 수정한다.
-
-#### 1-2. gres.conf 설정 확인하기 (GPU 인식) ####
-Slurm이 노드 안의 GPU를 올바르게 바인딩할 수 있도록 Compute 노드들의 /etc/slurm/gres.conf 파일도 설정한다.
-```
-# /etc/slurm/gres.conf 예시
-Name=gpu Type=blackwell File=/dev/nvidia0
-Name=gpu Type=blackwell File=/dev/nvidia1
-Name=gpu Type=blackwell File=/dev/nvidia2
-Name=gpu Type=blackwell File=/dev/nvidia3
-```
-* type 필드 확인 필요 - l40s 가 아님.
-  
-#### 1-3. 설정 반영 및 활성화 (가장 중요) ####
-설정 파일을 저장한 후, Slurm 데몬이 이 정보를 새로 읽도록 동기화해야 한다. 헤드 노드 터미널에서 아래 명령어를 실행한다.
-```
-sudo scontrol reconfigure
-```
-만약 신규 노드(gpu-node01,02)의 상태가 DOWN이나 DRAIN으로 되어 있다면 아래 명령어로 IDLE(대기) 상태로 깨워준다.
-```
-sudo scontrol update NodeName=gpu-node[01-02] State=RESUME
-```
-설정이 완료되었다면 사용자들이 파티션을 볼 수 있는지 확인한다.
-```
-sinfo
-```
-[결과]
-```
-PARTITION      AVAIL  TIMELIMIT  NODES  STATE NODELIST
-gpu-g7e-24x       up   infinite      2   idle gpu-node[01-02]
-```
+> ```
+> # /etc/slurm/slurm.conf 예시
+> # 노드 정의
+> NodeName=gpu-node[01-02] CPUs=96 RealMemory=380000 Gres=gpu:blackwell:4
+> 
+> # 파티션 정의
+> PartitionName=gpu-g7e-24x Nodes=gpu-node[01-02] MaxTime=INFINITE State=UP Default=NO
+> ```
+> * Default=NO: 사용자가 명시적으로 -p gpu-g7e-24x를 지정했을 때만 이 파티션이 사용된다. 만약 기본 파티션으로 바꾸고 싶다면 Default=YES로 수정한다.
+> 
+> #### 1-2. gres.conf 설정 확인하기 (GPU 인식) ####
+> Slurm이 노드 안의 GPU를 올바르게 바인딩할 수 있도록 Compute 노드들의 /etc/slurm/gres.conf 파일도 설정한다.
+> ```
+> # /etc/slurm/gres.conf 예시
+> Name=gpu Type=blackwell File=/dev/nvidia0
+> Name=gpu Type=blackwell File=/dev/nvidia1
+> Name=gpu Type=blackwell File=/dev/nvidia2
+> Name=gpu Type=blackwell File=/dev/nvidia3
+> ```
+> * type 필드 확인 필요 - l40s 가 아님.
+>   
+> #### 1-3. 설정 반영 및 활성화 (가장 중요) ####
+> 설정 파일을 저장한 후, Slurm 데몬이 이 정보를 새로 읽도록 동기화해야 한다. 헤드 노드 터미널에서 아래 명령어를 실행한다.
+> ```
+> sudo scontrol reconfigure
+> ```
+> 만약 신규 노드(gpu-node01,02)의 상태가 DOWN이나 DRAIN으로 되어 있다면 아래 명령어로 IDLE(대기) 상태로 깨워준다.
+> ```
+> sudo scontrol update NodeName=gpu-node[01-02] State=RESUME
+> ```
+> 설정이 완료되었다면 사용자들이 파티션을 볼 수 있는지 확인한다.
+> ```
+> sinfo
+> ```
+>
 
 ### 2. 인퍼런스 파이썬 스크립트 (inference.py) ###
 아래는 Hugging Face의 transformers 라이브러리를 사용해 구글 Gemma 2 모델로 추론을 수행하는 간단한 예시이다. (Cohere 로 교체 필요)
