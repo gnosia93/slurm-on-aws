@@ -199,8 +199,21 @@ cat logs/infer_123456.out
 vLLM은 PagedAttention 기술을 활용해 GPU VRAM 안에서 KV 캐시를 효율적으로 관리하므로, 대용량 모델인 Cohere Command R+ (104B)를 돌릴 때 Hugging Face 순정 코드보다 수 배 이상 빠른 압도적인 처리 속도를 보여준다.
 아래는 서버를 띄우지 않고, 준비된 JSONL 파일의 데이터를 한 번에 밀어 넣는 대량 배치 스크립트이다.
 
+#### 📝 inputs.jsonl 파일 예시 ####
 ```
-# vllm_bulk_inference.py
+{"id": 1, "prompt": "양자 컴퓨터가 상용화되면 현재의 RSA 암호 체계는 어떻게 되나요? 한 문장으로 요약해 주세요."}
+{"id": 2, "prompt": "스타트업이 초기 인프라를 구축할 때 AWS ParallelCluster를 도입하면 얻을 수 있는 비용적 장점은 무엇인가요?"}
+{"id": 3, "prompt": "초대형 언어 모델(LLM) 추론 시 vLLM 엔진이 Hugging Face 순정 코드보다 빠른 이유를 핵심 기술명 위주로 설명해줘."}
+{"id": 4, "prompt": "기후 변화로 인한 해수면 상승 문제를 해결하기 위해 전 세계 과학자들이 연구 중인 혁신적인 기술 3가지만 나열해 보시오."}
+{"id": 5, "prompt": "데이터 분석가 관점에서 파이썬의 Pandas 라이브러리와 Polars 라이브러리의 가장 큰 성능 차이는 어디서 발생하나요?"}
+```
+> [!NOTE] 팁 및 주의사항
+>	1. 줄바꿈 주의: 하나의 대화(JSON) 안에서 줄바꿈을 하겠다고 엔터를 치면 파일 읽기 에러가 발생한다. 프롬프트 내부에서 줄바꿈을 표현하고 싶다면 반드시 \n 이라는 이스케이프 문자열을 사용해야 한다.
+> 2. 커스텀 필드 확장 가능: 현재 스크립트는 prompt와 결과 매칭을 위한 id 필드만 읽도록 짜여 있지만, 필요하다면 {"id": 1, "category": "it", "prompt": "..."} 처럼 원하는 태그 필드를 추가할 수 있다. 파이썬에서 사전(Dictionary) 형태로 파싱한다.
+
+
+#### vllm_bulk_inference.py ####
+```
 import json
 import os
 from vllm import LLM, SamplingParams
