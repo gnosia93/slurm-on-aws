@@ -34,8 +34,27 @@ Name=gpu Type=l40s File=/dev/nvidia2
 Name=gpu Type=l40s File=/dev/nvidia3
 ```
 
+#### 4. 설정 반영 및 활성화 (가장 중요) ####
+설정 파일을 저장한 후, Slurm 데몬이 이 정보를 새로 읽도록 동기화해야 한다. 전체 클러스터 리부팅 없이 명령어로 즉시 반영할 수 있다.
+마스터 노드 터미널에서 아래 명령어를 실행한다.
+```
+sudo scontrol reconfigure
+```
+만약 신규 노드(gpu-node01,02)의 상태가 DOWN이나 DRAIN으로 되어 있다면 아래 명령어로 IDLE(대기) 상태로 깨워준다.
+```
+sudo scontrol update NodeName=gpu-node[01-02] State=RESUME
+```
 
-
+#### 5. 정상 생성 확인 ####
+설정이 완료되었다면 사용자들이 파티션을 볼 수 있는지 확인한다.
+```
+sinfo
+```
+[결과]
+```
+PARTITION      AVAIL  TIMELIMIT  NODES  STATE NODELIST
+gpu-g7e-24x       up   infinite      2   idle gpu-node[01-02]
+```
 
 ### 2. 인퍼런스 파이썬 스크립트 (inference.py) ###
 아래는 Hugging Face의 transformers 라이브러리를 사용해 구글 Gemma 2 모델로 추론을 수행하는 간단한 예시이다. (Cohere 로 교체 필요)
