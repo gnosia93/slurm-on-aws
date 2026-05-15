@@ -41,17 +41,16 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 > [!NOTE]
 > AWS ParallelCluster(pcluster)와 달리, 일반 Slurm 환경에서는 아래의 단계를 거쳐 수동으로 신규 파티션을 추가해야 합니다
 > #### 1. 노드(NodeName) 및 파티션(PartitionName) 정의 ####
+> * /etc/slurm/slurm.conf 예시
 > ```
-> # /etc/slurm/slurm.conf 예시
 > # 노드 정의
 > NodeName=gpu-node[01-02] CPUs=96 RealMemory=380000 Gres=gpu:blackwell:4
-> 
 > # 파티션 정의
 > PartitionName=gpu-g7e-24x Nodes=gpu-node[01-02] MaxTime=INFINITE State=UP Default=NO
 > ```
 > * Default=NO: 사용자가 명시적으로 -p gpu-g7e-24x를 지정했을 때만 이 파티션이 사용된다. 만약 기본 파티션으로 바꾸고 싶다면 Default=YES로 수정한다.
 > 
-> #### 1. gres.conf 설정 확인하기 (GPU 인식) ####
+> #### 2. gres.conf 설정 확인하기 (GPU 인식) ####
 > Slurm이 노드 안의 GPU를 올바르게 바인딩할 수 있도록 Compute 노드들의 /etc/slurm/gres.conf 파일도 설정한다.
 > ```
 > # /etc/slurm/gres.conf 예시
