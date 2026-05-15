@@ -28,10 +28,10 @@ PartitionName=gpu-g7e-24x Nodes=gpu-node[01-02] MaxTime=INFINITE State=UP Defaul
 Slurm이 노드 안의 GPU를 올바르게 바인딩할 수 있도록 Compute 노드들의 /etc/slurm/gres.conf 파일도 설정한다.
 ```
 # /etc/slurm/gres.conf 예시
-Name=gpu Type=l40s File=/dev/nvidia0
-Name=gpu Type=l40s File=/dev/nvidia1
-Name=gpu Type=l40s File=/dev/nvidia2
-Name=gpu Type=l40s File=/dev/nvidia3
+Name=gpu Type=blackwell File=/dev/nvidia0
+Name=gpu Type=blackwell File=/dev/nvidia1
+Name=gpu Type=blackwell File=/dev/nvidia2
+Name=gpu Type=blackwell File=/dev/nvidia3
 ```
 * type 필드 확인 필요 - l40s 가 아님.
   
