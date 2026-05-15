@@ -75,6 +75,16 @@ export HF_HOME="/scratch/$USER/hf_cache"
 python inference.py
 ```
 
+### 4.  Slurm에 작업 제출 및 모니터링 ###
+
+```bash
+sbatch submit_inference.sh
+squeue -u $USER
+```
+생성된 작업 ID(123456) 에 로그를 출력한다.
+```bash
+cat logs/infer_123456.out
+```
 
 
 ### 참고 - GPU Memory ###
