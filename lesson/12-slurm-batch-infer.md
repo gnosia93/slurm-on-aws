@@ -286,8 +286,7 @@ if __name__ == "__main__":
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-memory.png)
 
 
-## Slurm Job Array 를 이용한 병렬 인퍼런스 ##
-* vLLM과 Slurm Job Array를 활용한 대규모 언어 모델(LLM) 병렬 추론 최적화
+## vLLM과 Slurm Job Array를 활용한 대규모 언어 모델(LLM) 병렬 추론 최적화 ##
 인퍼런스를 병렬로 처리하고자 하는 경우 가장 직관적인 방법은 inputs.jsonl 파일을 수동으로 분할 한후 각기 다른 GPU 에서 인퍼런스 하는 것이다.
 하지만 Slurm Job Array(작업 배열) 를 사용하게 되면, 파일을 수동으로 쪼갤 필요 없이 inputs.jsonl 하나만 그대로 두고, 병렬 인퍼런스를 구성할 수 있다. 이 방식을 쓰면 나중에 GPU 세트가 2개에서 4개, 10개로 늘어나도 파일 분할 없이 명령어 한 줄로 제어가 가능하다.
 
