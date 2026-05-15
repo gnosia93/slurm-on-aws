@@ -354,3 +354,7 @@ conda activate ai_env
 # 파이썬 실행 (내부에서 환경변수를 알아서 읽으므로 파일명 지정 필요 없음)
 python vllm_bulk_inference.py
 ```
+
+## 레퍼런스 ##
+
+* [NVIDIA RTX PRO 6000 Blackwell Server Edition GPU 가속기](https://aws.amazon.com/ko/blogs/korea/announcing-amazon-ec2-g7e-instances-accelerated-by-nvidia-rtx-pro-6000-blackwell-server-edition-gpus/)
