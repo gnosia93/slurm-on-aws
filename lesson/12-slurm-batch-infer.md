@@ -1,3 +1,5 @@
+* 테스트 및 내용 수정 필요..
+  
 ## Slurm 배치 인퍼런스 ##
 Slurm 환경에서는 AI 모델을 실시간으로 켜놓는 '서버' 형태보다는, "데이터 입력을 받아서 추론을 끝내고 결과 파일을 저장한 뒤 종료하는 배치(Batch) 작업" 형태로 구동하는 것이 정석이다. 여기서는 g7e.24xlarge (4GPU, VRAM 96GB * 4EA) 1대로 Cohere Command R+ 104B 모델을 서빙한다. 모델은 TP 또는 PP 를 이용하여 4 GPU 로 구성할 예정이다. 
 
@@ -352,7 +354,3 @@ conda activate ai_env
 # 파이썬 실행 (내부에서 환경변수를 알아서 읽으므로 파일명 지정 필요 없음)
 python vllm_bulk_inference.py
 ```
-
-
-
-## 레퍼런스 ##
