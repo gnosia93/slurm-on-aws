@@ -1,6 +1,6 @@
 ## Slurm Batch Inference ##
 
-g7e.xlarge (VRAM 96GB) 4대 Cohere Command R+ 104B 모델을 서빙한다.
+g7e.xlarge (1GPU, VRAM 96GB) 4대로 Cohere Command R+ 104B 모델을 서빙한다.
 
 
 
