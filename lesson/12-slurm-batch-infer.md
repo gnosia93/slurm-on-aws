@@ -192,6 +192,81 @@ squeue -u $USER
 cat logs/infer_123456.out
 ```
 
+### 대량 배치 처리 시 극대화 팁 (vLLM 인오프라인 배치) ###
+
+현재 드린 코드는 Hugging Face 순정 코드로 구현되어 안정적이지만, 만약 처리해야 할 데이터가 수만 건 이상으로 너무 많다면 인퍼런스 속도가 느릴수 있다.. 이때는 서버를 띄우지 않고 오직 대량 배치 속도를 기적적으로 높이기 위해 vLLM의 Offline Inference 기능을 쓰는 것이 좋다.vLLM은 문장 길이에 따라 GPU 연산을 극도로 압축(PagedAttention 기술)하기 때문에 위 코드보다 최소 3~5배 이상 속도가 빠르다.
+
+vLLM은 PagedAttention 기술을 활용해 GPU VRAM 안에서 KV 캐시를 효율적으로 관리하므로, 대용량 모델인 Cohere Command R+ (104B)를 돌릴 때 Hugging Face 순정 코드보다 수 배 이상 빠른 압도적인 처리 속도를 보여준다.
+아래는 서버를 띄우지 않고, 준비된 JSONL 파일의 데이터를 한 번에 밀어 넣는 대량 배치 스크립트이다.
+
+```
+# vllm_bulk_inference.py
+import json
+import os
+from vllm import LLM, SamplingParams
+
+def main():
+    model_id = "CohereForAI/c4ai-command-r-plus"
+    input_file = "inputs.jsonl"
+    output_file = f"outputs_vllm_{os.environ.get('SLURM_JOB_ID', 'local')}.jsonl"
+
+    # 1. 입력 데이터 읽기
+    prompts = []
+    data_records = []
+    with open(input_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                item = json.loads(line)
+                prompts.append(item["prompt"])
+                data_records.append(item)
+    
+    print(f"Total data loaded: {len(prompts)} items.")
+
+    # 2. 생성 파라미터(Sampling Params) 설정
+    # vllm은 이 파라미터를 기반으로 최적화된 토큰 생성을 수행합니다.
+    sampling_params = SamplingParams(
+        temperature=0.3,
+        max_tokens=200,      # Hugging Face의 max_new_tokens와 동일
+        skip_special_tokens=True
+    )
+
+    # 3. vLLM 엔진 초기화 및 104B 모델 로드
+    print("Loading 104B Model via vLLM with 4 GPUs...")
+    llm = LLM(
+        model=model_id,
+        tensor_parallel_size=4,       # g7e.24xlarge가 가진 GPU 4장에 모델 분할 (필수)
+        dtype="bfloat16",             # 메모리 절약을 위한 데이터 타입
+        trust_remote_code=True,        # 일부 모델 구동에 필요한 권한 허용
+        gpu_memory_utilization=0.90   # GPU 메모리의 90%를 KV 캐시 및 모델용으로 락(Lock)
+    )
+
+    # 4. 대량 오프라인 배치 추론 실행 (vLLM의 핵심 장점)
+    # 데이터를 통째로 던지면 내부에서 알아서 실시간으로 묶고 풀며 초고속 연산을 수행합니다.
+    print("Starting vLLM bulk offline inference...")
+    outputs = llm.generate(prompts, sampling_params)
+
+    # 5. 결과 저장
+    print("Writing results to file...")
+    with open(output_file, "w", encoding="utf-8") as out_f:
+        for idx, output in enumerate(outputs):
+            generated_text = output.outputs[0].text
+            
+            result = {
+                "id": data_records[idx]["id"],
+                "prompt": data_records[idx].get("prompt", prompts[idx]),
+                "response": generated_text.strip()
+            }
+            out_f.write(json.dumps(result, ensure_ascii=False) + "\n")
+
+    print(f"vLLM Bulk inference completed! Results saved to {output_file}")
+
+if __name__ == "__main__":
+    main()
+```
+*	tensor_parallel_size=4: Hugging Face의 device_map="auto"는 모델의 레이어 단위로 GPU를 쪼개 쓰는 파이프라인 병렬화(PP) 방식이라 병목이 생긴다. 반면 vLLM은 한 단어를 만들 때도 4장의 GPU가 동시에 연산하는 **텐서 병렬화(TP)**를 지원하므로 대형 모델 연산 속도가 극대화된다.
+*	배치 루프(for문)의 실종: Hugging Face 코드에서는 메모리가 터지는 걸 막기 위해 우리가 직접 데이터를 2개, 4개씩 쪼개서 for문을 돌렸다.. 하지만 vLLM은 데이터를 llm.generate(prompts)로 통째로 던져주면, 내부의 연속 배치(Continuous Batching) 알고리즘이 GPU 가동률을 100%에 가깝게 유지하며 가장 효율적인 크기로 알아서 묶어 처리한다.
+*	지능형 KV 캐시 매니지먼트: 데이터 처리가 끝나는 대로 해당 메모리를 나노초 단위로 바로 회수해 다음 문장에 할당하므로, 메모리 부족(OOM) 에러 확률이 현저히 낮아진다.
+
 
 ### 참고 - GPU Memory ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-memory.png)
