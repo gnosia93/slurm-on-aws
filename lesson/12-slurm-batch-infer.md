@@ -76,8 +76,8 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 > ```
 
 
-### 2. 인퍼런스 파이썬 스크립트 (inference.py) ###
-아래는 Hugging Face의 transformers 라이브러리를 사용해 구글 Gemma 2 모델로 추론을 수행하는 간단한 예시이다. (Cohere 로 교체 필요)
+### 2. 인퍼런스 스크립트 (bulk_inference.py) ###
+아래는 Hugging Face의 transformers 라이브러리를 이용한 추론을 예시이다. 
 ```
 # bulk_inference.py
 import json
@@ -192,9 +192,9 @@ squeue -u $USER
 cat logs/infer_123456.out
 ```
 
-### 대량 배치 처리 시 극대화 팁 (vLLM 인오프라인 배치) ###
+### 대량 배치 처리 (vLLM 오프라인 배치) ###
 
-현재 드린 코드는 Hugging Face 순정 코드로 구현되어 안정적이지만, 만약 처리해야 할 데이터가 수만 건 이상으로 너무 많다면 인퍼런스 속도가 느릴수 있다.. 이때는 서버를 띄우지 않고 오직 대량 배치 속도를 기적적으로 높이기 위해 vLLM의 Offline Inference 기능을 쓰는 것이 좋다.vLLM은 문장 길이에 따라 GPU 연산을 극도로 압축(PagedAttention 기술)하기 때문에 위 코드보다 최소 3~5배 이상 속도가 빠르다.
+위의 예제 코드는 Hugging Face 순정 코드로 구현되어 안정적이지만, 만약 처리해야 할 데이터가 수만 건 이상으로 너무 많다면 인퍼런스 속도가 느릴수 있다. 이때는 서버를 띄우지 않고 오직 대량 배치 속도를 높이기 위해 vLLM의 Offline Inference 기능을 쓰는 것이 유리하다. vLLM은 문장 길이에 따라 GPU 연산을 극도로 압축(PagedAttention 기술)하기 때문에 기존 코드보다 최소 3~5배 이상 속도가 빠르다.
 
 vLLM은 PagedAttention 기술을 활용해 GPU VRAM 안에서 KV 캐시를 효율적으로 관리하므로, 대용량 모델인 Cohere Command R+ (104B)를 돌릴 때 Hugging Face 순정 코드보다 수 배 이상 빠른 압도적인 처리 속도를 보여준다.
 아래는 서버를 띄우지 않고, 준비된 JSONL 파일의 데이터를 한 번에 밀어 넣는 대량 배치 스크립트이다.
@@ -285,6 +285,8 @@ if __name__ == "__main__":
 ### 참고 - GPU Memory ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-memory.png)
 
+
+## 레퍼런스 ##
 
 
 
