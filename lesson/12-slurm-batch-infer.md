@@ -39,7 +39,7 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 ```
 
 > [!NOTE]
-#### 1-1. 노드(NodeName) 및 파티션(PartitionName) 정의 ####
+> #### 1-1. 노드(NodeName) 및 파티션(PartitionName) 정의 ####
 ```
 # /etc/slurm/slurm.conf 예시
 # 노드 정의
