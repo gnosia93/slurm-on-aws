@@ -24,7 +24,7 @@ PartitionName=gpu-g7e-24x Nodes=gpu-node[01-02] MaxTime=INFINITE State=UP Defaul
 ```
 * Default=NO: 사용자가 명시적으로 -p gpu-g7e-24x를 지정했을 때만 이 파티션이 사용된다. 만약 기본 파티션으로 바꾸고 싶다면 Default=YES로 수정한다.
 
-### 3. gres.conf 설정 확인하기 (GPU 인식) ###
+#### 3. gres.conf 설정 확인하기 (GPU 인식) ####
 Slurm이 노드 안의 GPU를 올바르게 바인딩할 수 있도록 Compute 노드들의 /etc/slurm/gres.conf 파일도 설정한다.
 ```
 # /etc/slurm/gres.conf 예시
