@@ -27,8 +27,7 @@
 
 * [C11. Scaling Efficiency / MFU](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/11-scaling-efficiency.md)
     
-* [C12. Cohere Command R+(104B, 128K) 인퍼런스]
-  - https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-memory.png
+* [C12. Cohere Command R+(104B, 128K) 인퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/12-slurm-batch-infer.md)
 
 * [C13. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/13-cluster-delete.md)
 
