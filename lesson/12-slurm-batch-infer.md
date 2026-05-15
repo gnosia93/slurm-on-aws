@@ -79,47 +79,82 @@ pcluster update-cluster --cluster-name 내클러스터이름 --cluster-configura
 ### 2. 인퍼런스 파이썬 스크립트 (inference.py) ###
 아래는 Hugging Face의 transformers 라이브러리를 사용해 구글 Gemma 2 모델로 추론을 수행하는 간단한 예시이다. (Cohere 로 교체 필요)
 ```
-# inference.py
+# bulk_inference.py
+import json
+import os
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 def main():
-    # 1. 모델 ID를 Cohere Command R+ (104B)로 변경
-    model_id = "CohereForAI/c4ai-command-r-plus"  
+    model_id = "CohereForAI/c4ai-command-r-plus"
+    input_file = "inputs.jsonl"
+    output_file = f"outputs_{os.environ.get('SLURM_JOB_ID', 'local')}.jsonl"
     
-    # GPU 사용 가능 여부 확인
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    # 2. 토크나이저 로드 (Cohere 모델은 고유의 토크나이저 설정을 따름)
+    # 1. 모델 및 패딩 토크나이저 로드
+    # 대량 배치 처리를 할 때는 문장 길이를 맞추기 위해 padding 설정이 필수입니다.
     tokenizer = AutoTokenizer.from_pretrained(model_id)
-    
-    # 3. 104B 대형 모델 로드를 위한 최적화 설정
-    print("Loading 104B Model... This might take a while.")
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+        
+    print("Loading 104B Model into multiple GPUs...")
     model = AutoModelForCausalLM.from_pretrained(
         model_id, 
-        torch_dtype=torch.bfloat16,   # 메모리를 절반으로 줄이기 위해 bfloat16 필수
-        device_map="auto"             # g7e가 가진 4장의 GPU에 모델을 자동으로 분할 분배
+        torch_dtype=torch.bfloat16, 
+        device_map="auto"
     )
 
-    # 4. 추론할 질문 설정
-    prompt = "인공지능의 미래에 대해 한 문장으로 요약해줘."
-    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    # 2. 대량의 입력 데이터 읽기
+    requests = []
+    with open(input_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                requests.append(json.loads(line))
+    
+    print(f"Total data loaded: {len(requests)} items.")
 
-    # 답변 생성
-    print("Generating response...")
-    # 대형 모델의 경우 max_new_tokens 외에도 생성 파라미터를 살짝 잡아주면 좋습니다.
-    outputs = model.generate(
-        **inputs, 
-        max_new_tokens=150,
-        temperature=0.3,
-        do_sample=True
-    )
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # 3. 배치 처리 루프 (Batch Size 설정)
+    # GPU 메모리(VRAM) 상황에 맞춰 조정하세요. 104B 모델은 배치를 크게 잡으면 터지므로 2~4 정도가 적당합니다.
+    BATCH_SIZE = 2 
+    
+    print("Starting bulk inference...")
+    with open(output_file, "w", encoding="utf-8") as out_f:
+        for i in range(0, len(requests), BATCH_SIZE):
+            batch_data = requests[i:i+BATCH_SIZE]
+            prompts = [item["prompt"] for item in batch_data]
+            
+            # 입력 토큰화 및 패딩 처리
+            inputs = tokenizer(prompts, return_tensors="pt", padding=True, truncation=True).to(device)
+            
+            # 대량 추론 수행
+            with torch.no_grad():
+                outputs = model.generate(
+                    **inputs, 
+                    max_new_tokens=200,
+                    temperature=0.3,
+                    do_sample=True
+                )
+            
+            # 결과 디코딩 및 파일 기록
+            for idx, output in enumerate(outputs):
+                # 입력 프롬프트 부분을 제외하고 생성된 답변만 추출하기 위해 기존 입력 길이를 계산
+                input_len = inputs["input_ids"][idx].shape[0]
+                generated_text = tokenizer.decode(output[input_len:], skip_special_tokens=True)
+                
+                result = {
+                    "id": batch_data[idx]["id"],
+                    "prompt": batch_data[idx]["prompt"],
+                    "response": generated_text.strip()
+                }
+                
+                # 한 줄씩 즉시 저장 (작업이 도중에 끊겨도 데이터 보존)
+                out_f.write(json.dumps(result, ensure_ascii=False) + "\n")
+            
+            print(f"Progress: {i + len(batch_data)} / {len(requests)} processed.")
 
-    # 결과 출력 (Slurm 로그 파일에 기록됨)
-    print("\n=== Result ===")
-    print(response)
+    print(f"Bulk inference completed! Results saved to {output_file}")
 
 if __name__ == "__main__":
     main()
@@ -164,6 +199,8 @@ cat logs/infer_123456.out
 
 ### 참고 - GPU Memory ###
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-memory.png)
+
+
 
 
 
