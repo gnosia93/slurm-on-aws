@@ -84,27 +84,37 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 def main():
-    model_id = "google/gemma-2-9b-it"  # 사용할 오픈소스 모델
+    # 1. 모델 ID를 Cohere Command R+ (104B)로 변경
+    model_id = "CohereForAI/c4ai-command-r-plus"  
     
     # GPU 사용 가능 여부 확인
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(self, f"Using device: {device}")
+    print(f"Using device: {device}")
 
-    # 모델 및 토크나이저 로드 (bfloat16으로 메모리 절약)
+    # 2. 토크나이저 로드 (Cohere 모델은 고유의 토크나이저 설정을 따름)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
+    
+    # 3. 104B 대형 모델 로드를 위한 최적화 설정
+    print("Loading 104B Model... This might take a while.")
     model = AutoModelForCausalLM.from_pretrained(
         model_id, 
-        torch_dtype=torch.bfloat16, 
-        device_map="auto"
+        torch_dtype=torch.bfloat16,   # 메모리를 절반으로 줄이기 위해 bfloat16 필수
+        device_map="auto"             # g7e가 가진 4장의 GPU에 모델을 자동으로 분할 분배
     )
 
-    # 추론할 질문
+    # 4. 추론할 질문 설정
     prompt = "인공지능의 미래에 대해 한 문장으로 요약해줘."
     inputs = tokenizer(prompt, return_tensors="pt").to(device)
 
     # 답변 생성
     print("Generating response...")
-    outputs = model.generate(**inputs, max_new_tokens=100)
+    # 대형 모델의 경우 max_new_tokens 외에도 생성 파라미터를 살짝 잡아주면 좋습니다.
+    outputs = model.generate(
+        **inputs, 
+        max_new_tokens=150,
+        temperature=0.3,
+        do_sample=True
+    )
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
     # 결과 출력 (Slurm 로그 파일에 기록됨)
