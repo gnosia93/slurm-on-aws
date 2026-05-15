@@ -11,8 +11,8 @@ g7e.24xlarge 2대로 구성된 gpu-g7e-24x slurm 파티션을 생성한다.
 
 
 #### 1. 노드 정의 (NodeName) ####
-/etc/slurm/slurm.conf 에 아래와 같은 NodeName 추가을 추가한다.
 ```
+# /etc/slurm/slurm.conf 예시
 # g7e.24xlarge Nodes
 NodeName=gpu-node[01-02] CPUs=96 RealMemory=380000 Gres=gpu:4 State=UNKNOWN
 ```
