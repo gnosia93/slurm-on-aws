@@ -286,8 +286,72 @@ if __name__ == "__main__":
 ![](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/images/gpu-memory.png)
 
 
-## 레퍼런스 ##
+## Slurm Job Array 를 이용한 병렬 인퍼런스 ##
+인퍼런스를 병렬로 처리하고자 하는 경우 가장 직관적인 방법은 inputs.jsonl 파일을 수동으로 분할 한후 각기 다른 GPU 에서 인퍼런스 하는 것이다.
+하지만 Slurm Job Array(작업 배열) 를 사용하게 되면, 파일을 수동으로 쪼갤 필요 없이 inputs.jsonl 하나만 그대로 두고, 병렬 인퍼런스를 구성할 수 있다. 이 방식을 쓰면 나중에 GPU 세트가 2개에서 4개, 10개로 늘어나도 파일 분할 없이 명령어 한 줄로 제어가 가능하다.
 
+### 1. 파이썬 스크립트 수정 (vllm_bulk_inference.py) ###
+Slurm이 주는 내부 변수인 SLURM_ARRAY_TASK_ID(현재 몇 번째 작업 세트인지)와 SLURM_ARRAY_TASK_COUNT(총 몇 개 세트가 도는지)를 활용해 수학적으로 내 할당량만 계산한다.
+
+```
+import os
+import json
+from vllm import LLM, SamplingParams
+
+def main():
+    input_file = "inputs.jsonl"
+    
+    # Slurm 환경변수 읽기 (로컬 테스트 호환을 위해 기본값 지정)
+    task_id = int(os.environ.get("SLURM_ARRAY_TASK_ID", 0))     # 0 또는 1
+    task_count = int(os.environ.get("SLURM_ARRAY_TASK_COUNT", 1)) # 총 2개
+    
+    output_file = f"outputs_vllm_task_{task_id}_{os.environ.get('SLURM_JOB_ID', 'local')}.jsonl"
+
+    # 전체 데이터 로드
+    all_prompts = []
+    all_records = []
+    with open(input_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                item = json.loads(line)
+                all_prompts.append(item["prompt"])
+                all_records.append(item)
+
+    # 💡 수학적으로 내 몫만 슬라이싱(Slicing)하기
+    total_size = len(all_prompts)
+    chunk_size = total_size // task_count
+    
+    start_idx = task_id * chunk_size
+    # 마지막 task인 경우 남는 자투리 데이터까지 다 가져오도록 처리
+    end_idx = total_size if task_id == task_count - 1 else (task_id + 1) * chunk_size
+    
+    # 내가 처리할 구역만 추출
+    prompts = all_prompts[start_idx:end_idx]
+    data_records = all_records[start_idx:end_idx]
+    
+    print(f"[Task {task_id}/{task_count}] Processing indices {start_idx} to {end_idx} (Total: {len(prompts)})")
+
+    # ... (이후 vllm 엔진 로드 및 추론, 결과 저장 코드는 동일) ...
+```
+
+### 2. Slurm 스크립트 제출 (submit_array.sh) ###
+스크립트 상단에 #SBATCH --array=0-1 옵션만 추가해 주면 된다. 이 옵션이 붙으면 Slurm은 이 스크립트를 완전히 독립된 2개의 Job(ID: 0번, 1번)으로 복제하여 빈 GPU 노드 2대에 각각 찢어서 던져준다.
+```
+#!/bin/bash
+#SBATCH --job-name=vllm_array
+#SBATCH --partition=gpu-g7e-24x
+#SBATCH --gres=gpu:4
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --array=0-1                 # 0번, 1번 총 2개의 병렬 세트 구동!
+#SBATCH --output=logs/array_%A_%a.out  # %A는 메인 ID, %a는 어레이 인덱스(0 또는 1)
+
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate ai_env
+
+# 파이썬 실행 (내부에서 환경변수를 알아서 읽으므로 파일명 지정 필요 없음)
+python vllm_bulk_inference.py
+```
 
 
 
