@@ -1,3 +1,5 @@
+* not fully implemented yet..
+
 ## Slurm Batch Inference ##
 
 g7e.xlarge (1GPU, VRAM 96GB) 4대로 Cohere Command R+ 104B 모델을 서빙한다. TP/PP 각각을 EFA 로 구성한다.
