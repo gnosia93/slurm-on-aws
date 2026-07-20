@@ -29,7 +29,7 @@
     
 * [C12. Cohere Command R+(104B, 128K) 배치 인퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/12-slurm-batch-infer.md)
 
-* [C13. 100+B 인퍼런스](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/13-100b-inf.md)
+* [C13. 100+B 인퍼런스 with EC2 Only](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/13-100b-inf.md)
     - [Capacity Block](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/13-capacity-block.md)
       
 * [C14. 클러스터 변경 / 삭제](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/13-cluster-delete.md)
