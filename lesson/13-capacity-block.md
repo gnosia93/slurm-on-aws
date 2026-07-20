@@ -58,12 +58,13 @@ aws ec2 purchase-capacity-block \
 CLI 사용 시 --capacity-reservation-specification 파라미터로 ID를 주입.
 ```
 aws ec2 run-instances \
-    --image-id ami-0c55b159cbfafe1f0 \
+    --image-id ami-xxxx \
     --instance-type p5.48xlarge \
     --count 4 \
     --key-name my-key-pair \
-    --subnet-id subnet-0123456789abcdef0 \
-    --capacity-reservation-specification 'CapacityReservationTarget={CapacityReservationId=cr-0123456789abcdef0}' \
+    --subnet-id subnet-xxxx \
+    --instance-market-options 'MarketType=capacity-block' \
+    --capacity-reservation-specification 'CapacityReservationTarget={CapacityReservationId=cr-xxxx}' \
     --region us-east-1
 ```
 
@@ -73,25 +74,24 @@ Infrastructure as Code(IaC)로 작성할 때는 capacity_reservation_specificati
 ```
 resource "aws_instance" "gpu_node" {
   count         = 4
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-xxxx"
   instance_type = "p5.48xlarge"
-  subnet_id     = "subnet-0123456789abcdef0"
+  subnet_id     = "subnet-xxxx"
 
-  # Capacity Block 타겟 지정
+  instance_market_options {
+    market_type = "capacity-block"
+  }
+
   capacity_reservation_specification {
-    capacity_reservation_preference = "capacity-reservations-only"
-    
     capacity_reservation_target {
-      capacity_reservation_id = "cr-0123456789abcdef0"
+      capacity_reservation_id = "cr-xxxx"
     }
   }
-
-  tags = {
-    Name = "VLM-Training-Node-${count.index}"
-  }
+  # ...
 }
+```
 
-## 페러런스 ##
+## 러퍼런스 ##
 
 * [EC2 Capacity Blocks for ML to reserve GPU capacity](https://aws.amazon.com/ko/blogs/aws/announcing-amazon-ec2-capacity-blocks-for-ml-to-reserve-gpu-capacity-for-your-machine-learning-workloads/)
 ```
