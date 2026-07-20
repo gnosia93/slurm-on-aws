@@ -92,6 +92,48 @@ resource "aws_instance" "gpu_node" {
 }
 ```
 
+### AWS Parallel Cluster 예시 ###
+```
+Region: us-east-1
+Image:
+  Os: alinux2
+
+HeadNode:
+  InstanceType: m5.xlarge
+  Networking:
+    SubnetId: subnet-public-xxxx   # 헤드노드는 퍼블릭 서브넷 권장
+  Ssh:
+    KeyName: my-key-pair
+
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: cb-p5-queue
+      CapacityType: CAPACITY_BLOCK          # ← 핵심 1
+      CapacityReservationTarget:            # ← 핵심 2 (큐 레벨)
+        CapacityReservationId: cr-xxxx      #    구매한 Capacity Block ID
+      Networking:
+        SubnetIds:
+          - subnet-private-xxxx             # ← CB와 동일한 AZ의 서브넷
+        PlacementGroup:
+          Enabled: true
+      ComputeResources:
+        - Name: cb-p5
+          InstanceType: p5.48xlarge         # ← CB와 동일한 인스턴스 타입
+          MinCount: 4                        # ← 핵심 3: Min = Max = CB 인스턴스 수
+          MaxCount: 4
+          Efa:
+            Enabled: true                    # P5는 EFA 필수 권장
+```
+
+* MinCount = MaxCount (0보다 큰 값) Capacity Block 큐에서는 동일해야 한다. CB 예약에 포함된 모든 인스턴스가 static node로 관리되기 때문이다. 즉 오토스케일링(dynamic node)처럼 0까지 줄었다 늘었다 하지 않고, 블록 기간 동안 예약 수만큼 계속 떠 있다. 값은 구매한 인스턴스 개수와 일치시키야 한다.
+* CapacityType: CAPACITY_BLOCK 이 값을 큐에 지정해야 ParallelCluster가 CB 방식(내부적으로 MarketType=capacity-block)으로 인스턴스를 띄운다. 
+* 인스턴스 타입 / AZ 일치 - InstanceType은 CB로 예약한 타입과 정확히 동일해야 한다. (예 p5.48xlarge). 컴퓨트 서브넷은 CB가 위치한 단일 AZ와 같아야 한다.
+* CapacityReservationTarget 위치 위 예시는 큐 레벨에 뒀는데, 컴퓨트 리소스별로 다른 CB를 쓰려면 ComputeResources 아래에도 둘 수 있다. 큐 레벨에 두면 그 큐의 모든 컴퓨트 리소스에 적용된다.
+* 블록 시작 시간 전에 클러스터를 만들면, static 노드가 아직 용량이 없어 계속 launch 실패 상태가 된다. CB 예약 시작 시각이 되면 정상적으로 올라오기 때문에 클러스터 생성 자체는 미리 해둬도 된다.
+* 블록 종료 시점에는 EC2가 인스턴스를 자동 종료하므로, 그 전에 체크포인트 저장/드레이닝이 되도록 학습 스크립트를 설계해야 한다. (30분 이상 여유를 두고 마무리하는 걸 권장)
+* 여러 노드 분산 학습이면 PlacementGroup: Enabled: true + Efa: Enabled: true로 노드 간 통신 성능을 확보한다. 
+
 ## 러퍼런스 ##
 
 * [EC2 Capacity Blocks for ML to reserve GPU capacity](https://aws.amazon.com/ko/blogs/aws/announcing-amazon-ec2-capacity-blocks-for-ml-to-reserve-gpu-capacity-for-your-machine-learning-workloads/)
