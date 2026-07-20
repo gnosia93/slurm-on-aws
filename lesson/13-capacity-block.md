@@ -7,7 +7,7 @@ AWS Management Console이나 AWS CLI로 예약할 수 있다.
 	2.	Create Capacity Reservation (용량 예약 생성) 버튼 클릭.
 	3.	Reservation type에서 Capacity Block for ML (ML용 용량 블록) 선택.
 	4.	설정값 입력:
-•	Instance type: (예: g6e.12xlarge 또는 g5.12xlarge 등)
+•	Instance type: (예: p5.48xlarge 등)
 •	Target capacity: 필요 인스턴스 개수 (예: 4)
 •	Duration: 사용 기간 (일 단위 또는 시간 단위)
 •	Start date / End date: 시작 희망 일시
@@ -21,7 +21,7 @@ AWS Management Console이나 AWS CLI로 예약할 수 있다.
 ① 사용 가능한 Capacity Block 검색:
 ```
 aws ec2 describe-capacity-block-offerings \
-    --instance-type g6e.12xlarge \
+    --instance-type p5.48xlarge \
     --instance-count 4 \
     --start-date-range 2026-08-01T00:00:00Z \
     --capacity-duration-hours 48 \
@@ -46,7 +46,7 @@ aws ec2 purchase-capacity-block \
 ### 방법 A: AWS Console에서 론치 ###
 ```
   1.	EC2 콘솔 ➔ Launch Instances (인스턴스 시작) 클릭.
-	2.	AMI, 인스턴스 유형(g6e.12xlarge 등), Key Pair 등 기본 설정.
+	2.	AMI, 인스턴스 유형(p5.48xlarge 등), Key Pair 등 기본 설정.
 	3.	Advanced details (고급 세부 정보) 섹션을 펼침.
 	4.	Capacity Reservation (용량 예약) 항목 설정:
 •	Capacity Reservation option: Target by ID (ID로 타겟팅) 선택.
@@ -59,7 +59,7 @@ CLI 사용 시 --capacity-reservation-specification 파라미터로 ID를 주입
 ```
 aws ec2 run-instances \
     --image-id ami-0c55b159cbfafe1f0 \
-    --instance-type g6e.12xlarge \
+    --instance-type p5.48xlarge \
     --count 4 \
     --key-name my-key-pair \
     --subnet-id subnet-0123456789abcdef0 \
@@ -74,7 +74,7 @@ Infrastructure as Code(IaC)로 작성할 때는 capacity_reservation_specificati
 resource "aws_instance" "gpu_node" {
   count         = 4
   ami           = "ami-0c55b159cbfafe1f0"
-  instance_type = "g6e.12xlarge"
+  instance_type = "p5.48xlarge"
   subnet_id     = "subnet-0123456789abcdef0"
 
   # Capacity Block 타겟 지정
@@ -90,5 +90,9 @@ resource "aws_instance" "gpu_node" {
     Name = "VLM-Training-Node-${count.index}"
   }
 }
+
+## 페러런스 ##
+
+* [EC2 Capacity Blocks for ML to reserve GPU capacity](https://aws.amazon.com/ko/blogs/aws/announcing-amazon-ec2-capacity-blocks-for-ml-to-reserve-gpu-capacity-for-your-machine-learning-workloads/)
 ```
 
