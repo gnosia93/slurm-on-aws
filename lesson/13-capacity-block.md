@@ -44,7 +44,7 @@ aws ec2 purchase-capacity-block \
 
 ⚠️ 주의사항: Capacity Block은 Placement Group(배치 그룹), Subnet(가용 영역), Tenancy 사양이 예약된 내용과 정확히 일치한다.
 
-### 방법 A: AWS Console에서 론치 ###
+### 1. AWS Console에서 론치 ###
 ```
   1.	EC2 콘솔 ➔ Launch Instances (인스턴스 시작) 클릭.
 	2.	AMI, 인스턴스 유형(p5.48xlarge 등), Key Pair 등 기본 설정.
@@ -55,7 +55,7 @@ aws ec2 purchase-capacity-block \
 	5.	인스턴스 개수를 구매한 개수 이하로 설정 후 Launch Instance 클릭.
 ```
 
-### 방법 B: AWS CLI로 론치 (aws ec2 run-instances) ###
+### 2. AWS CLI로 론치 ###
 CLI 사용 시 --capacity-reservation-specification 파라미터로 ID를 주입.
 ```
 aws ec2 run-instances \
@@ -69,7 +69,7 @@ aws ec2 run-instances \
     --region us-east-1
 ```
 
-### 방법 C: Terraform 코드로 설정 (aws_instance) ###
+### 3. Terraform 설정 ###
 Infrastructure as Code(IaC)로 작성할 때는 capacity_reservation_specification 블록을 사용.
 
 ```
@@ -92,7 +92,7 @@ resource "aws_instance" "gpu_node" {
 }
 ```
 
-### AWS Parallel Cluster 예시 ###
+### 4. AWS Parallel Cluster 예시 ###
 ```
 Region: us-east-1
 Image:
