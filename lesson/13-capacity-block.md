@@ -1,5 +1,6 @@
 ## Capacity Block 예약(구매)하기 ##
-AWS Management Console이나 AWS CLI로 예약할 수 있다.
+
+P 타입 인스턴스에 대해서 AWS Management Console이나 AWS CLI로 예약할 수 있다.
 
 ### 방법 A: AWS Management Console에서 예약 ###
 ```
