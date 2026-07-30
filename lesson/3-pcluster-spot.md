@@ -130,7 +130,7 @@ MASTER_PORT=29500
 
 srun torchrun \
     --nnodes=$SLURM_NNODES \
-    --nproc_per_node=1 \ # 노드당 사용할 GPU(프로세스) 수
+    --nproc_per_node=1 \
     --rdzv_id=$SLURM_JOB_ID \
     --rdzv_backend=c10d \
     --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
