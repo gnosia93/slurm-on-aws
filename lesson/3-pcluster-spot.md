@@ -26,6 +26,12 @@ Slurm은 나열된 순서대로 파티션을 시도하므로, 앞에 있는 gpu-
 #### Spot 중단 시 작업을 자동으로 다시 큐에 넣으려면 ###
 
 ```bash
-#SBATCH --requeue
-#SBATCH --partition=gpu-spot,gpu-ondemand
+#!/bin/bash
+#SBATCH --job-name=train
+#SBATCH --partition=gpu-spot,gpu-ondemand    # Spot 우선, 실패 시 OnDemand
+#SBATCH --nodes=2
+#SBATCH --exclusive
+#SBATCH --requeue                            # Spot 중단 시 자동 재큐
+
+srun python train.py --checkpoint-dir /fsx/checkpoints
 ```
