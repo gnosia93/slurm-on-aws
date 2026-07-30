@@ -125,7 +125,16 @@ Slurm은 나열된 순서대로 파티션을 시도하므로, 앞에 있는 gpu-
 #SBATCH --exclusive
 #SBATCH --requeue                            # Spot 중단 시 자동 재큐
 
-srun python train.py --checkpoint-dir /fsx/checkpoints
+MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+MASTER_PORT=29500
+
+srun torchrun \
+    --nnodes=$SLURM_NNODES \
+    --nproc_per_node=1 \ # 노드당 사용할 GPU(프로세스) 수
+    --rdzv_id=$SLURM_JOB_ID \
+    --rdzv_backend=c10d \
+    --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
+    train.py --checkpoint-dir /fsx/checkpoints
 ```
 
 ## 소프트웨어 버전 확인 ##
