@@ -21,9 +21,9 @@ SlurmQueues:
 sbatch --partition=gpu-spot,gpu-ondemand train.sh
 ```
 Slurm은 나열된 순서대로 파티션을 시도하므로, 앞에 있는 gpu-spot을 먼저 잡으려 하고 안 되면 gpu-ondemand로 넘어간다.
+하지만 Spot으로 이미 시작한 뒤 중간에 Spot이 회수되면 그 작업은 그냥 실패 상태가 된다. 자동으로 OnDemand로 옮겨가지 않는다.
 
-#### Spot 중단 시 작업을 자동으로 다시 큐에 넣으려면: ###
-
+#### Spot 중단 시 작업을 자동으로 다시 큐에 넣으려면 ###
 
 ```bash
 #SBATCH --requeue
