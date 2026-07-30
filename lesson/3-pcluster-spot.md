@@ -129,3 +129,22 @@ srun python train.py --checkpoint-dir /fsx/checkpoints
 ```
 
 ## 소프트웨어 버전 확인 ##
+
+* 헤드노드 진입 (아래 둘중 하나의 명령어로 진입) 
+```
+pcluster ssh --cluster-name <클러스터이름> -i ~/.ssh/${KEY_NAME}.pem
+
+aws ssm start-session --target <헤드노드-instance-id>
+```
+
+* 인터랙티브 세션으로 노드 띄우고 바로 들어가기
+```
+# 헤드노드에서 실행. GPU 노드 1대를 잡아서 셸을 띄움
+srun --partition=gpu-spot --nodes=1 --exclusive --pty bash
+
+# 이제 GPU 노드 안이므로 아래 명령들이 동작함
+fi_info -p efa
+find / -name "libnccl.so*" 2>/dev/null
+ls /opt/aws-ofi-nccl/
+nvidia-smi
+```
