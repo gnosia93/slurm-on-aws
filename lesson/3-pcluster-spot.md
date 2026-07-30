@@ -1,3 +1,5 @@
+## Spot 큐 사용하기 ##
+
 CapacityType은 큐 레벨 설정이고 한 큐에 하나만 지정할 수 있다. Spot과 OnDemand를 둘 다 쓰려면 큐를 나눠야 한다.
 
 ```
@@ -125,3 +127,5 @@ Slurm은 나열된 순서대로 파티션을 시도하므로, 앞에 있는 gpu-
 
 srun python train.py --checkpoint-dir /fsx/checkpoints
 ```
+
+## 소프트웨어 버전 확인 ##
