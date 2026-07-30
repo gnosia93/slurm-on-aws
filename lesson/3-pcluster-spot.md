@@ -143,8 +143,10 @@ aws ssm start-session --target <헤드노드-instance-id>
 srun --partition=gpu-spot --nodes=1 --exclusive --pty bash
 
 # 이제 GPU 노드 안이므로 아래 명령들이 동작함
-fi_info -p efa
-find / -name "libnccl.so*" 2>/dev/null
-ls /opt/aws-ofi-nccl/
-nvidia-smi
+nvidia-smi                                # ① GPU 인식 + 드라이버/CUDA + GPU 개수
+fi_info -p efa                            # ② EFA 동작 여부 (멀티노드 성능 핵심)
+find / -name "libnccl.so*" 2>/dev/null    # ③ NCCL 설치/버전
+ls /opt/aws-ofi-nccl/                     # ④ aws-ofi-nccl (NCCL↔EFA 다리)
+
+df -h | grep fsx                          # (Optional) 대규모 분산 훈련인 경우 체크포인트 저장할 /fsx(Lustre) 마운트 확인
 ```
