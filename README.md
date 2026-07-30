@@ -10,7 +10,8 @@
 * [C2. 스토리지 및 네트워크 구성](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/2-shared-fs.md)
 
 * [C3. Parallel Cluster 설치](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/3-pcluster.md) 
-
+    - [Spot 큐 사용하기]()
+      
 * [C4. nccl-test 실행하기](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/4-nccl-test.md) 
     
 * [C5. 클러스터 진단](https://github.com/gnosia93/slurm-on-aws/blob/main/lesson/5-system-diag.md)   
